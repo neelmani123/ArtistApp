@@ -514,7 +514,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
               ),
               SizedBox(height: 10),
               Card(
-                color: Color(primarycolor),
+               // color: Color(primarycolor),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
@@ -571,7 +571,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
 
               SizedBox(height: 10),
               Card(
-                color: Color(primarycolor),
+                //color: Color(primarycolor),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
@@ -627,7 +627,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
 
               SizedBox(height: 10),
               Card(
-                color: Color(primarycolor),
+                //color: Color(primarycolor),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
