@@ -56,25 +56,19 @@ class EditProfileScreenState extends State<EditProfileScreen>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(primarycolor),
+      backgroundColor: Colors.grey,
       appBar: AppBar(
-        backgroundColor: Color(primarycolor),
-        title: Text(
-          "Edit Details",
-          style: TextStyle(color: Colors.white),
-        ),
+        backgroundColor: Colors.transparent,
       ),
       body: (is_loading)?Center(
           child: CupertinoActivityIndicator(radius:22,
           )):SingleChildScrollView(
         child: Container(
-
           alignment: Alignment.center,
           child: Column(
             children: <Widget>[
-
               Card(
-                color: Color(primarycolor),
+               // color: Color(primarycolor),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
@@ -111,7 +105,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         alignment : Alignment.topLeft,
                         child: Text(data.profile_summary,style: TextStyle(
                           fontSize: 16,
-                          color:Color(text_white),
+                          color:Color(boldColor),
                         ),),
                       ),
                       SizedBox(height: 5),
@@ -122,11 +116,11 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           children: [
                             Text(data.home_town,style: TextStyle(
                               fontSize: 16,
-                              color:Color(text_white),
+                              color:Color(boldColor),
                             ),),
                             Text(", "+data.country,style: TextStyle(
                               fontSize: 16,
-                              color:Color(text_white),
+                              color:Color(boldColor),
                             ),),
                           ],
                         ),
@@ -137,7 +131,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         alignment : Alignment.topLeft,
                         child: Text(data.email,style: TextStyle(
                           fontSize: 20,
-                          color:Color(text_white),
+                          color:Color(boldColor),
                         ),),
                       ),
                       SizedBox(height: 5),
@@ -146,7 +140,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         alignment : Alignment.topLeft,
                         child: Text(data.phone,style: TextStyle(
                           fontSize: 20,
-                          color:Color(text_white),
+                          color:Color(boldColor),
                         ),),
                       ),
                       SizedBox(height: 5),
@@ -154,15 +148,13 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                   ),
                 ),
               ),
-
-              SizedBox(height: 10),
+             // SizedBox(height: 10),
               Card(
-                color: Color(primarycolor),
+                //color: Color(primarycolor),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
                     children: [
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -173,22 +165,20 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                 Text("Res",style: TextStyle(
                                   fontSize: 18,
                                   decoration: TextDecoration.underline,
-                                  color:Color(rec_job_heading),
+                                  //color:Color(rec_job_heading),
                                 ),),
                                 Text("ume Headline",style: TextStyle(
                                   fontSize: 18,
-                                  color:Color(rec_job_heading),
+                                  //color:Color(rec_job_heading),
                                 ),),
                               ],
                             ),
                           ),
-
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                               child: InkWell(
                                 onTap: (){
-
                                   showModalBottomSheet(
                                     isScrollControlled: true,
                                     context: context,
@@ -198,7 +188,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                         body: SingleChildScrollView(
                                           controller: ModalScrollController.of(context),
                                           child: Container(
-                                            color: Colors.white,
+                                           // color: Colors.white,
                                             height: 500,
                                             child: Padding(
                                               padding: const EdgeInsets.all(8.0),
@@ -215,11 +205,11 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                                         Text("Res",style: TextStyle(
                                                           fontSize: 18,
                                                           decoration: TextDecoration.underline,
-                                                          color:Color(rec_job_heading),
+                                                       //   color:Color(rec_job_heading),
                                                         ),),
                                                         Text("ume Headline",style: TextStyle(
                                                           fontSize: 18,
-                                                          color:Color(rec_job_heading),
+                                                         // color:Color(rec_job_heading),
                                                         ),),
                                                       ],
                                                     ),
@@ -314,15 +304,14 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                 ),
               ),
 
-
-              SizedBox(height: 10),
+             // SizedBox(height: 10),
               Card(
-                color: Color(primarycolor),
+               // color: Color(primarycolor),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
-                    children: [
 
+                    children: [
                       Align(
                         alignment : Alignment.topLeft,
                         child: Row(
@@ -372,7 +361,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                      data.resume+"",
+                                       data.resume+"",
                                       style: TextStyle(
                                         fontSize: 18,
                                         color:Color(home_pink_color),
@@ -391,16 +380,13 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                   ),
                 ),
               ),
-
-
-              SizedBox(height: 10),
+             // SizedBox(height: 10),
               Card(
-                color: Color(primarycolor),
+               // color: Color(primarycolor),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
                     children: [
-
                       Align(
                         alignment : Alignment.topLeft,
                         child: Row(
@@ -461,16 +447,13 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                 ),
               ),
 
-
-
               SizedBox(height: 10),
               Card(
-                color: Color(primarycolor),
+                //color: Color(primarycolor),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
                     children: [
-
                       Align(
                         alignment : Alignment.topLeft,
                         child: Row(
@@ -529,8 +512,6 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                   ),
                 ),
               ),
-
-
               SizedBox(height: 10),
               Card(
                 color: Color(primarycolor),

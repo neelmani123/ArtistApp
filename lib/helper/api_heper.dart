@@ -11,13 +11,11 @@ class ApiBaseHelper {
   Future<dynamic> post(String url,Map reqBody) async {
     var responseJson;
     debugPrint("content ==>"+aPPmAINuRL+ url);
-    final response = await http.post(aPPdOMAIN+ url ,body: jsonEncode(reqBody),headers: {HttpHeaders.contentTypeHeader: 'application/json'});
+    final response = await http.post(aPPmAINuRL+ url ,body: jsonEncode(reqBody),headers: {HttpHeaders.contentTypeHeader: 'application/json'});
     print("content ==>"+response.body);
     responseJson = _returnResponse(response);
     return  responseJson;
   }
-
-
 
   dynamic _returnResponse(http.Response response) {
     switch (response.statusCode) {

@@ -1,6 +1,7 @@
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/api_helper/cached_image.dart';
 import 'package:artist_icon/screens/profile/model/UserWork.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class WorkExperienceScren extends StatefulWidget{
@@ -27,7 +28,6 @@ class AllCollectionsState extends State<WorkExperienceScren>{
     return InkWell(
       child: Stack(
         children: [
-
           Container(
             child: Column(
               children: [
@@ -58,7 +58,7 @@ class AllCollectionsState extends State<WorkExperienceScren>{
                                       Column(
                                         children: [
                                           Container(
-                                            margin: new EdgeInsets.symmetric(horizontal: 10),
+                                            margin: new EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                                             child: Text(
                                               "  "+'${widget.job_categories_list[index].position}', maxLines: 1,overflow: TextOverflow.ellipsis,
                                               style: TextStyle(fontSize: 20,color: Colors.black),
@@ -85,20 +85,18 @@ class AllCollectionsState extends State<WorkExperienceScren>{
                                             ),
                                           ),
 
-
                                         ],
                                       ),
                                     ],
                                   ),
                                 ),
 
-
-
                                 Container(
                                   color: Colors.transparent,
-                                  alignment: Alignment.topLeft,
-                                  margin: new EdgeInsets.symmetric(horizontal: 5.0),
+                                 // alignment: Alignment.topLeft,
+                                  margin: new EdgeInsets.symmetric(horizontal: 10.0),
                                   child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         " From "+'${""+widget.job_categories_list[index].start_date}', maxLines: 1,overflow: TextOverflow.ellipsis,
@@ -116,7 +114,6 @@ class AllCollectionsState extends State<WorkExperienceScren>{
 
                               ],
                             ),
-
 
                           ],
                         ),

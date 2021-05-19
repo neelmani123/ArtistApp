@@ -250,17 +250,17 @@ class HttpService
     }
   }
   //Add Work Experience Api  Call
-  Future<AddWorkExperienceModel> add_Work_exp({String position,String comp_name,String start_date,String end_date,String current_work,String location})async{
+  Future<AddWorkExperienceModel> add_Work_exp({String position,String comp_name,String current_work,String location})async{
 Map reqBody={
   'position':position,
   'company_name':comp_name,
-  'start_date':start_date,
-  'end_date':end_date,
-  'currently_work_here':current_work,
-  'company_location':location,
+  'start_date':"12-10-2021",
+  'end_date':"12-10-2021",
+  'currently_work_here':"0",
+  'company_location':position,
   'jwtToken':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk'
 };
-final response=await _apiHelper.post('add_work_experience', reqBody);
+final response=await _apiHelper.post('Artist_api/add_work_experience', reqBody);
 try{
   return AddWorkExperienceModel.fromJson(response);
 
@@ -277,10 +277,12 @@ catch(e){
       "school_name": school_name,
       "education_level": education_level,
       "filled_of_study": filled_of_study,
-      "start_date": start_date,
-      "end_date": end_date,
+      "start_date": "12-10-2021",
+      "end_date": "12-10-2021",
       "currently_study_here": currently_study_here,
-      "education_sub_category": education_sub_category
+      "education_sub_category": education_sub_category,
+      "education_location":"noida",
+      "jwtToken":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk"
     };
     final response = await _apiHelper.post('Artist_api/add_education', reqBody);
     try {

@@ -27,6 +27,7 @@ class _OtpScreenState extends State<OTPScreen> {
   String _deviceId = '';
   String _deviceToken = '';
   String _deviceType = 'WEB';
+  bool _isLoading;
 
   Future<void> initDeviceInfo() async {
     String deviceid = "12345";
@@ -71,6 +72,7 @@ class _OtpScreenState extends State<OTPScreen> {
       if(widget.status == 'login') {
         var res = await httpService.users_login_api(number:widget.mobileNumber,otp:_pinPutController.text);
         if(res.status == true){
+          _isLoading=false;
           Fluttertoast.showToast(msg: "Success");
           final prefs = await SharedPreferences.getInstance();
           prefs.setString('session', "1");
@@ -240,9 +242,8 @@ class _OtpScreenState extends State<OTPScreen> {
                                       onTap: _reSendOtp,
                                       child: Text("Resend Code.",style:TextStyle(
                                           fontSize: 16,
-
                                           fontWeight: FontWeight.bold,
-                                        color: Color(text_white),
+                                        color: Colors.black,
                                       ),),
                                     )
                                   ],
@@ -281,7 +282,7 @@ class _OtpScreenState extends State<OTPScreen> {
                                       constraints: BoxConstraints(
                                           maxWidth: 300.0, minHeight: 50.0),
                                       alignment: Alignment.center,
-                                      child: Text(
+                                      child: _isLoading==true?Container(height:20,width:20,child: CircularProgressIndicator(),):Text(
                                         'SUBMIT',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(color: Colors.white),

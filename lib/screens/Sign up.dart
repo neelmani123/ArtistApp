@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-
 import 'Color.dart';
 
 class Signup extends StatelessWidget {

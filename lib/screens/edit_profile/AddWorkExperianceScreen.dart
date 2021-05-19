@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/api_helper/http_service.dart';
+import 'package:artist_icon/screens/edit_profile/EditProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AddWorkExperianceScreen extends StatefulWidget {
   @override
@@ -11,41 +17,62 @@ class AddWorkExperianceScreen extends StatefulWidget {
 }
 
 class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
-  bool _isLoading = true;
+  bool _isLoading = false;
   final TextEditingController position = new TextEditingController();
   final TextEditingController company_name = new TextEditingController();
   final TextEditingController start_date = new TextEditingController();
   final TextEditingController end_date = new TextEditingController();
   final TextEditingController current_work = new TextEditingController();
   final TextEditingController location = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   HttpService _httpService = HttpService();
   _addData() async {
+   // _isLoading=true;
     var res = await _httpService.add_Work_exp(
         position: position.text,
         comp_name: company_name.text,
-        start_date: "2015-10-12",
-        end_date: "2014-10-29",
         current_work: current_work.text,
         location: 'noida');
     if (res.status == true) {
       setState(() {
         _isLoading = false;
+        print(res.message);
+        Fluttertoast.showToast(msg: res.message);
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditProfileScreen()));
       });
-      print(res.message);
     }
   }
+
+  /*Future _addWorkExperience() async
+  {
+    Map<String,String>headers={'Content-Type':'application/json'};
+    final res=jsonEncode({
+      "position":position.text,
+      "company_name":company_name.text,
+      "start_date":"2015-10-20",
+      "end_date":"2015-10-16",
+      "currently_work_here":"0",
+      "company_location":location.text,
+      "jwtToken":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk"
+    });
+    var response=await http.post("https://artist.devclub.co.in/api/Artist_api/add_work_experience",headers: headers,body: res);
+    Map data=json.decode(response.body);
+    print("response is:${data}");
+
+  }*/
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      key:_scaffoldKey,
       appBar: AppBar(
         title: Text(
           'Add Work Experience',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
       ),
-      body: Container(
+      body: /*_isLoading?Container(child: Center(child: CircularProgressIndicator(),),):*/Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.only(top: 10),
@@ -84,7 +111,7 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                               margin: EdgeInsets.only(left: 10),
                               child: Image.asset(
                                 'images/job.png',
-                                color: Colors.white,
+                                color: Colors.black,
                               )),
                         ),
                         Expanded(
@@ -92,13 +119,13 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                           child: Container(
                             height: 40,
                             child: TextField(
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.black),
                               controller: position,
-                              cursorColor: Colors.white,
+                              cursorColor: Colors.black,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Enter Your Designation',
-                                  hintStyle: TextStyle(color: Colors.white)),
+                                  hintStyle: TextStyle(color: Colors.black)),
                             ),
                           ),
                         ),
@@ -140,7 +167,7 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                               margin: EdgeInsets.only(left: 10),
                               child: Image.asset(
                                 'images/building.png',
-                                color: Colors.white,
+                                color: Colors.black,
                                 height: 20,
                                 width: 20,
                               )),
@@ -150,13 +177,13 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                           child: Container(
                             height: 40,
                             child: TextField(
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.black),
                               controller: company_name,
-                              cursorColor: Colors.white,
+                              cursorColor: Colors.black,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Enter Company Name',
-                                  hintStyle: TextStyle(color: Colors.white)),
+                                  hintStyle: TextStyle(color: Colors.black)),
                             ),
                           ),
                         ),
@@ -203,7 +230,7 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                           ),
                           child: Text(
                             '02-11-2020',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                           ),
                         ),
                         Container(
@@ -291,7 +318,7 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                           ),
                           child: Text(
                             '02-11-2020',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                           ),
                         ),
                         Container(
@@ -338,7 +365,7 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                               margin: EdgeInsets.only(left: 10),
                               child: Image.asset(
                                 'images/home.png',
-                                color: Colors.white,
+                                color: Colors.black,
                                 height: 20,
                                 width: 20,
                               )),
@@ -348,13 +375,13 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                           child: Container(
                             height: 40,
                             child: TextField(
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.black),
                               controller: location,
-                              cursorColor: Colors.white,
+                              cursorColor: Colors.black,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Enter Company Location',
-                                  hintStyle: TextStyle(color: Colors.white)),
+                                  hintStyle: TextStyle(color: Colors.black)),
                             ),
                           ),
                         ),
@@ -368,9 +395,10 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  height: 70,
-                  width: 330,
-                  margin: const EdgeInsets.only(left: 10.0, top: 20),
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.only(top: 40),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.10),
@@ -379,12 +407,13 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                     onPressed: () {
                       setState(() {
                         _isLoading = true;
+                        _addData();
                       });
-                      _addData();
+                      //_addWorkExperience();
                     },
                     color: Color(boldColor),
                     // textColor: Colors.white,
-                    child: Text("Save",
+                    child: _isLoading==true?Container(height:20,width:20,child: CircularProgressIndicator(),):Text("Save",
                         style: TextStyle(fontSize: 20, color: Colors.white)),
                   ),
                 ),

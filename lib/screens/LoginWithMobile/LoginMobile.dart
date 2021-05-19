@@ -16,6 +16,7 @@ class LoginMobile extends StatefulWidget{
 class LoginMobileState extends State<LoginMobile>{
   HttpService _httpService = HttpService();
   final TextEditingController mobile_number = new TextEditingController();
+  bool _isLoading;
 
 
   _send_otp(BuildContext context) {
@@ -33,6 +34,7 @@ class LoginMobileState extends State<LoginMobile>{
     var res = await _httpService.sendOtpModel(number:mobile_number.text);
 
     if(res.status == true){
+      _isLoading=false;
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -43,7 +45,8 @@ class LoginMobileState extends State<LoginMobile>{
               email: "",
             ),
           ));
-    }else{
+    }
+    else{
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -155,7 +158,7 @@ class LoginMobileState extends State<LoginMobile>{
               children: [
                 Container(
                   //margin: const EdgeInsets.only(left: 0.0, right: 180.0),
-                  height: 70,
+                  height: 60,
                   width: 140,
                   margin: EdgeInsets.all(30),
                   child: RaisedButton(
@@ -165,12 +168,13 @@ class LoginMobileState extends State<LoginMobile>{
                     onPressed: () {
                       setState(() {
                         _send_otp(context);
+                        _isLoading=true;
                       });
                      // Navigator.push(context, MaterialPageRoute(builder: (context) => Signup()));
                     },
                     color: Color(fountColor),
                     textColor: Colors.white,
-                    child: Text("Log in",
+                    child: _isLoading==true ?Container(height:20,width:20,child: CircularProgressIndicator(),):Text("Log in",
                         style: TextStyle(fontSize: 20)),
                   ),
                 ),
