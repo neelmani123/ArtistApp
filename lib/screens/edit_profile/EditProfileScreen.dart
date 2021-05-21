@@ -33,7 +33,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
   StateSetter _setState;
   Future<void> getDataApi() async {
     final prefs = await SharedPreferences.getInstance();
-    var res = await _httpService.get_profile_data(jwtToken:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk");
+    var res = await _httpService.get_profile_data(jwtToken:prefs.getString('userID'));
     if(res.status == true){
       setState(() {
         is_loading=false;
@@ -56,9 +56,8 @@ class EditProfileScreenState extends State<EditProfileScreen>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        title: Text('Edit Profile'),
       ),
       body: (is_loading)?Center(
           child: CupertinoActivityIndicator(radius:22,
@@ -79,18 +78,18 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           SizedBox(width: 00,),
                           CircleAvatar(
                             radius: 35,
-                            child: ClipOval(child: Image.network(data.profile_img, height: 60, width: 60, fit: BoxFit.cover,),),
+                            child: ClipOval(child: Image.network(data.profile_img??'', height: 60, width: 60, fit: BoxFit.cover,),),
                           ),
                           SizedBox(width: 10,),
                           Column(
                             children: [
-                              Text(data.name,style: TextStyle(
+                              Text(data.name??'',style: TextStyle(
                                 fontSize: 20,
                                 color:Color(boldColor),
                               ),),
                               Align(
                                 alignment : Alignment.topLeft,
-                                child: Text(data.profile_summary,style: TextStyle(
+                                child: Text(data.profile_summary??'',style: TextStyle(
                                   fontSize: 20,
                                   color:Color(boldColor),
                                 ),),
@@ -103,7 +102,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
 
                       Align(
                         alignment : Alignment.topLeft,
-                        child: Text(data.profile_summary,style: TextStyle(
+                        child: Text(data.profile_summary??'',style: TextStyle(
                           fontSize: 16,
                           color:Color(boldColor),
                         ),),
@@ -114,11 +113,11 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         alignment : Alignment.topLeft,
                         child: Row(
                           children: [
-                            Text(data.home_town,style: TextStyle(
+                            Text(data.home_town??'',style: TextStyle(
                               fontSize: 16,
                               color:Color(boldColor),
                             ),),
-                            Text(", "+data.country,style: TextStyle(
+                            Text("${data.country??''}",style: TextStyle(
                               fontSize: 16,
                               color:Color(boldColor),
                             ),),
@@ -129,7 +128,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
 
                       Align(
                         alignment : Alignment.topLeft,
-                        child: Text(data.email,style: TextStyle(
+                        child: Text(data.email??'',style: TextStyle(
                           fontSize: 20,
                           color:Color(boldColor),
                         ),),
@@ -138,7 +137,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
 
                       Align(
                         alignment : Alignment.topLeft,
-                        child: Text(data.phone,style: TextStyle(
+                        child: Text(data.phone??'',style: TextStyle(
                           fontSize: 20,
                           color:Color(boldColor),
                         ),),
@@ -294,7 +293,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                       SizedBox(height: 10),
                       Align(
                         alignment : Alignment.topLeft,
-                        child: Text(data.resume_headline+"",style: TextStyle(
+                        child: Text(data.resume_headline??'',style: TextStyle(
                           fontSize: 14,
                           color:Color(text_white),
                         ),),
@@ -361,7 +360,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                       data.resume+"",
+                                       data.resume??'',
                                       style: TextStyle(
                                         fontSize: 18,
                                         color:Color(home_pink_color),
@@ -557,9 +556,15 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                               width: 1,
                             ),
                           ),
-                          child: Center(
-                            child: Text(" + Add",
-                                style: TextStyle(fontSize: 16,color: Colors.white)),
+                          child: InkWell(
+                            onTap: (){
+                              print("Skill Click");
+                              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>SkillsScreen(job_categories_list:data.skills_name)));
+                            },
+                            child: Center(
+                              child: Text(" + Add",
+                                  style: TextStyle(fontSize: 16,color: Colors.white)),
+                            ),
                           ),
                         ),
                       ),
@@ -652,7 +657,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                       SizedBox(height: 10),
                       Align(
                         alignment : Alignment.topLeft,
-                        child: Text(data.your_interests.replaceAll(",", "\n"),style: TextStyle(
+                        child: Text(data.your_interests??'',style: TextStyle(
                           fontSize: 16,
                           color:Color(text_white),
                         ),),
@@ -682,8 +687,6 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                   ),
                 ),
               ),
-
-
 
 
             ],

@@ -221,7 +221,7 @@ class HttpService
     final prefs = await SharedPreferences.getInstance();
     Dio dio = new Dio();
     FormData data = FormData.fromMap({
-      "jwtToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk",
+      "jwtToken": prefs.getString('userID'),
       "resume_headline": resumeHeadline,
 
     });
@@ -251,6 +251,7 @@ class HttpService
   }
   //Add Work Experience Api  Call
   Future<AddWorkExperienceModel> add_Work_exp({String position,String comp_name,String current_work,String location})async{
+    final prefs = await SharedPreferences.getInstance();
 Map reqBody={
   'position':position,
   'company_name':comp_name,
@@ -258,7 +259,7 @@ Map reqBody={
   'end_date':"12-10-2021",
   'currently_work_here':"0",
   'company_location':position,
-  'jwtToken':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk'
+  'jwtToken':prefs.getString('userID')
 };
 final response=await _apiHelper.post('Artist_api/add_work_experience', reqBody);
 try{
@@ -273,16 +274,17 @@ catch(e){
   //manage profile
   Future<AddEducationModel> add_education ( {
     String school_name,String education_level,String filled_of_study,String start_date, String end_date,String currently_study_here,String  education_sub_category  }) async{
+    final prefs = await SharedPreferences.getInstance();
     Map reqBody = {
       "school_name": school_name,
       "education_level": education_level,
       "filled_of_study": filled_of_study,
-      "start_date": "12-10-2021",
-      "end_date": "12-10-2021",
+      "start_date": start_date,
+      "end_date": end_date,
       "currently_study_here": currently_study_here,
       "education_sub_category": education_sub_category,
       "education_location":"noida",
-      "jwtToken":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk"
+      "jwtToken":prefs.getString('userID')
     };
     final response = await _apiHelper.post('Artist_api/add_education', reqBody);
     try {

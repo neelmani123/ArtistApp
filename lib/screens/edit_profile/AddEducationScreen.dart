@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http ;
 import 'package:artist_icon/screens/api_helper/http_service.dart';
 import 'package:artist_icon/screens/edit_profile/EditProfileScreen.dart';
+import 'package:intl/intl.dart';
 
 
 class AddEducationScreen extends StatefulWidget{
@@ -23,7 +24,9 @@ class AddEducationScreenState extends State<AddEducationScreen>{
   final TextEditingController end_date = new TextEditingController();
   final TextEditingController currently_study_here = new TextEditingController();
   final TextEditingController education_sub_category = new TextEditingController();
-  DateTime selectDate = DateTime.now();
+  DateTime _date1 = DateTime.now();
+  DateTime _date = DateTime.now();
+  String _formatteddate="",_formatteddate1="";
   bool _isLoading;
   AddEducationModel _user;
   HttpService _httpService = HttpService();
@@ -42,8 +45,8 @@ class AddEducationScreenState extends State<AddEducationScreen>{
       school_name: school_name.text,
       education_level: education.text,
       filled_of_study: filled_of_study.text,
-      start_date: start_date.text,
-      end_date: end_date.text,
+      start_date: _formatteddate,
+      end_date: _formatteddate1,
       currently_study_here: currently_study_here.text,
       education_sub_category: education_sub_category.text
     );
@@ -58,6 +61,8 @@ class AddEducationScreenState extends State<AddEducationScreen>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    _formatteddate = new DateFormat.yMMMd().format(_date);
+    _formatteddate1 = new DateFormat.yMMMd().format(_date1);
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(title: Text('Add Education',style: TextStyle(color: Colors.black),),
@@ -187,30 +192,53 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                          borderRadius: BorderRadius.circular(5.10),
                         color: Color(blueGreyColor),
                       ),
-                      child: Column(
+                      child: InkWell(
+                        onTap: (){
+                          setState(() {
+                            selectDate(context);
+                          });
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              flex: 5,
-                              child: Container(
-                                height: 30,
-                                child: GestureDetector(
-                                  onTap: ()=>_selectDate(context),
-                                  child: AbsorbPointer(
-                                    child: TextField(
-                                      controller:  start_date,
-                                      style: TextStyle(fontSize: 17,color: Colors.black),
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        labelText: 'Enter your start date',
-                                        labelStyle: TextStyle(color:Color(fountColor)),
-                                      ),
-                                    ),
+                            Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: Text(
+                                  "Enter your start date",
+                                  style: TextStyle(
+                                      color:Color(fountColor),
+                                    fontSize: 17
+                                  ),
+                                )),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                               /* Container(
+                                  margin: EdgeInsets.only(left: 10),
+                                  child: Image.asset('images/calendar-alt.png'),
+                                ),*/
+                                Container(
+                                 /* margin: EdgeInsets.only(
+                                    right: 180,
+                                    left: 10,
+                                  ),*/
+                                  child: Text(
+                                    "$_formatteddate",
+                                    style: TextStyle(color: Colors.black),
                                   ),
                                 ),
-                              ),
+                                Container(
+                                  // margin: EdgeInsets.only(),
+                                  child: Image.asset(
+                                    'images/calendar-alt.png',
+                                  ),
+                                ),
+                              ],
                             )
-                          ]
-
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -228,29 +256,53 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                          borderRadius: BorderRadius.circular(5.10),
                         color: Color(blueGreyColor),
                       ),
-                      child: Column(
+                      child: InkWell(
+                        onTap: (){
+                          setState(() {
+                            selectDate1(context);
+                          });
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              flex: 5,
-                              child: Container(
-                                height: 30,
-                                child: GestureDetector(
-                                  onTap: () =>_selectDate(context),
-                                  child: AbsorbPointer(
-                                    child: TextField(
-                                      controller:  end_date,
-                                      style: TextStyle(fontSize: 17,color: Colors.black),
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        labelText: 'Enter your end date',
-                                        labelStyle: TextStyle(color:Color(fountColor)),
-                                      ),
-                                    ),
+                            Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: Text(
+                                  "Enter your end date",
+                                  style: TextStyle(
+                                      color:Color(fountColor),
+                                      fontSize: 17
+                                  ),
+                                )),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                 /* margin: EdgeInsets.only(left: 10),
+                                  child: Image.asset('images/calendar-alt.png'),*/
+                                ),
+                                Container(
+                                  /*margin: EdgeInsets.only(
+                                    right: 180,
+                                    left: 10,
+                                  ),*/
+                                  child: Text(
+                                    "$_formatteddate1",
+                                    style: TextStyle(color: Colors.black),
                                   ),
                                 ),
-                              ),
+                                Container(
+                                  // margin: EdgeInsets.only(),
+                                  child: Image.asset(
+                                    'images/calendar-alt.png',
+                                  ),
+                                ),
+                              ],
                             )
-                          ]
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -353,15 +405,32 @@ class AddEducationScreenState extends State<AddEducationScreen>{
         )
     );
   }
-  Future<Null> _selectDate(BuildContext context) async {
-   final DateTime picked = await showDatePicker(context: context, initialDate: selectDate, firstDate: DateTime(1901,1),lastDate: DateTime(2100));
-    // if(picked ! = null && picked ! = selectDate)
-    //   setState(() {
-    //     selectDate=picked;
-    //     DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-    //     DateTime dateTime = dateFormat.parse(picker.toString());
-    //     start_date.text = DateFomat('dd-MMM-yyyy').format(dateTime);
-    //   });
+  /*This Method is use for the Date Picker Dialog1*/
+  Future<Null> selectDate1(BuildContext context) async {
+    DateTime _datePicker = await showDatePicker(
+        context: context,
+        initialDate: _date1,
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2030));
+    if (_datePicker != null && _datePicker != _date1) {
+      setState(() {
+        _date1 = _datePicker;
+      });
+    }
+  }
+  /*This Method is use for the Date Picker Dialog*/
+  Future<Null> selectDate(BuildContext context) async {
+    DateTime _datePicker = await showDatePicker(
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2030),
+    );
+    if (_datePicker != null && _datePicker != _date) {
+      setState(() {
+        _date = _datePicker;
+      });
+    }
   }
 
 }

@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddWorkExperianceScreen extends StatefulWidget {
   @override
@@ -26,7 +29,10 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
   final TextEditingController location = new TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   HttpService _httpService = HttpService();
-  _addData() async {
+  DateTime _date = DateTime.now();
+  DateTime _date1 = DateTime.now();
+  String _formatteddate="",_formatteddate1="";
+  /*_addData() async {
    // _isLoading=true;
     var res = await _httpService.add_Work_exp(
         position: position.text,
@@ -41,28 +47,65 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditProfileScreen()));
       });
     }
+  }*/
+  /*This Method is use for the Date Picker Dialog*/
+  Future<Null> selectDate(BuildContext context) async {
+    DateTime _datePicker = await showDatePicker(
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2030),
+    );
+    if (_datePicker != null && _datePicker != _date) {
+      setState(() {
+        _date = _datePicker;
+      });
+    }
+  }
+  /*This Method is use for the Date Picker Dialog1*/
+  Future<Null> selectDate1(BuildContext context) async {
+    DateTime _datePicker = await showDatePicker(
+        context: context,
+        initialDate: _date1,
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2030));
+    if (_datePicker != null && _datePicker != _date1) {
+      setState(() {
+        _date1 = _datePicker;
+      });
+    }
   }
 
-  /*Future _addWorkExperience() async
+  Future _addWorkExperience() async
   {
+    final prefs = await SharedPreferences.getInstance();
     Map<String,String>headers={'Content-Type':'application/json'};
     final res=jsonEncode({
       "position":position.text,
       "company_name":company_name.text,
-      "start_date":"2015-10-20",
-      "end_date":"2015-10-16",
+      "start_date":_formatteddate,
+      "end_date":_formatteddate1,
       "currently_work_here":"0",
       "company_location":location.text,
-      "jwtToken":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk"
+      "jwtToken":prefs.getString('userID')
     });
     var response=await http.post("https://artist.devclub.co.in/api/Artist_api/add_work_experience",headers: headers,body: res);
     Map data=json.decode(response.body);
     print("response is:${data}");
-
-  }*/
+    if (data['status'] == true) {
+      setState(() {
+        _isLoading = false;
+        print(data['message']);
+        Fluttertoast.showToast(msg: data['message']);
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditProfileScreen()));
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+     _formatteddate = new DateFormat.yMMMd().format(_date);
+     _formatteddate1 = new DateFormat.yMMMd().format(_date1);
     // TODO: implement build
     return Scaffold(
       key:_scaffoldKey,
@@ -207,41 +250,49 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                   // borderRadius: BorderRadius.circular(10.10),
                   color: Color(blueGreyColor),
                 ),
-                child: Column(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(right: 180, top: 10),
-                        child: Text(
-                          "start date",
-                          style: TextStyle(
-                            color: Colors.green,
-                          ),
-                        )),
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 10),
-                          child: Image.asset('images/calendar-alt.png'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            right: 180,
-                            left: 10,
-                          ),
+                child: InkWell(
+                  onTap: (){
+                    setState(() {
+                      selectDate(context);
+                      print(_formatteddate);
+                    });
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(right: 180, top: 10),
                           child: Text(
-                            '02-11-2020',
-                            style: TextStyle(color: Colors.black),
+                            "start date",
+                            style: TextStyle(
+                              color: Colors.green,
+                            ),
+                          )),
+                      Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: Image.asset('images/calendar-alt.png'),
                           ),
-                        ),
-                        Container(
-                          // margin: EdgeInsets.only(),
-                          child: Image.asset(
-                            'images/calendar-alt.png',
+                          Container(
+                            margin: EdgeInsets.only(
+                              right: 180,
+                              left: 10,
+                            ),
+                            child: Text(
+                                "${_formatteddate} ",
+                              style: TextStyle(color: Colors.black),
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
+                          Container(
+                            // margin: EdgeInsets.only(),
+                            child: Image.asset(
+                              'images/calendar-alt.png',
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -295,41 +346,48 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                   // borderRadius: BorderRadius.circular(10.10),
                   color: Color(blueGreyColor),
                 ),
-                child: Column(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(right: 200, top: 10),
-                        child: Text(
-                          "end date",
-                          style: TextStyle(
-                            color: Colors.green,
-                          ),
-                        )),
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 10),
-                          child: Image.asset('images/calendar-alt.png'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            right: 180,
-                            left: 10,
-                          ),
+                child: InkWell(
+                  onTap: (){
+                    setState(() {
+                      selectDate1(context);
+                    });
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(right: 200, top: 10),
                           child: Text(
-                            '02-11-2020',
-                            style: TextStyle(color: Colors.black),
+                            "end date",
+                            style: TextStyle(
+                              color: Colors.green,
+                            ),
+                          )),
+                      Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: Image.asset('images/calendar-alt.png'),
                           ),
-                        ),
-                        Container(
-                          // margin: EdgeInsets.only(),
-                          child: Image.asset(
-                            'images/calendar-alt.png',
+                          Container(
+                            margin: EdgeInsets.only(
+                              right: 180,
+                              left: 10,
+                            ),
+                            child: Text(
+                              "${_formatteddate1} ",
+                              style: TextStyle(color: Colors.black),
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
+                          Container(
+                            // margin: EdgeInsets.only(),
+                            child: Image.asset(
+                              'images/calendar-alt.png',
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -407,9 +465,10 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                     onPressed: () {
                       setState(() {
                         _isLoading = true;
-                        _addData();
+                        //_addData();
+                        _addWorkExperience();
                       });
-                      //_addWorkExperience();
+
                     },
                     color: Color(boldColor),
                     // textColor: Colors.white,

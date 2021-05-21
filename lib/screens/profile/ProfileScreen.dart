@@ -24,7 +24,7 @@ class ProfileScreenState extends State<ProfileScreen>{
   Data data;
   Future<void> getDataApi() async {
     final prefs = await SharedPreferences.getInstance();
-    var res = await _httpService.get_profile_data(jwtToken:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk");
+    var res = await _httpService.get_profile_data(jwtToken:prefs.getString('userID'));
     if(res.status == true){
       setState(() {
         data=res.data;
@@ -53,7 +53,6 @@ class ProfileScreenState extends State<ProfileScreen>{
         alignment: Alignment.center,
         child: Column(
           children: <Widget>[
-
             Card(
               color: Color( blueGreyColor),
               shape: RoundedRectangleBorder(
@@ -71,18 +70,18 @@ class ProfileScreenState extends State<ProfileScreen>{
                         CircleAvatar(
                           radius: 35,
 
-                          child: ClipOval(child: Image.network(data.profile_img, height: 60, width: 60, fit: BoxFit.cover,),),
+                          child: ClipOval(child: Image.network(data.profile_img??'', height: 60, width: 60, fit: BoxFit.cover,),),
                         ),
                         SizedBox(width: 10,),
                         Column(
                           children: [
-                            Text(data.name,style: TextStyle(
+                            Text(data.name??'',style: TextStyle(
                               fontSize: 20,
                               color:Colors.black,
                             ),),
                             Align(
                               alignment : Alignment.topLeft,
-                              child: Text(data.profile_summary,style: TextStyle(
+                              child: Text(data.profile_summary??'',style: TextStyle(
                                 fontSize: 20,
                                 color:Colors.grey,
                               ),),
@@ -95,7 +94,7 @@ class ProfileScreenState extends State<ProfileScreen>{
 
                     Align(
                       alignment : Alignment.topLeft,
-                        child: Text(data.profile_summary,style: TextStyle(
+                        child: Text(data.profile_summary??'',style: TextStyle(
                         fontSize: 16,
                         color:Colors.grey,
                       ),),
@@ -106,11 +105,11 @@ class ProfileScreenState extends State<ProfileScreen>{
                       alignment : Alignment.topLeft,
                       child: Row(
                         children: [
-                          Text(data.home_town,style: TextStyle(
+                          Text(data.home_town??'',style: TextStyle(
                             fontSize: 16,
                             color:Colors.grey,
                           ),),
-                          Text(", "+data.country,style: TextStyle(
+                          Text(data.country??'',style: TextStyle(
                             fontSize: 16,
                             color:Colors.grey,
                           ),),
@@ -120,7 +119,7 @@ class ProfileScreenState extends State<ProfileScreen>{
                     SizedBox(height: 5),
                     Align(
                       alignment : Alignment.topLeft,
-                      child: Text(data.email,style: TextStyle(
+                      child: Text(data.email??'',style: TextStyle(
                         fontSize: 20,
                         color:Colors.grey,
                       ),),
@@ -129,7 +128,7 @@ class ProfileScreenState extends State<ProfileScreen>{
 
                     Align(
                       alignment : Alignment.topLeft,
-                      child: Text(data.phone,style: TextStyle(
+                      child: Text(data.phone??'',style: TextStyle(
                         fontSize: 20,
                         color:Colors.grey,
                       ),),
@@ -170,7 +169,7 @@ class ProfileScreenState extends State<ProfileScreen>{
                     SizedBox(height: 10),
                     Align(
                       alignment : Alignment.topLeft,
-                      child: Text(data.resume_headline+"",style: TextStyle(
+                      child: Text(data.resume_headline??'',style: TextStyle(
                         fontSize: 14,
                         color:Colors.grey,
                       ),),
@@ -224,7 +223,7 @@ class ProfileScreenState extends State<ProfileScreen>{
                           ),
                         ),
                         child: Center(
-                          child: Text(data.resume+"",
+                          child: Text(data.resume??'',
                             style: TextStyle(
                             fontSize: 18,
                             color:Color(fountColor),
@@ -429,7 +428,7 @@ class ProfileScreenState extends State<ProfileScreen>{
                     SizedBox(height: 10),
                     Align(
                       alignment : Alignment.topLeft,
-                      child: Text(data.your_interests.replaceAll(",", "\n"),style: TextStyle(
+                      child: Text(data.your_interests??'',style: TextStyle(
                         fontSize: 16,
                         color:Colors.black,
                       ),),

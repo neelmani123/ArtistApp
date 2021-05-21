@@ -4,6 +4,7 @@ import 'package:artist_icon/screens/feed/FeedScreen.dart';
 import 'package:artist_icon/screens/profile/ProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Home.dart';
 
@@ -17,10 +18,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedPageIndex = 0;
   int _index = 0;
+  String name='';
   void _selectTab(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
+  }
+  Future get_name() async{
+    final prefs = await SharedPreferences.getInstance();
+    name=prefs.getString('name');
+  }
+  @override
+  void initState() {
+    super.initState();
+   get_name();
   }
 
   Map<String, Object> _getPage() {
@@ -224,10 +235,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  String tital() {
+  String tital()  {
     String name='';
-    if(_selectedPageIndex==0){
-      name='Hello,\n Morning, Arvind';
+    if(_selectedPageIndex==0&&_selectedPageIndex==1)
+    {
+      name='Hello,\n Morning,${name}';
     }
     if(_selectedPageIndex==1){
       name='Feed';

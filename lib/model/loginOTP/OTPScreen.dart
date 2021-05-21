@@ -82,6 +82,7 @@ class _OtpScreenState extends State<OTPScreen> {
           prefs.setString('mobile', res.data.phone);
           prefs.setString('email', res.data.email);
           Navigator.pop(context);
+          print("Token is :${res.data.jwtToken}");
           Navigator.push(
               context,
               MaterialPageRoute(

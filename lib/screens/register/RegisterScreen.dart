@@ -38,12 +38,11 @@ class RegisterScreenState extends State<RegisterScreen>{
     // }
 
   }
-
   @override
   void initState() {
-
+    super.initState();
+    mobile_number.text=widget.mobileNumber;
   }
-
 
   Future<void> _call_Api() async {
     print("===>"+mobile_number.text);
@@ -63,8 +62,6 @@ class RegisterScreenState extends State<RegisterScreen>{
       Fluttertoast.showToast(msg: "Something went wrong");
     }
   }
-
-
 
   String validateEmail(String value) {
     Pattern pattern =

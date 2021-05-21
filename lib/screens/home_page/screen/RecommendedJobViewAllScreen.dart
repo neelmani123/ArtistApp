@@ -20,7 +20,7 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
 
   Future<void> job_categories_listApi() async {
     final prefs = await SharedPreferences.getInstance();
-    var res = await _httpService.job_categories_list(jwtToken:prefs.getString('userID'),limit:"",search:"");
+    var res = await _httpService.job_categories_list(jwtToken:prefs.getString('userID'),limit:"10",search:"");
     if(res.status == true){
       setState(() {
         job_categories_list=  res.data;
@@ -45,10 +45,9 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
       child: Column(
         children: [
           Card(
-
             child: Container(
               height: 220,
-              width: 200,
+              width: MediaQuery.of(context).size.width,
               child: Stack(
                 children: [
                   Column(
@@ -57,7 +56,7 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
                         child: Row(
                           children: [
                             Expanded(
-                              flex: 4,
+                              //flex: 4,
                               child: Column(
                                 children: [
                                   Container(
@@ -170,6 +169,8 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
             ),
           ),
           Container(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
             color: Colors.transparent,
             alignment: Alignment.topLeft,
             margin: new EdgeInsets.symmetric(horizontal: 5.0),
