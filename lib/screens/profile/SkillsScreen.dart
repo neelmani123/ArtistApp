@@ -50,7 +50,7 @@ class AllCollectionsState extends State<SkillsScreen>{
                                   alignment: Alignment.topLeft,
                                   margin: new EdgeInsets.symmetric(horizontal: 5.0),
                                   child: Text(
-                                    "  "+'${widget.job_categories_list[index].name}', maxLines: 1,overflow: TextOverflow.ellipsis,
+                                    "  "+'${widget.job_categories_list[index].name??''}', maxLines: 1,overflow: TextOverflow.ellipsis,
                                     style: TextStyle(fontSize: 20,color: Colors.black),
                                   ),
                                 ),

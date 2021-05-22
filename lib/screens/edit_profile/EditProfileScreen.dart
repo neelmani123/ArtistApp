@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:artist_icon/screens/AddLanguage/addLanguage.dart';
+import 'package:artist_icon/screens/AddSkill/addskill.dart';
+import 'package:artist_icon/screens/Interest/AddInterest.dart';
+import 'package:artist_icon/screens/editIntro/EditIntroduction.dart';
 import 'package:artist_icon/screens/edit_profile/AddEducationScreen.dart';
 import 'package:artist_icon/screens/edit_profile/AddWorkExperianceScreen.dart';
 import 'package:file_picker/file_picker.dart';
@@ -73,14 +77,13 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                   child: Column(
                     children: [
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                       // crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          SizedBox(width: 00,),
                           CircleAvatar(
                             radius: 35,
                             child: ClipOval(child: Image.network(data.profile_img??'', height: 60, width: 60, fit: BoxFit.cover,),),
                           ),
-                          SizedBox(width: 10,),
+                         // SizedBox(width: 10,),
                           Column(
                             children: [
                               Text(data.name??'',style: TextStyle(
@@ -95,6 +98,26 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                 ),),
                               ),
                             ],
+                          ),
+                          InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditIntroduction()));
+                            },
+                            child: Container(
+                              //width: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.only(left: 180,bottom: 30),
+                              child: Row(
+                               // mainAxisAlignment: MainAxisAlignment.end,
+                               // crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  IconButton(icon: Icon(Icons.edit,color: Color(home_pink_color),)),
+                                  Text("Edit",style: TextStyle(
+                                    fontSize: 20,
+                                    color:Color(home_pink_color),
+                                  ),),
+                                ],
+                              ),
+                            ),
                           )
                         ],
                       ),
@@ -559,7 +582,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           child: InkWell(
                             onTap: (){
                               print("Skill Click");
-                              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>SkillsScreen(job_categories_list:data.skills_name)));
+                              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>AddSkill()));
                             },
                             child: Center(
                               child: Text(" + Add",
@@ -620,8 +643,14 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                             ),
                           ),
                           child: Center(
-                            child: Text(" + Add",
-                                style: TextStyle(fontSize: 16,color: Colors.white)),
+                            child: InkWell(
+                              onTap: (){
+                                print("Language Tab Click ");
+                                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Addlanguage()));
+                              },
+                              child: Text(" + Add",
+                                  style: TextStyle(fontSize: 16,color: Colors.white)),
+                            ),
                           ),
                         ),
                       ),
@@ -678,8 +707,13 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                             ),
                           ),
                           child: Center(
-                            child: Text(" + Add",
-                                style: TextStyle(fontSize: 16,color: Colors.white)),
+                            child: InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>AddInterest()));
+                              },
+                              child: Text(" + Add",
+                                  style: TextStyle(fontSize: 16,color: Colors.white)),
+                            ),
                           ),
                         ),
                       ),

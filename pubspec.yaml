@@ -45,6 +45,8 @@ dependencies:
   flutter_swiper: ^1.1.6
   multi_select_flutter: ^4.0.0
   intl:
+  image_picker:
+
 
 dev_dependencies:
   flutter_test:
