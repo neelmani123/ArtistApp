@@ -75,6 +75,8 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                        // crossAxisAlignment: CrossAxisAlignment.center,
@@ -84,21 +86,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                             child: ClipOval(child: Image.network(data.profile_img??'', height: 60, width: 60, fit: BoxFit.cover,),),
                           ),
                          // SizedBox(width: 10,),
-                          Column(
-                            children: [
-                              Text(data.name??'',style: TextStyle(
-                                fontSize: 20,
-                                color:Color(boldColor),
-                              ),),
-                              Align(
-                                alignment : Alignment.topLeft,
-                                child: Text(data.profile_summary??'',style: TextStyle(
-                                  fontSize: 20,
-                                  color:Color(boldColor),
-                                ),),
-                              ),
-                            ],
-                          ),
+
                           InkWell(
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditIntroduction()));
@@ -110,10 +98,10 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                // mainAxisAlignment: MainAxisAlignment.end,
                                // crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  IconButton(icon: Icon(Icons.edit,color: Color(home_pink_color),)),
+                                  IconButton(icon: Icon(Icons.edit,color: Color(fountColor),)),
                                   Text("Edit",style: TextStyle(
                                     fontSize: 20,
-                                    color:Color(home_pink_color),
+                                    color:Color(fountColor),
                                   ),),
                                 ],
                               ),
@@ -122,12 +110,16 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         ],
                       ),
                       SizedBox(height: 10),
-
+                      Text(data.name??'',style: TextStyle(
+                        fontSize: 20,
+                        color:Colors.black,
+                        fontWeight: FontWeight.bold
+                      ),),
                       Align(
                         alignment : Alignment.topLeft,
                         child: Text(data.profile_summary??'',style: TextStyle(
                           fontSize: 16,
-                          color:Color(boldColor),
+                          color:Colors.grey,
                         ),),
                       ),
                       SizedBox(height: 5),
@@ -138,11 +130,11 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           children: [
                             Text(data.home_town??'',style: TextStyle(
                               fontSize: 16,
-                              color:Color(boldColor),
+                              color:Colors.grey,
                             ),),
                             Text("${data.country??''}",style: TextStyle(
                               fontSize: 16,
-                              color:Color(boldColor),
+                              color:Colors.grey,
                             ),),
                           ],
                         ),
@@ -153,7 +145,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         alignment : Alignment.topLeft,
                         child: Text(data.email??'',style: TextStyle(
                           fontSize: 20,
-                          color:Color(boldColor),
+                          color:Colors.grey,
                         ),),
                       ),
                       SizedBox(height: 5),
@@ -162,7 +154,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         alignment : Alignment.topLeft,
                         child: Text(data.phone??'',style: TextStyle(
                           fontSize: 20,
-                          color:Color(boldColor),
+                          color:Colors.grey,
                         ),),
                       ),
                       SizedBox(height: 5),
@@ -301,10 +293,10 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                 },
                                 child: Row(
                                   children: [
-                                    IconButton(icon: Icon(Icons.edit,color: Color(home_pink_color),)),
+                                    IconButton(icon: Icon(Icons.edit,color: Color(fountColor),)),
                                     Text("Edit",style: TextStyle(
                                       fontSize: 20,
-                                      color:Color(home_pink_color),
+                                      color:Color(fountColor),
                                     ),),
                                   ],
                                 ),
@@ -373,7 +365,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                               color: Colors.white,
                               borderRadius: BorderRadius.all(Radius.circular(40)),
                               border: Border.all(
-                                color: Color(boldColor),
+                                color: Color(fountColor),
                                 width: 1,
                               ),
                             ),
@@ -391,7 +383,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                   ),
                                   Expanded(
                                       flex: 1,
-                                      child: IconButton(icon: Icon(Icons.upload_sharp,color: Color(home_pink_color),))),
+                                      child: IconButton(icon: Icon(Icons.upload_sharp,color: Color(fountColor),))),
                                 ],
                               ),
                             ),
@@ -440,10 +432,10 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           width: 70,
                           margin: const EdgeInsets.only(right: 10.0),
                           decoration: BoxDecoration(
-                            color: Color(primarycolor),
+                            //color: Color(primarycolor),
                             borderRadius: BorderRadius.all(Radius.circular(40)),
                             border: Border.all(
-                              color: Color(boldColor),
+                              color: Color(fountColor),
                               width: 1,
                             ),
                           ),
@@ -458,7 +450,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                     ));
                               },
                               child: Text(" + Add",
-                                  style: TextStyle(fontSize: 16,color: Colors.white)),
+                                  style: TextStyle(fontSize: 16,color: Color(fountColor))),
                             ),
                           ),
                         ),
@@ -507,10 +499,10 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           width: 70,
                           margin: const EdgeInsets.only(right: 10.0),
                           decoration: BoxDecoration(
-                            color: Color(primarycolor),
+                            //color: Color(primarycolor),
                             borderRadius: BorderRadius.all(Radius.circular(40)),
                             border: Border.all(
-                              color: Color(boldColor),
+                              color: Color(fountColor),
                               width: 1,
                             ),
                           ),
@@ -525,7 +517,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                     ));
                               },
                               child: Text(" + Add",
-                                  style: TextStyle(fontSize: 16,color: Colors.white)),
+                                  style: TextStyle(fontSize: 16,color: Color(fountColor))),
                             ),
                           ),
                         ),
@@ -572,10 +564,10 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           width: 70,
                           margin: const EdgeInsets.only(right: 10.0),
                           decoration: BoxDecoration(
-                            color: Color(primarycolor),
+                           // color: Color(primarycolor),
                             borderRadius: BorderRadius.all(Radius.circular(40)),
                             border: Border.all(
-                              color: Color(boldColor),
+                              color: Color(fountColor),
                               width: 1,
                             ),
                           ),
@@ -586,7 +578,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                             },
                             child: Center(
                               child: Text(" + Add",
-                                  style: TextStyle(fontSize: 16,color: Colors.white)),
+                                  style: TextStyle(fontSize: 16,color: Color(fountColor))),
                             ),
                           ),
                         ),
@@ -635,10 +627,10 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           width: 70,
                           margin: const EdgeInsets.only(right: 10.0),
                           decoration: BoxDecoration(
-                            color: Color(primarycolor),
+                           // color: Color(primarycolor),
                             borderRadius: BorderRadius.all(Radius.circular(40)),
                             border: Border.all(
-                              color: Color(boldColor),
+                              color: Color(fountColor),
                               width: 1,
                             ),
                           ),
@@ -649,7 +641,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Addlanguage()));
                               },
                               child: Text(" + Add",
-                                  style: TextStyle(fontSize: 16,color: Colors.white)),
+                                  style: TextStyle(fontSize: 16,color: Color(fountColor))),
                             ),
                           ),
                         ),
@@ -699,10 +691,10 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           width: 70,
                           margin: const EdgeInsets.only(right: 10.0),
                           decoration: BoxDecoration(
-                            color: Color(primarycolor),
+                            //color: Color(primarycolor),
                             borderRadius: BorderRadius.all(Radius.circular(40)),
                             border: Border.all(
-                              color: Color(boldColor),
+                              color: Color(fountColor),
                               width: 1,
                             ),
                           ),
@@ -712,7 +704,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>AddInterest()));
                               },
                               child: Text(" + Add",
-                                  style: TextStyle(fontSize: 16,color: Colors.white)),
+                                  style: TextStyle(fontSize: 16,color: Color(fountColor))),
                             ),
                           ),
                         ),

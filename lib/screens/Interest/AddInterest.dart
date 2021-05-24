@@ -15,7 +15,7 @@ class _AddInterestState extends State<AddInterest> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title: Text('Add Language')),
+      appBar: new AppBar(title: Text('Add Interest')),
       body: Column(
         children: [
           SizedBox(height: 40,),

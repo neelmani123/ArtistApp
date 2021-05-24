@@ -21,6 +21,7 @@ class AddWorkExperianceScreen extends StatefulWidget {
 
 class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
   bool _isLoading = false;
+  bool isSwitched = false;
   final TextEditingController position = new TextEditingController();
   final TextEditingController company_name = new TextEditingController();
   final TextEditingController start_date = new TextEditingController();
@@ -75,7 +76,26 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
       });
     }
   }
+  var textValue = 'Switch is OFF';
+  void toggleSwitch(bool value) {
 
+    if(isSwitched == false)
+    {
+      setState(() {
+        isSwitched = true;
+        textValue = 'Switch Button is ON';
+      });
+      print('Switch Button is ON');
+    }
+    else
+    {
+      setState(() {
+        isSwitched = false;
+        textValue = 'Switch Button is OFF';
+      });
+      print('Switch Button is OFF');
+    }
+  }
   Future _addWorkExperience() async
   {
     final prefs = await SharedPreferences.getInstance();
@@ -137,9 +157,11 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                   color: Color(blueGreyColor),
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                        margin: EdgeInsets.only(right: 190, top: 10),
+                        margin: EdgeInsets.only(left: 50, top: 10),
                         child: Text(
                           "Position",
                           style: TextStyle(
@@ -193,9 +215,11 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                   color: Color(blueGreyColor),
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                        margin: EdgeInsets.only(right: 110, top: 10),
+                        margin: EdgeInsets.only(left: 50, top: 10),
                         child: Text(
                           "Where did you work?",
                           style: TextStyle(
@@ -258,11 +282,13 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                     });
                   },
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          margin: EdgeInsets.only(right: 180, top: 10),
+                          margin: EdgeInsets.only(left: 60, top: 10),
                           child: Text(
-                            "start date",
+                            "Start date",
                             style: TextStyle(
                               color: Colors.green,
                             ),
@@ -270,25 +296,25 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                       Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 10),
-                            child: Image.asset('images/calendar-alt.png'),
+                            margin: EdgeInsets.only(left: 20),
+                            child: Icon(Icons.calendar_today_sharp,size: 20,)
                           ),
                           Container(
                             margin: EdgeInsets.only(
                               right: 180,
-                              left: 10,
+                              left: 20,
                             ),
                             child: Text(
                                 "${_formatteddate} ",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
-                          Container(
+                          /*Container(
                             // margin: EdgeInsets.only(),
                             child: Image.asset(
                               'images/calendar-alt.png',
                             ),
-                          ),
+                          ),*/
                         ],
                       )
                     ],
@@ -308,9 +334,11 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                     ),
                   ],
                   // borderRadius: BorderRadius.circular(10.10),
-                  color: Color(boldColor),
+                  color: Colors.white,
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -319,13 +347,21 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                           margin: EdgeInsets.only(left: 30, top: 10),
                           child: Text(
                             'I currently work here',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                           ),
                         ),
                         Container(
+                          height: 40,
                           margin: EdgeInsets.only(left: 90, top: 10),
-                          child: Image.asset('images/dropdown_buttan.png'),
+                          child: Switch(
+                            onChanged: toggleSwitch,
+                            value: isSwitched,
+                            inactiveThumbColor: Colors.white,
+                            inactiveTrackColor: Colors.grey,
+                          )
                         ),
+
+
                       ],
                     )
                   ],
@@ -353,37 +389,36 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                     });
                   },
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          margin: EdgeInsets.only(right: 200, top: 10),
+                          margin: EdgeInsets.only(left: 60, top: 10),
                           child: Text(
-                            "end date",
+                            "End date",
                             style: TextStyle(
                               color: Colors.green,
                             ),
                           )),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 10),
-                            child: Image.asset('images/calendar-alt.png'),
+                            margin: EdgeInsets.only(left: 20),
+                            child: Icon(Icons.calendar_today_sharp,size: 20,)
                           ),
                           Container(
                             margin: EdgeInsets.only(
-                              right: 180,
-                              left: 10,
+                              //right: 180,
+                              left: 20,
                             ),
                             child: Text(
                               "${_formatteddate1} ",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
-                          Container(
-                            // margin: EdgeInsets.only(),
-                            child: Image.asset(
-                              'images/calendar-alt.png',
-                            ),
-                          ),
+
                         ],
                       )
                     ],
@@ -406,11 +441,13 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                   color: Color(blueGreyColor),
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                        margin: EdgeInsets.only(right: 130, top: 10),
+                        margin: EdgeInsets.only(left: 50, top: 10),
                         child: Text(
-                          "what did you do?",
+                          "What did you do?",
                           style: TextStyle(
                             color: Colors.green,
                           ),
@@ -468,11 +505,10 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                         //_addData();
                         _addWorkExperience();
                       });
-
                     },
-                    color: Color(boldColor),
+                    color: Color(fountColor),
                     // textColor: Colors.white,
-                    child: _isLoading==true?Container(height:20,width:20,child: CircularProgressIndicator(),):Text("Save",
+                    child: _isLoading==true?Container(height:20,width:20,child: CircularProgressIndicator(),):Text("SAVE",
                         style: TextStyle(fontSize: 20, color: Colors.white)),
                   ),
                 ),

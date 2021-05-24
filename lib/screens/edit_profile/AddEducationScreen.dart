@@ -90,6 +90,7 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                               Expanded(
                               flex: 5,
                                 child: Container(
+                                  padding: EdgeInsets.only(left: 10),
                                   height: 30,
                                   child: TextField(
                                     controller: school_name,
@@ -125,6 +126,7 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                               Expanded(
                                 flex: 5,
                                 child: Container(
+                                  padding: EdgeInsets.only(left: 10),
                                   height: 30,
                                   child: TextField(
                                     controller: education,
@@ -161,6 +163,7 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                               Expanded(
                                 flex: 5,
                                 child: Container(
+                                  padding: EdgeInsets.only(left: 10),
                                   height: 30,
                                   child: TextField(
                                     controller: filled_of_study,
@@ -203,7 +206,8 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                                margin: EdgeInsets.only(top: 10),
+                                padding: EdgeInsets.only(left: 10),
+                                //margin: EdgeInsets.only(top: 10),
                                 child: Text(
                                   "Enter your start date",
                                   style: TextStyle(
@@ -224,6 +228,7 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                                     right: 180,
                                     left: 10,
                                   ),*/
+                                  padding: EdgeInsets.only(left: 10),
                                   child: Text(
                                     "$_formatteddate",
                                     style: TextStyle(color: Colors.black),
@@ -267,7 +272,8 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                                margin: EdgeInsets.only(top: 10),
+                                padding: EdgeInsets.only(left: 10),
+                               // margin: EdgeInsets.only(top: 10),
                                 child: Text(
                                   "Enter your end date",
                                   style: TextStyle(
@@ -288,6 +294,7 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                                     right: 180,
                                     left: 10,
                                   ),*/
+                                  padding: EdgeInsets.only(left: 10),
                                   child: Text(
                                     "$_formatteddate1",
                                     style: TextStyle(color: Colors.black),
@@ -324,6 +331,8 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                               Expanded(
                                 flex: 5,
                                 child: Container(
+                                  padding: EdgeInsets.only(left: 10),
+
                                   height: 30,
                                   child: TextField(
                                     controller:  currently_study_here,
@@ -358,6 +367,7 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                               Expanded(
                                 flex: 5,
                                 child: Container(
+                                  padding: EdgeInsets.only(left: 10),
                                   height: 30,
                                   child: TextField(
                                     controller:  education_sub_category,
@@ -394,7 +404,7 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                           },
                           color: Color(fountColor),
                           // textColor: Colors.white,
-                          child: _isLoading==true?Container(height:20,width:20,child: CircularProgressIndicator(),):Text("Save",
+                          child: _isLoading==true?Container(height:20,width:20,child: CircularProgressIndicator(),):Text("SAVE",
                               style: TextStyle(fontSize: 20,color: Colors.white)),
                         ),
                       ),

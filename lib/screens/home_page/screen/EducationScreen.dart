@@ -26,7 +26,6 @@ class AllCollectionsState extends State<EducationScreen>{
     return InkWell(
       child: Stack(
         children: [
-
           Container(
             child: Column(
               children: [
@@ -35,73 +34,65 @@ class AllCollectionsState extends State<EducationScreen>{
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  elevation: 3,
                   child: Container(
-                    child: Expanded(
-                      flex: 1,
-                      child: Container(
-                        child: Stack(
-                          children: [
-                            Column(
-                              children: <Widget>[
-
-                                Container(
-                                  color: Colors.transparent,
-                                  alignment: Alignment.topLeft,
-                                  margin: new EdgeInsets.symmetric(horizontal: 5),
-                                  child: Text(
-                                    "  "+'${widget.job_categories_list[index].education_level}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(fontSize: 20,color: Colors.black),
-                                  ),
-                                ),
-
-                                Container(
-                                  color: Colors.transparent,
-                                  alignment: Alignment.topLeft,
-                                  margin: new EdgeInsets.symmetric(horizontal: 5.0),
-                                  child: Text(
-                                    "  "+'${widget.job_categories_list[index].school_name}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(fontSize: 16,color: Colors.grey),
-                                  ),
-                                ),
-
-                                Container(
-                                  color: Colors.transparent,
-                                  alignment: Alignment.topLeft,
-                                  margin: new EdgeInsets.symmetric(horizontal: 5.0),
-                                  child: Text(
-                                    "  "+'${widget.job_categories_list[index].filled_of_study}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(fontSize: 16,color: Colors.grey),
-                                  ),
-                                ),
-
-                                Container(
-                                  color: Colors.transparent,
-                                  alignment: Alignment.topLeft,
-                                  margin: new EdgeInsets.symmetric(horizontal: 5.0),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        " From "+'${""+widget.job_categories_list[index].start_date}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 16,color: Colors.grey),
-                                      ),
-                                      Text(
-                                        "  To "+'${""+widget.job_categories_list[index].end_date}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 16,color: Colors.grey),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-
-
-
-                              ],
-                            ),
-
-
-                          ],
+                    child:Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 15),
+                          color: Colors.transparent,
+                          alignment: Alignment.topLeft,
+                          margin: new EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            "  "+'${widget.job_categories_list[index].education_level}', maxLines: 1,overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 20,color: Colors.black),
+                          ),
                         ),
-                      ),
+
+                        Container(
+                          padding: EdgeInsets.only(left: 15,top: 7),
+                          color: Colors.transparent,
+                          alignment: Alignment.topLeft,
+                          margin: new EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Text(
+                            "  "+'${widget.job_categories_list[index].school_name}', maxLines: 1,overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 16,color: Colors.grey),
+                          ),
+                        ),
+
+                        /*Container(
+                          color: Colors.transparent,
+                          alignment: Alignment.topLeft,
+                          margin: new EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Text(
+                            "  "+'${widget.job_categories_list[index].filled_of_study}', maxLines: 1,overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 16,color: Colors.grey),
+                          ),
+                        ),*/
+
+                        Container(
+                          color: Colors.transparent,
+                          alignment: Alignment.topLeft,
+                          margin: new EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20,top: 7),
+                                child: Text(
+                                  '${""+widget.job_categories_list[index].start_date}', maxLines: 1,overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 16,color: Colors.grey),
+                                ),
+                              ),
+                              Text(
+                                '${""+widget.job_categories_list[index].end_date}', maxLines: 1,overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 16,color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                        ),
+
+SizedBox(height: 10,)
+
+                      ],
                     ),
                   ),
                 ),

@@ -14,7 +14,7 @@ class _AddSkillState extends State<AddSkill> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title: Text('Add Language')),
+      appBar: new AppBar(title: Text('Add Skill')),
       body: Column(
         children: [
           SizedBox(height: 40,),

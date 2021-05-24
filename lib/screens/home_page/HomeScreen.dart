@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedPageIndex = 0;
   int _index = 0;
-  String name='';
+  String name=" ";
   void _selectTab(int index) {
     setState(() {
       _selectedPageIndex = index;
@@ -26,7 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   Future get_name() async{
     final prefs = await SharedPreferences.getInstance();
-    name=prefs.getString('name');
+    setState(() {
+      name=prefs.getString('name');
+    });
+    print("Name is${name}");
   }
   @override
   void initState() {
@@ -76,10 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                      (_selectedPageIndex==0)?Text(
                       tital(),
-                      style: TextStyle(color: Color(home_pink_color),fontSize: 20),
+                      style: TextStyle(color: Color(fountColor),fontSize: 20),
                      ):Text(
                           tital(),
-                       style: TextStyle(color: Color(home_pink_color)),
+                       style: TextStyle(color: Color(fountColor)),
                      ),
                      ],
                   ),
@@ -171,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Center(
                     child: Row(
                       children: [
-                        IconButton(icon: Icon(Icons.edit,color: Color(home_pink_color),), onPressed: (
+                        IconButton(icon: Icon(Icons.edit,color: Color(fountColor),), onPressed: (
                             ){
                           Navigator.push(
                               context,
@@ -191,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                           child: Text("Edit",style: TextStyle(
                             fontSize: 20,
-                            color:Color(home_pink_color),
+                            color:Color(fountColor),
                           ),),
                         ),
                       ],
@@ -236,10 +239,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String tital()  {
-    String name='';
-    if(_selectedPageIndex==0&&_selectedPageIndex==1)
+    //String name='';
+    if(_selectedPageIndex==0)
     {
-      name='Hello,\n Morning,${name}';
+      name='Hello,\nMorning,${name}';
     }
     if(_selectedPageIndex==1){
       name='Feed';

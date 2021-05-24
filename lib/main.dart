@@ -47,9 +47,8 @@ class _Splash2State extends State<Splash2> {
     return new Timer(_duration, navigationPage);
   }
   Future<void> navigationPage() async {
-
     var _prefs = await SharedPreferences.getInstance();
-   String  _userId = _prefs.getString('userID')??'';
+   String  _userId = _prefs.getString('session')??'';
     if(_userId != null && _userId != '')
     {
       print("User Id is:${_userId}");
@@ -65,7 +64,7 @@ class _Splash2State extends State<Splash2> {
   Widget build(BuildContext context) {
     return SplashScreen(
       seconds: 7,
-      navigateAfterSeconds: new LoginMobile(),
+      //navigateAfterSeconds: new LoginMobile(),
       image:  Image.asset('images/logo.png',color:  Color(rec_job_heading),),
       //loadingText: Text("Loading"),
       photoSize: 100.0,

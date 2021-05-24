@@ -49,7 +49,6 @@ class ProfileScreenState extends State<ProfileScreen>{
         child: CupertinoActivityIndicator(radius:22,
         )):SingleChildScrollView(
       child: Container(
-
         alignment: Alignment.center,
         child: Column(
           children: <Widget>[
@@ -62,76 +61,94 @@ class ProfileScreenState extends State<ProfileScreen>{
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                   /* Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(width: 00,),
-                        CircleAvatar(
-                          radius: 35,
 
-                          child: ClipOval(child: Image.network(data.profile_img??'', height: 60, width: 60, fit: BoxFit.cover,),),
-                        ),
-                        SizedBox(width: 10,),
-                        Column(
-                          children: [
-                            Text(data.name??'',style: TextStyle(
-                              fontSize: 20,
-                              color:Colors.black,
-                            ),),
-                            Align(
-                              alignment : Alignment.topLeft,
-                              child: Text(data.profile_summary??'',style: TextStyle(
-                                fontSize: 20,
-                                color:Colors.grey,
-                              ),),
-                            ),
-                          ],
-                        )
                       ],
-                    ),
-                    SizedBox(height: 10),
+                    ),*/
+                    CircleAvatar(
+                      radius: 35,
 
-                    Align(
-                      alignment : Alignment.topLeft,
-                        child: Text(data.profile_summary??'',style: TextStyle(
-                        fontSize: 16,
-                        color:Colors.grey,
-                      ),),
+                      child: ClipOval(child: Image.network(data.profile_img??'', height: 60, width: 60, fit: BoxFit.cover,),),
                     ),
-                    SizedBox(height: 5),
-
-                    Align(
-                      alignment : Alignment.topLeft,
-                      child: Row(
+                    SizedBox(width: 10,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15,top: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(data.home_town??'',style: TextStyle(
-                            fontSize: 16,
-                            color:Colors.grey,
+                          Text(data.name??'',style: TextStyle(
+                            fontSize: 20,
+                            color:Colors.black,
+                            fontWeight: FontWeight.bold
                           ),),
-                          Text(data.country??'',style: TextStyle(
-                            fontSize: 16,
-                            color:Colors.grey,
-                          ),),
+                          /*Align(
+                            alignment : Alignment.topLeft,
+                            child: Text(data.profile_summary??'',style: TextStyle(
+                              fontSize: 20,
+                              color:Colors.grey,
+                            ),),
+                          ),*/
                         ],
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Align(
-                      alignment : Alignment.topLeft,
-                      child: Text(data.email??'',style: TextStyle(
-                        fontSize: 20,
-                        color:Colors.grey,
-                      ),),
+                    SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Align(
+                        alignment : Alignment.topLeft,
+                          child: Text(data.profile_summary??'',style: TextStyle(
+                          fontSize: 16,
+                          color:Colors.grey,
+                        ),),
+                      ),
                     ),
                     SizedBox(height: 5),
 
-                    Align(
-                      alignment : Alignment.topLeft,
-                      child: Text(data.phone??'',style: TextStyle(
-                        fontSize: 20,
-                        color:Colors.grey,
-                      ),),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Align(
+                        alignment : Alignment.topLeft,
+                        child: Row(
+                          children: [
+                            Text(data.home_town??'',style: TextStyle(
+                              fontSize: 16,
+                              color:Colors.grey,
+                            ),),
+                            Text(data.country??'',style: TextStyle(
+                              fontSize: 16,
+                              color:Colors.grey,
+                            ),),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Align(
+                        alignment : Alignment.topLeft,
+                        child: Text(data.email??'',style: TextStyle(
+                          fontSize: 20,
+                          color:Colors.grey,
+                        ),),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Align(
+                        alignment : Alignment.topLeft,
+                        child: Text(data.phone??'',style: TextStyle(
+                          fontSize: 20,
+                          color:Colors.grey,
+                        ),),
+                      ),
                     ),
                     SizedBox(height: 5),
                   ],
@@ -167,12 +184,15 @@ class ProfileScreenState extends State<ProfileScreen>{
                       ),
                     ),
                     SizedBox(height: 10),
-                    Align(
-                      alignment : Alignment.topLeft,
-                      child: Text(data.resume_headline??'',style: TextStyle(
-                        fontSize: 14,
-                        color:Colors.grey,
-                      ),),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Align(
+                        alignment : Alignment.topLeft,
+                        child: Text(data.resume_headline??'',style: TextStyle(
+                          fontSize: 14,
+                          color:Colors.black,
+                        ),),
+                      ),
                     ),
                   ],
                 ),

@@ -145,7 +145,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
                               radius: 50,
                               backgroundImage: _image == null
                                   ? NetworkImage("")
-                                  : Image.file(_image)),
+                                  : Image.file(_image,width: 50,height: 50,)),
                         ),
                       ),
                       Positioned(
@@ -176,18 +176,18 @@ class _EditIntroductionState extends State<EditIntroduction> {
                       labelText: "Your Full Name",
                       hintText: "Your Full Name",
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                     ),
@@ -287,21 +287,21 @@ class _EditIntroductionState extends State<EditIntroduction> {
                       child: TextFormField(
                         controller: _gender,
                         decoration: InputDecoration(
-                          labelStyle: TextStyle(color: Colors.blue),
+                          labelStyle: TextStyle(color: Colors.black),
                           labelText: "Gender",
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(5),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(5),
                             borderSide: BorderSide(
-                              color: Colors.blue,
+                              color: Color(fountColor),
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
-                              color: Colors.blue,
+                              color: Color(fountColor),
                             ),
                           ),
                         ),
@@ -320,18 +320,18 @@ class _EditIntroductionState extends State<EditIntroduction> {
                       labelText: "Contact Number",
                       hintText: "Contact Number",
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                     ),
@@ -348,18 +348,18 @@ class _EditIntroductionState extends State<EditIntroduction> {
                       labelText: "Enter profile summary",
                       hintText: "Enter profile summary",
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                     ),
@@ -376,18 +376,18 @@ class _EditIntroductionState extends State<EditIntroduction> {
                       labelText: "Home Town",
                       hintText: "Home Town",
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                     ),
@@ -404,18 +404,18 @@ class _EditIntroductionState extends State<EditIntroduction> {
                       labelText: "Perfect work location ",
                       hintText: "Perfect work location",
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                     ),
@@ -432,18 +432,18 @@ class _EditIntroductionState extends State<EditIntroduction> {
                       labelText: "Resume headline ",
                       hintText: "Resume headline",
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                     ),
@@ -460,18 +460,18 @@ class _EditIntroductionState extends State<EditIntroduction> {
                       labelText: "Experience Year",
                       hintText: "Experience Year",
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                     ),
@@ -488,18 +488,18 @@ class _EditIntroductionState extends State<EditIntroduction> {
                       labelText: "Experience Month",
                       hintText: "Experience Month",
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color(fountColor),
                         ),
                       ),
                     ),
@@ -518,10 +518,11 @@ class _EditIntroductionState extends State<EditIntroduction> {
                       setState(() {
                         _uploadImage();
                       });
+
                     },
                     color: Color(fountColor),
                     // textColor: Colors.white,
-                    child: _isLoading==true?Container(height:20,width:20,child: CircularProgressIndicator(),):Text("Submit",
+                    child: _isLoading==true?Container(height:20,width:20,child: CircularProgressIndicator(),):Text("SAVE",
                         style: TextStyle(fontSize: 20,color: Colors.white)),
                   ),
                 ),
@@ -531,16 +532,13 @@ class _EditIntroductionState extends State<EditIntroduction> {
         ),
       )
     );
-
   }
   //Here get Image from Camera and Gallery
   void getImage1(source) async {
     File image =  await ImagePicker.pickImage(source: source);
     setState(() {
        _image = image;
-       print("Pic Name:${image}");
+       print("Pic Name:${_image}");
     });
-    final prefs = await SharedPreferences.getInstance();
-    //prefs.setString("profile", _imageFiler.path);
   }
 }
