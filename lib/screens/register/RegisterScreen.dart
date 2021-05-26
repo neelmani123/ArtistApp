@@ -99,13 +99,13 @@ class RegisterScreenState extends State<RegisterScreen>{
               child: Container(
                 child: Text(
                   "Lets 'Get Started ",
-                  style: TextStyle(color: Color(boldColor),fontSize: 30,fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.black,fontSize: 30,fontWeight: FontWeight.bold),
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20),
-              child: Container(child: Text('Singing up or login to see our top and latest gadgets and jobs',style: TextStyle(color: Colors.white,fontSize: 20),)
+              child: Container(child: Text('Singing up or login to see our top and latest gadgets and jobs',style: TextStyle(color: Colors.black,fontSize: 20),)
               ),
             ),
             Padding(
@@ -205,7 +205,7 @@ class RegisterScreenState extends State<RegisterScreen>{
                   child: Container(
                     height: 80,
                     width: 300,
-                    child: Text('By creating an account,you agree to our teams of service and privercy policy',style: TextStyle(fontSize: 17,color: Colors.white),textAlign: TextAlign.center,),),
+                    child: Text('By creating an account,you agree to our teams of service and privercy policy',style: TextStyle(fontSize: 17,color: Colors.black),textAlign: TextAlign.center,),),
                 )
               ],
             ),
@@ -224,7 +224,7 @@ class RegisterScreenState extends State<RegisterScreen>{
                     onPressed: () {
                       _send_otp(context);
                     },
-                    color: Color(boldColor),
+                    color: Color(fountColor),
                     // textColor: Colors.white,
                     child: Text("Sign up",
                         style: TextStyle(fontSize: 20,color: Colors.white)),
@@ -237,11 +237,11 @@ class RegisterScreenState extends State<RegisterScreen>{
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
-                    child: Text('Already have an account?',style: TextStyle(fontSize:20,color: Colors.white),
+                    child: Text('Already have an account?',style: TextStyle(fontSize:20,color: Colors.black),
                     ),
                   ),
                 ),
-                Container(child: Text('Or login',style: TextStyle(fontSize: 20,color: Color(boldColor)),),)
+                Container(child: Text('Or login',style: TextStyle(fontSize: 20,color: Color(fountColor)),),)
               ],
             ),
             Padding(
