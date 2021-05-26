@@ -2,6 +2,7 @@ import 'package:artist_icon/screens/feed/model/Data.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:artist_icon/screens/feed/SharePost.dart';
 
 import '../Color.dart';
 
@@ -113,7 +114,7 @@ Widget build(BuildContext context) => ListTile(
               ),
               GestureDetector(
                 onTap: () {
-
+                  print("Comment pressed");
                 },
                 child: new Icon(
                   FontAwesomeIcons.comment,
@@ -122,7 +123,12 @@ Widget build(BuildContext context) => ListTile(
               new SizedBox(
                 width: 16.0,
               ),
-              new Icon(FontAwesomeIcons.shareAlt),
+              InkWell(
+                onTap: (){
+                  print("Share click here");
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>SharePost()));
+                },
+                  child: new Icon(FontAwesomeIcons.shareAlt)),
             ],
           ),
           new Icon(FontAwesomeIcons.bookmark)

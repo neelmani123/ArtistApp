@@ -69,6 +69,7 @@ class AllCollectionsState extends State<WorkExperienceScren> {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 20,
+                                          fontFamily: 'OpenSans',
                                           color: Colors.black),
                                     ),
 
@@ -84,6 +85,7 @@ class AllCollectionsState extends State<WorkExperienceScren> {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 16,
+                                          fontFamily: 'OpenSans',
                                           color: Colors.grey),
                                     ),
                                   ),
@@ -99,13 +101,14 @@ class AllCollectionsState extends State<WorkExperienceScren> {
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
-                                              fontSize: 16, color: Colors.grey),
+                                              fontSize: 16, fontFamily:'OpenSans',color: Colors.grey),
                                         ),
                                         Text(
                                               '${"" + widget.job_categories_list[index].end_date}',
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
+                                            fontFamily: 'OpenSans',
                                               fontSize: 16, color: Colors.grey),
                                         ),
                                       ],

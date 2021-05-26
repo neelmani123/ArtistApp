@@ -5,6 +5,7 @@ import 'package:artist_icon/helper/setup.dart';
 import 'package:artist_icon/model/RequestUserLoginModel/RequestUserLoginModel.dart';
 import 'package:artist_icon/model/register/register_apiModel.dart';
 import 'package:artist_icon/screens/edit_profile/model/EditProfileBean.dart';
+import 'package:artist_icon/screens/feed/model/CreatePostModel.dart';
 import 'package:artist_icon/screens/feed/model/GetAllFeedsBean.dart';
 import 'package:artist_icon/screens/home_page/model/RecentSearchJobModel.dart';
 import 'package:artist_icon/screens/home_page/template_listModel/TemplateListModel.dart';
@@ -62,6 +63,26 @@ class HttpService
     final response = await _apiHelper.post('Artist_api/request_otp_for_regester', reqBody);
     try {
       return RequestUserLoginModel.fromJson(response);
+    } catch (e) {
+      showExceptionToast();
+      return null;
+    }
+  }
+  Future<CreatepostModel>create_post({String text,String title,String desc})async{
+    Map reqBody={
+      "jwtToken":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk",
+      "text":text,
+      "media_type":"1",
+      "is_tutorial":"1",
+      "price":"10000",
+      "title":title,
+      "desc":desc,
+      "file_url":"IMG_20200804_185303.jpg",
+      "product_image":"IMG_20200804_185303.jpg"
+    };
+    final response = await _apiHelper.post('Feed_api/add_feed', reqBody);
+    try {
+      return CreatepostModel.fromJson(response);
     } catch (e) {
       showExceptionToast();
       return null;

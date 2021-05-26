@@ -84,7 +84,8 @@ class ProfileScreenState extends State<ProfileScreen>{
                           Text(data.name??'',style: TextStyle(
                             fontSize: 20,
                             color:Colors.black,
-                            fontWeight: FontWeight.bold
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'OPenSans'
                           ),),
                           /*Align(
                             alignment : Alignment.topLeft,
@@ -104,6 +105,7 @@ class ProfileScreenState extends State<ProfileScreen>{
                           child: Text(data.profile_summary??'',style: TextStyle(
                           fontSize: 16,
                           color:Colors.grey,
+                          fontFamily: 'OPensSans'
                         ),),
                       ),
                     ),
@@ -118,10 +120,12 @@ class ProfileScreenState extends State<ProfileScreen>{
                             Text(data.home_town??'',style: TextStyle(
                               fontSize: 16,
                               color:Colors.grey,
+                              fontFamily: 'OpenSans'
                             ),),
                             Text(data.country??'',style: TextStyle(
                               fontSize: 16,
                               color:Colors.grey,
+                              fontFamily: 'OpenSans'
                             ),),
                           ],
                         ),
@@ -135,6 +139,7 @@ class ProfileScreenState extends State<ProfileScreen>{
                         child: Text(data.email??'',style: TextStyle(
                           fontSize: 20,
                           color:Colors.grey,
+                          fontFamily: 'OpenSans'
                         ),),
                       ),
                     ),
@@ -147,6 +152,7 @@ class ProfileScreenState extends State<ProfileScreen>{
                         child: Text(data.phone??'',style: TextStyle(
                           fontSize: 20,
                           color:Colors.grey,
+                          fontFamily: 'OpenSans'
                         ),),
                       ),
                     ),
@@ -178,6 +184,7 @@ class ProfileScreenState extends State<ProfileScreen>{
                           ),),
                           Text("ume Headline",style: TextStyle(
                             fontSize: 18,
+                            fontFamily: 'OpenSans',
                             color:Color(rec_job_heading),
                           ),),
                         ],
@@ -191,6 +198,7 @@ class ProfileScreenState extends State<ProfileScreen>{
                         child: Text(data.resume_headline??'',style: TextStyle(
                           fontSize: 14,
                           color:Colors.black,
+                          fontFamily: 'OpenSans'
                         ),),
                       ),
                     ),
@@ -211,18 +219,19 @@ class ProfileScreenState extends State<ProfileScreen>{
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
-
                     Align(
                       alignment : Alignment.topLeft,
                       child: Row(
                         children: [
                           Text("Up",style: TextStyle(
                             fontSize: 18,
+                            fontFamily: 'OpenSans',
                             decoration: TextDecoration.underline,
                             color:Color(fountColor),
                           ),),
                           Text("date Resume",style: TextStyle(
                             fontSize: 18,
+                            fontFamily: 'OpenSans',
                             color:Color(fountColor),
                           ),),
                         ],
@@ -246,6 +255,7 @@ class ProfileScreenState extends State<ProfileScreen>{
                           child: Text(data.resume??'',
                             style: TextStyle(
                             fontSize: 18,
+                            fontFamily: 'OpenSans',
                             color:Color(fountColor),
                           ),),
                         ),
@@ -275,11 +285,13 @@ class ProfileScreenState extends State<ProfileScreen>{
                         children: [
                           Text("Wo",style: TextStyle(
                             fontSize: 18,
+                            fontFamily: 'OpenSans',
                             decoration: TextDecoration.underline,
                             color:Color(rec_job_heading),
                           ),),
                           Text("rk Experience",style: TextStyle(
                             fontSize: 18,
+                            fontFamily: 'OpenSans',
                             color:Color(rec_job_heading),
                           ),),
                         ],

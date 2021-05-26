@@ -1,5 +1,7 @@
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/edit_profile/EditProfileScreen.dart';
+import 'package:artist_icon/screens/feed/CreatePost.dart';
+import 'package:artist_icon/screens/feed/SharePost.dart';
 import 'package:artist_icon/screens/feed/FeedScreen.dart';
 import 'package:artist_icon/screens/profile/ProfileScreen.dart';
 import 'package:flutter/material.dart';
@@ -45,9 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
       {
         'page': FeedScreen(),
       },
+
       {
         'page': ProfileScreen(),
-      }
+      },
     ];
 
     return _pages[_selectedPageIndex];
@@ -68,6 +71,24 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Scaffold(
         //drawer: CustomDrawer(),
+       drawer: Drawer(
+         child: ListView(
+           children: [
+             DrawerHeader(
+               decoration: BoxDecoration(
+                 color: Colors.white,
+               ),
+               child: Text(''),
+             ),
+             ListTile(
+               title: Text('Create Post',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               onTap: () {
+                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>CreatePost()));
+               },
+             ),
+           ],
+         ),
+       ),
         appBar:PreferredSize(
           //Here is the preferred height.
           preferredSize: Size.fromHeight(70.0),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:artist_icon/screens/AddLanguage/addLanguage.dart';
 import 'package:artist_icon/screens/AddSkill/addskill.dart';
@@ -34,6 +35,8 @@ class EditProfileScreenState extends State<EditProfileScreen>{
   final TextEditingController resume_headlines = new TextEditingController();
   Data data;
   bool is_loading=true;
+  File file;
+  String fileName;
   StateSetter _setState;
   Future<void> getDataApi() async {
     final prefs = await SharedPreferences.getInstance();
@@ -274,7 +277,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                                             });
                                                             // Navigator.push(context, MaterialPageRoute(builder: (context) => Signup()));
                                                           },
-                                                          color: Color(boldColor),
+                                                          color: Color(fountColor),
                                                           textColor: Colors.white,
                                                           child: Text("Save",
                                                               style: TextStyle(fontSize: 20)),
@@ -305,12 +308,12 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Align(
                         alignment : Alignment.topLeft,
                         child: Text(data.resume_headline??'',style: TextStyle(
                           fontSize: 14,
-                          color:Color(text_white),
+                          color:Colors.black,
                         ),),
                       ),
                     ],
@@ -353,7 +356,11 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                             );
 
                             if(result != null) {
-                              File file = File(result.files.single.path);
+
+                              file = File(result.files.single.path);
+                              Uint8List fileBytes = result.files.first.bytes;
+                              fileName = result.files.first.name;
+                              print("File Name is1 :${fileName}");
                             } else {
                               // User canceled the picker
                             }
@@ -374,12 +381,15 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                 children: [
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
-                                       data.resume??'',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color:Color(home_pink_color),
-                                      ),),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: Text(
+                                         fileName??'',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color:Colors.black,
+                                        ),),
+                                    ),
                                   ),
                                   Expanded(
                                       flex: 1,
