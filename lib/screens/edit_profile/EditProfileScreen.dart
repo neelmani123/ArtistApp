@@ -83,6 +83,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                     children: [
                       Row(
                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           CircleAvatar(
                             radius: 35,
@@ -113,52 +114,67 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         ],
                       ),
                       SizedBox(height: 10),
-                      Text(data.name??'',style: TextStyle(
-                        fontSize: 20,
-                        color:Colors.black,
-                        fontWeight: FontWeight.bold
-                      ),),
-                      Align(
-                        alignment : Alignment.topLeft,
-                        child: Text(data.profile_summary??'',style: TextStyle(
-                          fontSize: 16,
-                          color:Colors.grey,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(data.name??'',style: TextStyle(
+                          fontSize: 20,
+                          color:Colors.black,
+                          fontWeight: FontWeight.bold
                         ),),
                       ),
-                      SizedBox(height: 5),
-
-                      Align(
-                        alignment : Alignment.topLeft,
-                        child: Row(
-                          children: [
-                            Text(data.home_town??'',style: TextStyle(
-                              fontSize: 16,
-                              color:Colors.grey,
-                            ),),
-                            Text("${data.country??''}",style: TextStyle(
-                              fontSize: 16,
-                              color:Colors.grey,
-                            ),),
-                          ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Align(
+                          alignment : Alignment.topLeft,
+                          child: Text(data.profile_summary??'',style: TextStyle(
+                            fontSize: 16,
+                            color:Colors.grey,
+                          ),),
                         ),
                       ),
                       SizedBox(height: 5),
 
-                      Align(
-                        alignment : Alignment.topLeft,
-                        child: Text(data.email??'',style: TextStyle(
-                          fontSize: 20,
-                          color:Colors.grey,
-                        ),),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Align(
+                          alignment : Alignment.topLeft,
+                          child: Row(
+                            children: [
+                              Text(data.home_town??'',style: TextStyle(
+                                fontSize: 16,
+                                color:Colors.grey,
+                              ),),
+                              Text("${data.country??''}",style: TextStyle(
+                                fontSize: 16,
+                                color:Colors.grey,
+                              ),),
+                            ],
+                          ),
+                        ),
                       ),
                       SizedBox(height: 5),
 
-                      Align(
-                        alignment : Alignment.topLeft,
-                        child: Text(data.phone??'',style: TextStyle(
-                          fontSize: 20,
-                          color:Colors.grey,
-                        ),),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Align(
+                          alignment : Alignment.topLeft,
+                          child: Text(data.email??'',style: TextStyle(
+                            fontSize: 20,
+                            color:Colors.grey,
+                          ),),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Align(
+                          alignment : Alignment.topLeft,
+                          child: Text(data.phone??'',style: TextStyle(
+                            fontSize: 20,
+                            color:Colors.grey,
+                          ),),
+                        ),
                       ),
                       SizedBox(height: 5),
                     ],
@@ -410,13 +426,15 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Align(
                         alignment : Alignment.topLeft,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text("Wo",style: TextStyle(
                                   fontSize: 18,
@@ -432,6 +450,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 80),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   IconButton(icon: Icon(Icons.edit,color: Color(fountColor),)),
                                   Text("Edit",style: TextStyle(

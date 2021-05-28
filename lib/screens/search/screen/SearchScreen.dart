@@ -99,6 +99,9 @@ Widget build(BuildContext context) {
 
             SizedBox(height: 10),
             MultiSelectBottomSheetField<DataSkills>(
+              confirmText: Text('Ok',style: TextStyle(color: Color(fountColor)),),
+              cancelText: Text('Cancel',style: TextStyle(color: Color(fountColor)),),
+              checkColor: Colors.black,
               key: _skillsSelectKey,
               initialChildSize: 0.7,
               maxChildSize: 0.95,
@@ -153,6 +156,9 @@ Widget build(BuildContext context) {
 
             SizedBox(height: 40),
             MultiSelectBottomSheetField<DataCity>(
+              confirmText: Text('Ok',style: TextStyle(color: Color(fountColor)),),
+              cancelText: Text('Cancel',style: TextStyle(color: Color(fountColor)),),
+              checkColor: Colors.black,
               key: _citySelectKey,
               initialChildSize: 0.7,
               maxChildSize: 0.95,
@@ -207,6 +213,9 @@ Widget build(BuildContext context) {
 
             SizedBox(height: 40),
             MultiSelectBottomSheetField<JobType>(
+              confirmText: Text('Ok',style: TextStyle(color: Color(fountColor)),),
+              cancelText: Text('Cancel',style: TextStyle(color: Color(fountColor)),),
+              checkColor: Colors.black,
               key: _multiSelectKey,
               initialChildSize: 0.7,
               maxChildSize: 0.95,
@@ -244,15 +253,17 @@ Widget build(BuildContext context) {
               onConfirm: (values) {
                 setState(() {
                   _selectedJobs = values;
+
                 });
                 _multiSelectKey.currentState.validate();
               },
               chipDisplay: MultiSelectChipDisplay(
                 chipColor:Color(boldColor),
-                textStyle: TextStyle(fontSize: 14,color: Color(text_white)),
+                textStyle: TextStyle(fontSize: 14,color: Colors.white),
                 onTap: (item) {
                   setState(() {
                     _selectedJobs.remove(item);
+                    print(_selectedJobs);
                   });
                   _multiSelectKey.currentState.validate();
                 },

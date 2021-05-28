@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/api_helper/http_service.dart';
 import 'package:artist_icon/screens/search/model/city_list/Data.dart';
+import 'package:artist_icon/screens/search/model/skills/Data.dart';
 import 'package:artist_icon/screens/search/screen/SearchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -25,6 +26,10 @@ class _CreateJobPostState extends State<CreateJobPost> {
   List<DataCity> citydata=[];
   String value1;
   String value2 ;
+  List<DataSkills> _skills=[];
+  var _items=null;
+  List<DataSkills> _selectedskills3 = [];
+  final _skillsSelectKey = GlobalKey<FormFieldState>();
   TextEditingController location_controller=new TextEditingController();
   TextEditingController title_controller=new TextEditingController();
   TextEditingController company_name_controller=new TextEditingController();
@@ -78,6 +83,21 @@ class _CreateJobPostState extends State<CreateJobPost> {
 
     }
   }*/
+  Future<void> skills_listApi() async {
+    final prefs = await SharedPreferences.getInstance();
+    var res = await _httpService.skills_list(jwtToken:prefs.getString('userID'),limit:"");
+    if(res.status == true){
+      setState(() {
+        _skills=  res.data;
+        _items = _skills
+            .map((skills) => MultiSelectItem<DataSkills>(skills, skills.skills_name))
+            .toList();
+      });
+    }else{
+      Fluttertoast.showToast(msg: "Something went wrong");
+
+    }
+  }
 
   Future cityName()async
   {
@@ -218,6 +238,7 @@ class _CreateJobPostState extends State<CreateJobPost> {
    // city_listApi();
     cityName();
     getCategory();
+    skills_listApi();
     super.initState();
   }
 
@@ -231,176 +252,251 @@ class _CreateJobPostState extends State<CreateJobPost> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20,),
+              Text("Location",style: TextStyle(color: Colors.black,fontSize: 20,),),
+              SizedBox(height: 5,),
               TextField(
                 controller: location_controller,
                 decoration: InputDecoration(
-                  labelText: 'Location',
                   labelStyle: TextStyle(color: Colors.black),
                   hintText: 'Location',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
               SizedBox(height: 10,),
+              Text("Title",style: TextStyle(color: Colors.black,fontSize: 20,),),
+              SizedBox(height: 5,),
               TextField(
                 controller: title_controller,
                 decoration: InputDecoration(
-                  labelText: 'Title',
                   labelStyle: TextStyle(color: Colors.black),
                   hintText: 'Title',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
               SizedBox(height: 10,),
+              Text("Company Name",style: TextStyle(color: Colors.black,fontSize: 20),),
+              SizedBox(height: 5,),
               TextField(
                 controller: company_name_controller,
                 decoration: InputDecoration(
-                  labelText: 'Company Name',
                   labelStyle: TextStyle(color: Colors.black),
                   hintText: 'Company Name',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
               SizedBox(height: 10,),
+              Text('Skills',style: TextStyle(color: Colors.black,fontSize: 20),),
+              SizedBox(height: 5,),
+              MultiSelectBottomSheetField<DataSkills>(
+                confirmText: Text('Ok',style: TextStyle(color: Color(fountColor)),),
+                cancelText: Text('Cancel',style: TextStyle(color: Color(fountColor)),),
+                checkColor: Colors.black,
+                key: _skillsSelectKey,
+                initialChildSize: 0.7,
+                maxChildSize: 0.95,
+                title: Text("Skills"),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  border: Border.all(
+                    color: Color(fountColor),
+                    width: 1,
+                  ),
+                ),
+                buttonIcon: Icon(
+                  Icons.shopping_bag,
+                  color: Colors.black54,
+                ),
+                buttonText: Text(
+                  "Skills",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                ),
+                items: _items,
+                searchable: true,
+                validator: (values) {
+                  if (values == null || values.isEmpty) {
+                    return "Required";
+                  }
+                  List<String> names = values.map((e) => e.skills_name).toList();
+                  print("Selected Skill is:${names}");
+                  if (false) {
+                  }
+                  return null;
+                },
+                onConfirm: (values) {
+                  setState(() {
+                    _selectedskills3 = values;
+
+                  });
+                  _skillsSelectKey.currentState.validate();
+                },
+                chipDisplay: MultiSelectChipDisplay(
+                  chipColor:Color(boldColor),
+                  textStyle: TextStyle(fontSize: 14,color: Color(text_white)),
+                  onTap: (item) {
+                    setState(() {
+                      _selectedskills3.remove(item);
+                      //print("Selected Skill is:${_selectedskills3}");
+                    });
+                    _skillsSelectKey.currentState.validate();
+                  },
+                ),
+              ),
+              SizedBox(height: 10,),
+              Text("Other Skills",style: TextStyle(color: Colors.black,fontSize: 20,),),
+              SizedBox(height: 5,),
               TextField(
                 controller: other_skill_controller,
                 decoration: InputDecoration(
-                  labelText: 'Other Skill',
                   labelStyle: TextStyle(color: Colors.black),
-                  hintText: 'Other Skill',
+                  hintText: 'Other Skills',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
               SizedBox(height: 10,),
+              Text("Salary From",style: TextStyle(color: Colors.black,fontSize: 20,),),
+              SizedBox(height: 5,),
               TextField(
                 controller: salary_form_controller,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Salary From',
+                  //labelText: 'Salary From',
                   labelStyle: TextStyle(color: Colors.black),
                   hintText: 'LPA',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
               SizedBox(height: 10,),
+              Text("Salary To",style: TextStyle(color: Colors.black,fontSize: 20,),),
+              SizedBox(height: 5,),
               TextField(
                 controller: salary_to_controller,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Salary To',
+                  //labelText: 'Salary To',
                   labelStyle: TextStyle(color: Colors.black),
                   hintText: 'LPA',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
               SizedBox(height: 10,),
+              Text("Experience From",style: TextStyle(color: Colors.black,fontSize: 20,),),
+              SizedBox(height: 5,),
               TextField(
                 controller: exp_from_controller,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Experience From',
+                  //labelText: 'Experience From',
                   labelStyle: TextStyle(color: Colors.black),
                   hintText: '0 to 5 year',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
               SizedBox(height: 10,),
+              Text("Experience To",style: TextStyle(color: Colors.black,fontSize: 20,),),
+              SizedBox(height: 5,),
               TextField(
                 controller: exp_to_controller,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Experience To',
+                 // labelText: 'Experience To',
                   labelStyle: TextStyle(color: Colors.black),
                   hintText: '5 to 10 year',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
@@ -425,7 +521,12 @@ class _CreateJobPostState extends State<CreateJobPost> {
                   ),
                 ),
               ),*/
+              Text("Job Type",style: TextStyle(color: Colors.black,fontSize: 20,),),
+              SizedBox(height: 5,),
               MultiSelectBottomSheetField<JobType>(
+                confirmText: Text('Ok',style: TextStyle(color: Color(fountColor)),),
+                cancelText: Text('Cancel',style: TextStyle(color: Color(fountColor)),),
+                checkColor: Colors.black,
                 key: _multiSelectKey,
                 initialChildSize: 0.7,
                 maxChildSize: 0.95,
@@ -480,28 +581,31 @@ class _CreateJobPostState extends State<CreateJobPost> {
                 ),
               ),
               SizedBox(height: 10,),
+              Text('Working Hours',style: TextStyle(color: Colors.black,fontSize: 20,),),
+              SizedBox(height: 5,),
               TextField(
                 controller: working_hours_controller,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Working hours',
                   labelStyle: TextStyle(color: Colors.black),
                   hintText: 'Working hours',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
               SizedBox(height: 10,),
+              Text('Select City',style: TextStyle(color: Colors.black,fontSize: 20,),),
+              SizedBox(height: 5,),
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   height: 60,
@@ -533,6 +637,9 @@ class _CreateJobPostState extends State<CreateJobPost> {
                     ),
                   )),
               SizedBox(height: 10,),
+              Text('Category Type',
+                style: TextStyle(color: Colors.black,fontSize: 20,),),
+              SizedBox(height: 5,),
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   height: 60,
@@ -563,28 +670,28 @@ class _CreateJobPostState extends State<CreateJobPost> {
                     ),
                   )),
               SizedBox(height: 10,),
+              Text('Description',style: TextStyle(color: Colors.black,fontSize: 20,),),
+              SizedBox(height: 5,),
               TextField(
                 controller: description_controller,
                 decoration: InputDecoration(
-                  labelText: 'Description',
                   labelStyle: TextStyle(color: Colors.black),
                   hintText: 'Description',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(fountColor),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
               SizedBox(height: 10,),
-
               Container(
                 height: 60,
                 width: MediaQuery.of(context).size.width,

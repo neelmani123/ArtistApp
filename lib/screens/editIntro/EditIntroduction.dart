@@ -144,8 +144,8 @@ class _EditIntroductionState extends State<EditIntroduction> {
                           child: CircleAvatar(
                               radius: 50,
                               backgroundImage: _image == null
-                                  ? NetworkImage("")
-                                  : Image.file(_image,width: 50,height: 50,)),
+                                  ? NetworkImage("https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg")
+                                  : FileImage(File(_image.path))),
                         ),
                       ),
                       Positioned(
@@ -538,7 +538,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
     File image =  await ImagePicker.pickImage(source: source);
     setState(() {
        _image = image;
-       print("Pic Name:${_image}");
+       print("Pic Name:${File(_image.path)}");
     });
   }
 }
