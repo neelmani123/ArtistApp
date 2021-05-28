@@ -107,7 +107,7 @@ Widget build(BuildContext context) {
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(40)),
                 border: Border.all(
-                  color: Color(boldColor),
+                  color: Color(fountColor),
                   width: 1,
                 ),
               ),
@@ -161,7 +161,7 @@ Widget build(BuildContext context) {
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(40)),
                 border: Border.all(
-                  color: Color(boldColor),
+                  color: Color(fountColor),
                   width: 1,
                 ),
               ),
@@ -194,7 +194,7 @@ Widget build(BuildContext context) {
                 _citySelectKey.currentState.validate();
               },
               chipDisplay: MultiSelectChipDisplay(
-                chipColor:Color(boldColor),
+                chipColor:Color(fountColor),
                 textStyle: TextStyle(fontSize: 14,color: Color(text_white)),
                 onTap: (item) {
                   setState(() {
@@ -215,7 +215,7 @@ Widget build(BuildContext context) {
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(40)),
                 border: Border.all(
-                  color: Color(boldColor),
+                  color: Color(fountColor),
                   width: 1,
                 ),
               ),
@@ -275,7 +275,7 @@ Widget build(BuildContext context) {
                       _appl_now(context);
                       // Navigator.push(context, MaterialPageRoute(builder: (context) => Signup()));
                     },
-                    color: Color(boldColor),
+                    color: Color(fountColor),
                     textColor: Colors.white,
                     child: Text("Apply Now",
                         style: TextStyle(fontSize: 20)),

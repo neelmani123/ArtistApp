@@ -92,7 +92,7 @@ class AllCollectionsState extends State<RecommendedScreen>{
                         alignment: Alignment.topLeft,
                         margin: new EdgeInsets.symmetric(horizontal: 5.0),
                         child: Text(
-                          "  "+'${widget.job_categories_list[index].name}', maxLines: 1,overflow: TextOverflow.ellipsis,
+                          "  "+'${widget.job_categories_list[index].title}', maxLines: 1,overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: 22,color: Color(blackColor)),
                         ),
                       ),

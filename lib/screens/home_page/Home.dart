@@ -33,6 +33,7 @@ class HomeState extends State<Home>{
 
   Future<void> job_categories_listApi() async {
     final prefs = await SharedPreferences.getInstance();
+    print("Token is ${prefs.getString('userID')}");
     var res = await _httpService.job_categories_list(jwtToken:prefs.getString('userID'),limit:"10",search:"");
     if(res.status == true){
       setState(() {
@@ -224,7 +225,7 @@ class HomeState extends State<Home>{
                           ),
 
                           Container(
-                              child: RecommendedScreen(job_categories_list:job_categories_list)
+                              child: RecommendedScreen(job_categories_list:recommended_jobs)
                           ),
                         ],
                       ),
@@ -265,7 +266,7 @@ class HomeState extends State<Home>{
                           ),
 
                           Container(
-                              child: RecentSearchScreen(job_categories_list:job_categories_list)
+                              child: RecentSearchScreen(job_categories_list:recent_search_job)
                           ),
                         ],
                       ),

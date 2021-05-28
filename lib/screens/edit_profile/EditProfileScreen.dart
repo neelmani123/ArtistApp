@@ -414,16 +414,33 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                       Align(
                         alignment : Alignment.topLeft,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text("Wo",style: TextStyle(
-                              fontSize: 18,
-                              decoration: TextDecoration.underline,
-                              color:Color(rec_job_heading),
-                            ),),
-                            Text("rk Experience",style: TextStyle(
-                              fontSize: 18,
-                              color:Color(rec_job_heading),
-                            ),),
+                            Row(
+                              children: [
+                                Text("Wo",style: TextStyle(
+                                  fontSize: 18,
+                                  decoration: TextDecoration.underline,
+                                  color:Color(rec_job_heading),
+                                ),),
+                                Text("rk Experience",style: TextStyle(
+                                  fontSize: 18,
+                                  color:Color(rec_job_heading),
+                                ),),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 80),
+                              child: Row(
+                                children: [
+                                  IconButton(icon: Icon(Icons.edit,color: Color(fountColor),)),
+                                  Text("Edit",style: TextStyle(
+                                    fontSize: 20,
+                                    color:Color(fountColor),
+                                  ),),
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -482,15 +499,31 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         alignment : Alignment.topLeft,
                         child: Row(
                           children: [
-                            Text("Edu",style: TextStyle(
-                              fontSize: 18,
-                              decoration: TextDecoration.underline,
-                              color:Color(rec_job_heading),
-                            ),),
-                            Text("cation ",style: TextStyle(
-                              fontSize: 18,
-                              color:Color(rec_job_heading),
-                            ),),
+                            Row(
+                              children: [
+                                Text("Edu",style: TextStyle(
+                                  fontSize: 18,
+                                  decoration: TextDecoration.underline,
+                                  color:Color(rec_job_heading),
+                                ),),
+                                Text("cation ",style: TextStyle(
+                                  fontSize: 18,
+                                  color:Color(rec_job_heading),
+                                ),),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 100),
+                              child: Row(
+                                children: [
+                                  IconButton(icon: Icon(Icons.edit,color: Color(fountColor),)),
+                                  Text("Edit",style: TextStyle(
+                                    fontSize: 20,
+                                    color:Color(fountColor),
+                                  ),),
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       ),

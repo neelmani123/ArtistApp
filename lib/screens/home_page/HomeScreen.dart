@@ -1,13 +1,14 @@
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/edit_profile/EditProfileScreen.dart';
 import 'package:artist_icon/screens/feed/CreatePost.dart';
+import 'package:artist_icon/screens/feed/CreateJobPost.dart';
+import 'package:artist_icon/screens/feed/JobPostList.dart';
 import 'package:artist_icon/screens/feed/SharePost.dart';
 import 'package:artist_icon/screens/feed/FeedScreen.dart';
 import 'package:artist_icon/screens/profile/ProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'Home.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -84,6 +85,18 @@ class _HomeScreenState extends State<HomeScreen> {
                title: Text('Create Post',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>CreatePost()));
+               },
+             ),
+             ListTile(
+               title: Text('Job Post',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               onTap: () {
+                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>CreateJobPost()));
+               },
+             ),
+             ListTile(
+               title: Text('Job Post List',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               onTap: () {
+                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>JobPostList()));
                },
              ),
            ],
@@ -237,7 +250,8 @@ class _HomeScreenState extends State<HomeScreen> {
           type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
-              backgroundColor: Theme.of(context).accentColor,
+              //backgroundColor: Theme.of(context).accentColor,
+              backgroundColor: Colors.green,
               icon: Icon(Icons.local_post_office_outlined),
               label: 'Job',
             ),
@@ -246,7 +260,11 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(Icons.feedback),
               label: 'Feed',
             ),
-
+           /*BottomNavigationBarItem(
+    backgroundColor: Theme.of(context).accentColor,
+    icon: Icon(Icons.add),
+    label: 'Create Feed',
+    ),*/
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).accentColor,
               icon: Icon(Icons.person_outline),

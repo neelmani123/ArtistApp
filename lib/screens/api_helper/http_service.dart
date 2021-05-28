@@ -5,6 +5,7 @@ import 'package:artist_icon/helper/setup.dart';
 import 'package:artist_icon/model/RequestUserLoginModel/RequestUserLoginModel.dart';
 import 'package:artist_icon/model/register/register_apiModel.dart';
 import 'package:artist_icon/screens/edit_profile/model/EditProfileBean.dart';
+import 'package:artist_icon/screens/feed/model/CreateJobPostModel.dart';
 import 'package:artist_icon/screens/feed/model/CreatePostModel.dart';
 import 'package:artist_icon/screens/feed/model/GetAllFeedsBean.dart';
 import 'package:artist_icon/screens/home_page/model/RecentSearchJobModel.dart';
@@ -19,8 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:artist_icon/screens/edit_profile/model/modeleducation/AddEducationModel.dart';
 import 'package:artist_icon/model/addWorkExperience/AddWorkExperienceModel.dart';
 
-class HttpService
-{
+class HttpService {
   ApiBaseHelper _apiHelper = ApiBaseHelper();
   String _userID = '0';
   String _token = '';
@@ -40,12 +40,12 @@ class HttpService
     Fluttertoast.showToast(msg: 'Something Went Wrong', timeInSecForIosWeb: 10);
   }
 
-  Future<RequestUserLoginModel> sendOtpModel({String number}) async{
-
+  Future<RequestUserLoginModel> sendOtpModel({String number}) async {
     Map reqBody = {
       "number": number
     };
-    final response = await _apiHelper.post('Artist_api/user_request_otp_for_login', reqBody);
+    final response = await _apiHelper.post(
+        'Artist_api/user_request_otp_for_login', reqBody);
     try {
       return RequestUserLoginModel.fromJson(response);
     } catch (e) {
@@ -55,12 +55,13 @@ class HttpService
   }
 
 
-  Future<RequestUserLoginModel> request_otp_for_regester({String number}) async{
-
+  Future<RequestUserLoginModel> request_otp_for_regester(
+      {String number}) async {
     Map reqBody = {
       "number": number
     };
-    final response = await _apiHelper.post('Artist_api/request_otp_for_regester', reqBody);
+    final response = await _apiHelper.post(
+        'Artist_api/request_otp_for_regester', reqBody);
     try {
       return RequestUserLoginModel.fromJson(response);
     } catch (e) {
@@ -68,17 +69,19 @@ class HttpService
       return null;
     }
   }
-  Future<CreatepostModel>create_post({String text,String title,String desc})async{
-    Map reqBody={
-      "jwtToken":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk",
-      "text":text,
-      "media_type":"1",
-      "is_tutorial":"1",
-      "price":"10000",
-      "title":title,
-      "desc":desc,
-      "file_url":"IMG_20200804_185303.jpg",
-      "product_image":"IMG_20200804_185303.jpg"
+
+  Future<CreatepostModel> create_post(
+      {String text, String title, String desc}) async {
+    Map reqBody = {
+      "jwtToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk",
+      "text": text,
+      "media_type": "1",
+      "is_tutorial": "1",
+      "price": "10000",
+      "title": title,
+      "desc": desc,
+      "file_url": "IMG_20200804_185303.jpg",
+      "product_image": "IMG_20200804_185303.jpg"
     };
     final response = await _apiHelper.post('Feed_api/add_feed', reqBody);
     try {
@@ -90,7 +93,8 @@ class HttpService
   }
 
 
-  Future<register_apiModel> registerAPiModel({String name,String email,String phone}) async
+  Future<register_apiModel> registerAPiModel(
+      {String name, String email, String phone}) async
   {
     Map reqBody = {
       "name": name,
@@ -107,12 +111,13 @@ class HttpService
   }
 
 
-  Future<register_apiModel> users_login_api({String number,String otp}) async{
+  Future<register_apiModel> users_login_api({String number, String otp}) async {
     Map reqBody = {
       "number": number,
       "otp": otp
     };
-    final response = await _apiHelper.post('Artist_api/users_login_api', reqBody);
+    final response = await _apiHelper.post(
+        'Artist_api/users_login_api', reqBody);
     try {
       return register_apiModel.fromJson(response);
     } catch (e) {
@@ -121,13 +126,15 @@ class HttpService
     }
   }
 
-  Future<RecentSearchJobModel> job_categories_list({String jwtToken,String limit,String search}) async{
+  Future<RecentSearchJobModel> job_categories_list(
+      {String jwtToken, String limit, String search}) async {
     Map reqBody = {
       "jwtToken": jwtToken,
       "limit": limit,
       "search": search
     };
-    final response = await _apiHelper.post('Artist_api/job_categories_list', reqBody);
+    final response = await _apiHelper.post(
+        'Artist_api/job_categories_list', reqBody);
     try {
       return RecentSearchJobModel.fromJson(response);
     } catch (e) {
@@ -136,12 +143,14 @@ class HttpService
     }
   }
 
-  Future<RecentSearchJobModel> recent_search_job({String jwtToken,String limit}) async{
+  Future<RecentSearchJobModel> recent_search_job(
+      {String jwtToken, String limit}) async {
     Map reqBody = {
       "jwtToken": jwtToken,
       "limit": limit
     };
-    final response = await _apiHelper.post('Artist_api/recent_search_job', reqBody);
+    final response = await _apiHelper.post(
+        'Artist_api/recent_search_job', reqBody);
     try {
       return RecentSearchJobModel.fromJson(response);
     } catch (e) {
@@ -150,12 +159,14 @@ class HttpService
     }
   }
 
-  Future<RecentSearchJobModel> recommended_jobs({String jwtToken,String limit}) async{
+  Future<RecentSearchJobModel> recommended_jobs(
+      {String jwtToken, String limit}) async {
     Map reqBody = {
       "jwtToken": jwtToken,
       "limit": limit
     };
-    final response = await _apiHelper.post('Artist_api/recommended_jobs', reqBody);
+    final response = await _apiHelper.post(
+        'Artist_api/recommended_jobs', reqBody);
     try {
       return RecentSearchJobModel.fromJson(response);
     } catch (e) {
@@ -165,7 +176,8 @@ class HttpService
   }
 
 
-  Future<TemplateListModel> template_list({String jwtToken,String limit,String search}) async{
+  Future<TemplateListModel> template_list(
+      {String jwtToken, String limit, String search}) async {
     Map reqBody = {
       "jwtToken": jwtToken,
       "limit": limit
@@ -179,7 +191,8 @@ class HttpService
     }
   }
 
-  Future<SearchJobModel> search_job({String jwtToken,String Skills_id,String job_type,String city_id}) async{
+  Future<SearchJobModel> search_job(
+      {String jwtToken, String Skills_id, String job_type, String city_id}) async {
     Map reqBody = {
       "jwtToken": jwtToken,
       "Skills_id": Skills_id,
@@ -195,7 +208,8 @@ class HttpService
     }
   }
 
-  Future<SkillsListBean> skills_list({String jwtToken,String limit,String search}) async{
+  Future<SkillsListBean> skills_list(
+      {String jwtToken, String limit, String search}) async {
     Map reqBody = {
       "jwtToken": jwtToken,
       "limit": limit
@@ -210,7 +224,8 @@ class HttpService
   }
 
 
-  Future<CityListBean> city_list({String jwtToken,String limit,String search}) async{
+  Future<CityListBean> city_list(
+      {String jwtToken, String limit, String search}) async {
     Map reqBody = {
       "jwtToken": jwtToken,
       "limit": limit
@@ -224,12 +239,14 @@ class HttpService
     }
   }
 
+
 //manage profile
-  Future<GetProfileData> get_profile_data({String jwtToken}) async{
+  Future<GetProfileData> get_profile_data({String jwtToken}) async {
     Map reqBody = {
       "jwtToken": jwtToken
     };
-    final response = await _apiHelper.post('Artist_api/get_profile_data', reqBody);
+    final response = await _apiHelper.post(
+        'Artist_api/get_profile_data', reqBody);
     try {
       return GetProfileData.fromJson(response);
     } catch (e) {
@@ -247,7 +264,9 @@ class HttpService
 
     });
     try {
-      Response response = await dio.post("https://artist.devclub.co.in/api/Artist_api/profile_update", data: data);
+      Response response = await dio.post(
+          "https://artist.devclub.co.in/api/Artist_api/profile_update",
+          data: data);
       return EditProfileBean.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
@@ -257,7 +276,7 @@ class HttpService
   }
 
 //manage profile
-  Future<GetAllFeedsBean> get_all_post({String jwtToken,String pages}) async{
+  Future<GetAllFeedsBean> get_all_post({String jwtToken, String pages}) async {
     Map reqBody = {
       "jwtToken": jwtToken,
       "pages": pages
@@ -270,31 +289,33 @@ class HttpService
       return null;
     }
   }
+
   //Add Work Experience Api  Call
-  Future<AddWorkExperienceModel> add_Work_exp({String position,String comp_name,String current_work,String location})async{
+  Future<AddWorkExperienceModel> add_Work_exp(
+      {String position, String comp_name, String current_work, String location}) async {
     final prefs = await SharedPreferences.getInstance();
-Map reqBody={
-  'position':position,
-  'company_name':comp_name,
-  'start_date':"12-10-2021",
-  'end_date':"12-10-2021",
-  'currently_work_here':"0",
-  'company_location':position,
-  'jwtToken':prefs.getString('userID')
-};
-final response=await _apiHelper.post('Artist_api/add_work_experience', reqBody);
-try{
-  return AddWorkExperienceModel.fromJson(response);
+    Map reqBody = {
+      'position': position,
+      'company_name': comp_name,
+      'start_date': "12-10-2021",
+      'end_date': "12-10-2021",
+      'currently_work_here': "0",
+      'company_location': position,
+      'jwtToken': prefs.getString('userID')
+    };
+    final response = await _apiHelper.post(
+        'Artist_api/add_work_experience', reqBody);
+    try {
+      return AddWorkExperienceModel.fromJson(response);
+    }
+    catch (e) {
 
-}
-catch(e){
-
-}
-}
+    }
+  }
 
   //manage profile
-  Future<AddEducationModel> add_education ( {
-    String school_name,String education_level,String filled_of_study,String start_date, String end_date,String currently_study_here,String  education_sub_category  }) async{
+  Future<AddEducationModel> add_education({
+    String school_name, String education_level, String filled_of_study, String start_date, String end_date, String currently_study_here, String education_sub_category }) async {
     final prefs = await SharedPreferences.getInstance();
     Map reqBody = {
       "school_name": school_name,
@@ -304,8 +325,8 @@ catch(e){
       "end_date": end_date,
       "currently_study_here": currently_study_here,
       "education_sub_category": education_sub_category,
-      "education_location":"noida",
-      "jwtToken":prefs.getString('userID')
+      "education_location": "noida",
+      "jwtToken": prefs.getString('userID')
     };
     final response = await _apiHelper.post('Artist_api/add_education', reqBody);
     try {
@@ -316,4 +337,34 @@ catch(e){
     }
   }
 
+
+  Future<CreateJobPostModel> create_job_post({
+    String category_id, String location, String company_name, String title, String other_skill, String salary_from, String salary_to, String experience_from, String experience_to, String job_type, String working_hours, String city_id, String job_description }) async {
+    final prefs = await SharedPreferences.getInstance();
+    /*Map<String,dynamic> reqBody = jsonEncode({
+      "jwtToken": prefs.getString('userID'),
+      "category_id": category_id,
+      "location": location,
+      "title": title,
+      "job_description": job_description,
+      "skills": "1,2",
+      "other_skills": other_skill,
+      "salary_from": salary_from,
+      "salary_to": salary_to,
+      "experience_to": experience_to,
+      "experience_form": experience_from,
+      "job_type": job_type,
+      "company_name": company_name,
+      "working_hours": working_hours,
+      "city_id": city_id
+    });*/
+   /* final response = await _apiHelper.post(
+        "Artist_api/create_job_post", reqBody);*/
+    /*try {
+      return CreateJobPostModel.fromJson(response);
+    } catch (e) {
+      showExceptionToast();
+      return null;
+    }*/
+  }
 }
