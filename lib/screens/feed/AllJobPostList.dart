@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:artist_icon/screens/feed/AppliedJobList.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:artist_icon/screens/Color.dart';
@@ -70,14 +71,22 @@ class _AllJobPostListState extends State<AllJobPostList> {
     Map data = json.decode(response.body);
     var status = data['status'];
     print('Status is:${status}');
-    if(status==true||status==false)
+    if(status==true)
     {
       setState(() {
         _isLoading=false;
         Fluttertoast.showToast(msg: data['message']);
+        /*Navigator.push(context, MaterialPageRoute(builder: (context)=>AppliedJobList()));*/
+
       });
     }
-
+    else if(status==false)
+      {
+        setState(() {
+          _isLoading=false;
+          Fluttertoast.showToast(msg: data['message']);
+        });
+      }
   }
   @override
   void initState() {

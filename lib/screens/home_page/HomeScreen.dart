@@ -1,6 +1,7 @@
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/edit_profile/EditProfileScreen.dart';
 import 'package:artist_icon/screens/feed/AllJobPostList.dart';
+import 'package:artist_icon/screens/feed/AppliedJobList.dart';
 import 'package:artist_icon/screens/feed/CreatePost.dart';
 import 'package:artist_icon/screens/feed/CreateJobPost.dart';
 import 'package:artist_icon/screens/feed/YourJobPostList.dart';
@@ -111,6 +112,12 @@ class _HomeScreenState extends State<HomeScreen> {
                title: Text('Job Search List',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>JobSearchList()));
+               },
+             ),
+             ListTile(
+               title: Text('Applied Job List',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               onTap: () {
+                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>AppliedJobList()));
                },
              ),
            ],
