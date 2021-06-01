@@ -1,3 +1,4 @@
+import 'package:artist_icon/screens/feed/CommentScreen.dart';
 import 'package:artist_icon/screens/feed/model/Data.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -115,6 +116,7 @@ Widget build(BuildContext context) => ListTile(
               GestureDetector(
                 onTap: () {
                   print("Comment pressed");
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>CommentScreen()));
                 },
                 child: new Icon(
                   FontAwesomeIcons.comment,

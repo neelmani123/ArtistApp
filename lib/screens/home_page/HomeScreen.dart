@@ -1,8 +1,10 @@
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/edit_profile/EditProfileScreen.dart';
+import 'package:artist_icon/screens/feed/AllJobPostList.dart';
 import 'package:artist_icon/screens/feed/CreatePost.dart';
 import 'package:artist_icon/screens/feed/CreateJobPost.dart';
-import 'package:artist_icon/screens/feed/JobPostList.dart';
+import 'package:artist_icon/screens/feed/YourJobPostList.dart';
+import 'package:artist_icon/screens/feed/SearchList.dart';
 import 'package:artist_icon/screens/feed/SharePost.dart';
 import 'package:artist_icon/screens/feed/FeedScreen.dart';
 import 'package:artist_icon/screens/profile/ProfileScreen.dart';
@@ -94,9 +96,21 @@ class _HomeScreenState extends State<HomeScreen> {
                },
              ),
              ListTile(
-               title: Text('Job Post List',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               title: Text('Your Job List',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>JobPostList()));
+               },
+             ),
+             ListTile(
+               title: Text('Search List',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               onTap: () {
+                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>AllJobPostList()));
+               },
+             ),
+             ListTile(
+               title: Text('Job Search List',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               onTap: () {
+                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>JobSearchList()));
                },
              ),
            ],

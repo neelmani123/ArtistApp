@@ -227,7 +227,32 @@ class _JobPostListState extends State<JobPostList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
                       child: Text("${data1[index]['other_skills']}",style: TextStyle(color: Colors.white),),
-                    )
+                    ),
+                    /*Center(
+                      child: Container(
+                        height: 60,
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.only(top: 20,bottom: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.10),),
+                          // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
+                          onPressed: () async{
+                            setState(() {
+                              _isLoading=true;
+                              //_addCreateJobPost();
+                              //_addCreateJobPost1();
+
+                            });
+                          },
+                          color: Color(fountColor),
+                          // textColor: Colors.white,
+                          child: Text("Apply Now",
+                              style: TextStyle(fontSize: 20,color: Colors.white)),
+                        ),
+                      ),
+                    )*/
                   ],
                 ),
               ],
