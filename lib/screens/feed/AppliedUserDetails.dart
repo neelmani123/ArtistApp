@@ -19,9 +19,26 @@ class _AppliedUserDetailsState extends State<AppliedUserDetails> {
         children: [
           Column(
             children: [
-              SizedBox(height: 40,),
+              SizedBox(height: 20,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 10,right: 15),
+                    height:30,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: Color(fountColor),
+                    ),
+                    padding: EdgeInsets.only(left: 25,top: 5,),
+                    child: Text('Shortlist Application',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                  ),
+                ],
+              ),
+              SizedBox(height: 30,),
               Row(
                 children: [
+
                   new Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     height: 60.0,
