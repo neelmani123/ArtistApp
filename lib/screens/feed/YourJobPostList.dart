@@ -1,4 +1,5 @@
 import 'package:artist_icon/screens/Color.dart';
+import 'package:artist_icon/screens/feed/AppliedJobPostLIst.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -253,6 +254,23 @@ class _JobPostListState extends State<JobPostList> {
                         ),
                       ),
                     )*/
+                    SizedBox(height: 10,),
+                    InkWell(
+                      onTap: ()
+                      {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>AppliedJobPostList(id: data1[index]['job_id'],)));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 10),
+                        height:30,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          color: Color(fountColor),
+                        ),
+                        padding: EdgeInsets.only(left: 20,top: 5),
+                        child: Text('Your Applied Application:${data1[index]['applied_count']}',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                      ),
+                    )
                   ],
                 ),
               ],
