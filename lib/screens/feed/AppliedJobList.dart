@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:artist_icon/screens/Color.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,33 @@ class AppliedJobList extends StatefulWidget {
 class _AppliedJobListState extends State<AppliedJobList> {
   bool _isLoading=true;
   List data1;
+  String select_type;
+  String choice;
+  Future select(){
+    String no=select_type;
+    switch(no)
+    {
+      case '0':
+        choice="Pending";
+        break;
+      case '1':
+        choice = "Shortlist Application";
+        break;
+      case '2':
+        choice="Interview";
+        break;
+      case '3':
+        choice="selected";
+        break;
+      case '4':
+        choice="not selected";
+        break;
+      default:
+        choice = null;
+
+    }
+  }
+
 
   Future appliedJobList()async
   {
@@ -31,6 +59,14 @@ class _AppliedJobListState extends State<AppliedJobList> {
       setState(() {
         _isLoading=false;
         data1=data['data'];
+        for(int i=0;i<data1.length;i++)
+          {
+            setState(() {
+              select_type=data1[i]['select_type'];
+              select();
+
+            });
+          }
         Fluttertoast.showToast(msg: data['message']);
         /*Navigator.push(context, MaterialPageRoute(builder: (context)=>AppliedJobList()));*/
 
@@ -68,10 +104,20 @@ class _AppliedJobListState extends State<AppliedJobList> {
                         children: [
                           Text('${data1[index]['company_name']??''}',style: TextStyle(fontWeight: FontWeight.bold),),
                           Spacer(),
-                          Icon(Icons.share),
+                          /*Icon(Icons.share),
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: Icon(Icons.favorite_border),
+                          ),*/
+                          Container(
+                           // margin: EdgeInsets.only(right: 15),
+                            height:30,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              color: Color(fountColor),
+                            ),
+                            padding: EdgeInsets.only(left: 35,top: 5,),
+                            child: Text('${choice??''}',style: TextStyle(color: Colors.white),),
                           ),
                         ],
                       ),
