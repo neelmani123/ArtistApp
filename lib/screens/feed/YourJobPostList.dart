@@ -89,11 +89,10 @@ class _JobPostListState extends State<JobPostList> {
                 ),
                 SizedBox(height: 20,),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      width: 190,
+                      width: 180,
                       height: 70,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -125,7 +124,7 @@ class _JobPostListState extends State<JobPostList> {
                       ),
                     ),
                     Container(
-                      width: 190,
+                      width: 180,
                       height: 70,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),

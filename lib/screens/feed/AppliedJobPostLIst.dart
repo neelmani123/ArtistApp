@@ -33,7 +33,7 @@ class _AppliedJobPostListState extends State<AppliedJobPostList> {
         choice="Interview";
         break;
       case '3':
-        choice="selected";
+        choice="Selected";
         break;
       case '4':
         choice="not selected";
@@ -88,25 +88,50 @@ class _AppliedJobPostListState extends State<AppliedJobPostList> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(
+              elevation: 5,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children:
                 [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Row(
-                      children: [
-                        Text("${data1[index]['name']??''}",style: TextStyle(fontSize: 20),),
-                        Spacer(),
-                        Container(
-                          margin: EdgeInsets.only(right: 15,top: 10),
-                          height:30,
-                          width: 170,
-                          decoration: BoxDecoration(
+                  Row(
+                    children: [
+                      new Container(
+                        height: 60.0,
+                        width: 60.0,
+                        margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: new DecorationImage(
+                              fit: BoxFit.fill,
+                              image: new NetworkImage(
+                                  "https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
+                              )
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Container(
+                        margin: EdgeInsets.only(left:20,right: 15,top: 10),
+                        height:30,
+                        width: 170,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
                             color: Color(fountColor),
                           ),
-                          padding: EdgeInsets.only(left: 25,top: 5,),
-                          child: Text("${choice??''}",style: TextStyle(color: Colors.white),),
+                          color: Colors.white,
                         ),
+                        padding: EdgeInsets.symmetric(horizontal: 40,vertical: 5),
+                        child: Text("${choice??''}",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,top: 10),
+                    child: Row(
+                      children: [
+                        Text("${data1[index]['name']??''}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                       ],
                     ),
                   ),
@@ -115,7 +140,11 @@ class _AppliedJobPostListState extends State<AppliedJobPostList> {
                     padding: const EdgeInsets.only(left: 20),
                     child: Row(
                       children: [
-                        Text("${data1[index]['email']}")
+                        Icon(Icons.email_outlined,color: Colors.grey,),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text("${data1[index]['email']}",style: TextStyle(color: Colors.grey),),
+                        )
                       ],
                     ),
                   ),
@@ -124,11 +153,16 @@ class _AppliedJobPostListState extends State<AppliedJobPostList> {
                     padding: const EdgeInsets.only(left: 20),
                     child: Row(
                       children: [
-                        Text("${data1[index]['phone']}")
+                        Icon(Icons.phone,color: Colors.grey,),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text("${data1[index]['phone']}",style: TextStyle(color: Colors.grey),),
+                        ),
+
                       ],
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 20,),
                 ],
               ),
             ),

@@ -16,8 +16,22 @@ class AllJobPostList extends StatefulWidget {
 class _AllJobPostListState extends State<AllJobPostList> {
   bool _isLoading=true;
   List data1;
-  String isApplied='';
-  String textName='';
+  String isApplied;
+  String choice;
+  Future select(){
+    switch(isApplied)
+    {
+      case "0":
+        choice="Apply Now";
+        break;
+      case "1":
+        choice = "Applied";
+        break;
+      default:
+        choice = null;
+
+    }
+  }
   Future _jobPostList()async
   {
     final _prefs = await SharedPreferences.getInstance();
@@ -39,23 +53,11 @@ class _AllJobPostListState extends State<AllJobPostList> {
         data1=data['data'];
         for(int i=0;i<data1.length;i++)
           {
-           isApplied=data1[i]['is_applied'];
-           print("Is applied is:${data1[i]['is_applied']}");
-           if(data1[i]['is_applied']==0)
-           {
-             setState(() {
-               textName='Apply Now';
-             });
-
-           }
-           else if(data1[i]['is_applied']==1){
-             setState(() {
-               textName='Applied';
-             });
-           }
-           else{
-             textName='Apply Now';
-           }
+           setState(() {
+             isApplied=data1[i]['is_applied'];
+             print("Is applied is:${data1[i]['is_applied']}");
+             select();
+           });
           }
         _isLoading=false;
       });
@@ -303,7 +305,7 @@ class _AllJobPostListState extends State<AllJobPostList> {
                             },
                             color: Color(fountColor),
                             // textColor: Colors.white,
-                            child: Text("${textName}",
+                            child: Text("${choice}",
                                 style: TextStyle(fontSize: 20,color: Colors.white)),
                           ),
                         ),
