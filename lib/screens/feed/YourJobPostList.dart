@@ -31,8 +31,20 @@ class _JobPostListState extends State<JobPostList> {
        data1=data['data'];
        _isLoading=false;
      });
+
     }
   }
+  var colors = [
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+  ];
   @override
   void initState() {
     // TODO: implement initState
@@ -42,32 +54,25 @@ class _JobPostListState extends State<JobPostList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
      // appBar: AppBar(title: Text("Job Post List"),),
       body: _isLoading==true?Container(child: Center(child: CircularProgressIndicator(),),):ListView.builder(
         itemCount: data1.length,
           itemBuilder: (context,index){
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-               /* InkWell(
-                  onTap: ()
-                  {
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20,left: 15),
-                    child: Icon(Icons.arrow_back,color: Colors.white,),
-                  ),
-                ),*/
-                SizedBox(height: 20,),
-                Center(
-                  child: Column(
+            return Card(
+              color: colors[index],
+              elevation: 5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 10,),
+                  Row(
                     children: [
                       new Container(
-                        height: 60.0,
-                        width: 60.0,
+                        margin: EdgeInsets.only(left: 10),
+                        height: 50.0,
+                        width: 50.0,
                         decoration: new BoxDecoration(
                           shape: BoxShape.circle,
                           image: new DecorationImage(
@@ -78,157 +83,260 @@ class _JobPostListState extends State<JobPostList> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10,),
-                      Text('${data1[index]['title']??''}',style: TextStyle(color: Colors.white),),
-                      SizedBox(height: 10,),
-                      Text('${data1[index]['company_name']+",noida"}',style: TextStyle(color: Colors.pink),),
-                      SizedBox(height: 5,),
-                      Text('Posted on ${data1[index]['created_at']}',style: TextStyle(color: Colors.pink),),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10,bottom: 10),
+                            child: Text('${data1[index]['company_name']??''}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text('15 days ago'),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ),
-                SizedBox(height: 20,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: 180,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(5.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              'working Hours',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            Text(
-                              'Full Time',
-                              style: TextStyle(
-                                  color: Color(fountColor),
-                                  fontSize: 17),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 180,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Colors.white,
-                        border: Border.all(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 10),
+                    child: Text('${data1[index]['job_description']??''}',style: TextStyle(fontSize: 15),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5,),
+                    child: Text('1-3 years'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5,top: 5),
+                    child: Text('${data1[index]['location']??''}'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5,top: 5),
+                    child: Text('${data1[index]['other_skills']??''}'),
+                  ),
+                  // SizedBox(height: 20,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        height: 30,
+                        width: 250,
+                        margin: const EdgeInsets.only(top: 10,bottom: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0),),
+                          // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
+                          onPressed: () async{
+                            setState(() {
+                              // _uploadImage();
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AppliedJobPostList(id: data1[index]['job_id'],)));
 
+                            });
+                          },
+                          color: Colors.white,
+                          // textColor: Colors.white,
+                          child: Text("Applied Application:${data1[index]['applied_count']}",
+                              style: TextStyle(color: Color(fountColor))),
                         ),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.all(5.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              'Monthly Salary',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16
-                              ),
-                            ),
-                            Text(
-                              '30k-50k',
-                              style: TextStyle(
-                                  color: Color(fountColor),
-                                  fontSize: 17),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20,),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: RichText(
-                        text: TextSpan(
-                          style: TextStyle(color: Color(fountColor),fontSize: 20),
-                          children: <TextSpan>[
-                            TextSpan(text: 'Job', style: TextStyle(decoration: TextDecoration.underline)),
-                            TextSpan(text: ' Description', style: TextStyle())
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10,),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Text("${data1[index]['job_description']}",style: TextStyle(color: Colors.white),),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: RichText(
-                        text: TextSpan(
-                          style: TextStyle(color: Color(fountColor),fontSize: 20),
-                          children: <TextSpan>[
-                            TextSpan(text: 'Key', style: TextStyle(decoration: TextDecoration.underline)),
-                            TextSpan(text: ' Skills', style: TextStyle())
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10,),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Text("Ballet,Ballroom,Contemporary",style: TextStyle(color: Colors.white),),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: RichText(
-                        text: TextSpan(
-                          style: TextStyle(color: Color(fountColor),fontSize: 20),
-                          children: <TextSpan>[
-                            TextSpan(text: 'Other', style: TextStyle(decoration: TextDecoration.underline)),
-                            TextSpan(text: ' Details', style: TextStyle())
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10,),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Text("${data1[index]['other_skills']}",style: TextStyle(color: Colors.white),),
-                    ),
-                    /*Center(
+                    ],
+                  )
+
+                ],
+              ),
+            );
+          })
+    );
+  }
+}
+/*
+Column(
+mainAxisAlignment: MainAxisAlignment.start,
+crossAxisAlignment: CrossAxisAlignment.start,
+children: [
+*/
+/* InkWell(
+                  onTap: ()
+                  {
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20,left: 15),
+                    child: Icon(Icons.arrow_back,color: Colors.white,),
+                  ),
+                ),*//*
+
+SizedBox(height: 20,),
+Center(
+child: Column(
+children: [
+new Container(
+height: 60.0,
+width: 60.0,
+decoration: new BoxDecoration(
+shape: BoxShape.circle,
+image: new DecorationImage(
+fit: BoxFit.fill,
+image: new NetworkImage(
+"https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
+)
+),
+),
+),
+SizedBox(height: 10,),
+Text('${data1[index]['title']??''}',style: TextStyle(color: Colors.white),),
+SizedBox(height: 10,),
+Text('${data1[index]['company_name']+",noida"}',style: TextStyle(color: Colors.pink),),
+SizedBox(height: 5,),
+Text('Posted on ${data1[index]['created_at']}',style: TextStyle(color: Colors.pink),),
+],
+),
+),
+SizedBox(height: 20,),
+Row(
+mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+children: [
+Container(
+width: 180,
+height: 70,
+decoration: BoxDecoration(
+color: Colors.white,
+borderRadius: BorderRadius.all(Radius.circular(10)),
+border: Border.all(
+),
+),
+child: Padding(
+padding: EdgeInsets.all(5.0),
+child: Column(
+mainAxisAlignment: MainAxisAlignment.center,
+children: <Widget>[
+Text(
+'working Hours',
+style: TextStyle(
+color: Colors.black,
+fontSize: 16,
+fontWeight: FontWeight.bold
+),
+),
+Text(
+'Full Time',
+style: TextStyle(
+color: Color(fountColor),
+fontSize: 17),
+)
+],
+),
+),
+),
+Container(
+width: 180,
+height: 70,
+decoration: BoxDecoration(
+borderRadius: BorderRadius.all(Radius.circular(10)),
+color: Colors.white,
+border: Border.all(
+
+),
+),
+child: Padding(
+padding: EdgeInsets.all(5.0),
+child: Column(
+mainAxisAlignment: MainAxisAlignment.center,
+children: <Widget>[
+Text(
+'Monthly Salary',
+style: TextStyle(
+color: Colors.black,
+fontWeight: FontWeight.bold,
+fontSize: 16
+),
+),
+Text(
+'30k-50k',
+style: TextStyle(
+color: Color(fountColor),
+fontSize: 17),
+)
+],
+),
+),
+),
+],
+),
+SizedBox(height: 20,),
+Column(
+mainAxisAlignment: MainAxisAlignment.start,
+crossAxisAlignment: CrossAxisAlignment.start,
+children: [
+Padding(
+padding: const EdgeInsets.only(left: 15),
+child: RichText(
+text: TextSpan(
+style: TextStyle(color: Color(fountColor),fontSize: 20),
+children: <TextSpan>[
+TextSpan(text: 'Job', style: TextStyle(decoration: TextDecoration.underline)),
+TextSpan(text: ' Description', style: TextStyle())
+],
+),
+),
+),
+SizedBox(height: 10,),
+Padding(
+padding: const EdgeInsets.only(left: 15),
+child: Text("${data1[index]['job_description']}",style: TextStyle(color: Colors.white),),
+)
+],
+),
+SizedBox(height: 10,),
+Column(
+mainAxisAlignment: MainAxisAlignment.start,
+crossAxisAlignment: CrossAxisAlignment.start,
+children: [
+Padding(
+padding: const EdgeInsets.only(left: 15),
+child: RichText(
+text: TextSpan(
+style: TextStyle(color: Color(fountColor),fontSize: 20),
+children: <TextSpan>[
+TextSpan(text: 'Key', style: TextStyle(decoration: TextDecoration.underline)),
+TextSpan(text: ' Skills', style: TextStyle())
+],
+),
+),
+),
+SizedBox(height: 10,),
+Padding(
+padding: const EdgeInsets.only(left: 15),
+child: Text("Ballet,Ballroom,Contemporary",style: TextStyle(color: Colors.white),),
+)
+],
+),
+SizedBox(height: 10,),
+Column(
+mainAxisAlignment: MainAxisAlignment.start,
+crossAxisAlignment: CrossAxisAlignment.start,
+children: [
+Padding(
+padding: const EdgeInsets.only(left: 15),
+child: RichText(
+text: TextSpan(
+style: TextStyle(color: Color(fountColor),fontSize: 20),
+children: <TextSpan>[
+TextSpan(text: 'Other', style: TextStyle(decoration: TextDecoration.underline)),
+TextSpan(text: ' Details', style: TextStyle())
+],
+),
+),
+),
+SizedBox(height: 10,),
+Padding(
+padding: const EdgeInsets.only(left: 15),
+child: Text("${data1[index]['other_skills']}",style: TextStyle(color: Colors.white),),
+),
+*/
+/*Center(
                       child: Container(
                         height: 60,
                         width: MediaQuery.of(context).size.width,
@@ -252,29 +360,27 @@ class _JobPostListState extends State<JobPostList> {
                               style: TextStyle(fontSize: 20,color: Colors.white)),
                         ),
                       ),
-                    )*/
-                    SizedBox(height: 10,),
-                    InkWell(
-                      onTap: ()
-                      {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>AppliedJobPostList(id: data1[index]['job_id'],)));
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(left: 10),
-                        height:30,
-                        width: 200,
-                        decoration: BoxDecoration(
-                          color: Color(fountColor),
-                        ),
-                        padding: EdgeInsets.only(left: 20,top: 5),
-                        child: Text('Your Applied Application:${data1[index]['applied_count']}',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            );
-          })
-    );
-  }
-}
+                    )*//*
+
+SizedBox(height: 10,),
+InkWell(
+onTap: ()
+{
+Navigator.push(context, MaterialPageRoute(builder: (context)=>AppliedJobPostList(id: data1[index]['job_id'],)));
+},
+child: Container(
+margin: EdgeInsets.only(left: 10),
+height:30,
+width: 200,
+decoration: BoxDecoration(
+color: Color(fountColor),
+),
+padding: EdgeInsets.only(left: 20,top: 5),
+child: Text('Your Applied Application:${data1[index]['applied_count']}',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+),
+)
+],
+),
+],
+);
+*/

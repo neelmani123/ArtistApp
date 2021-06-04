@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:artist_icon/screens/Color.dart';
+import 'package:artist_icon/screens/feed/JobDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -79,6 +80,25 @@ class _AppliedJobListState extends State<AppliedJobList> {
     appliedJobList();
     super.initState();
   }
+  var colors = [
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+
+
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -88,79 +108,98 @@ class _AppliedJobListState extends State<AppliedJobList> {
       ),):ListView.builder(
         itemCount: data1.length,
           itemBuilder: (BuildContext,index){
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              SizedBox(height: 10,),
-              Card(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        return InkWell(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>JobDetails(details: data1[index],)));
+          },
+          child: Card(
+            color: colors[index],
+            elevation: 5,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 10,),
+                Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 5),
-                      child: Row(
-                        children: [
-                          Text('${data1[index]['company_name']??''}',style: TextStyle(fontWeight: FontWeight.bold),),
-                          Spacer(),
-                          /*Icon(Icons.share),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Icon(Icons.favorite_border),
-                          ),*/
-                          Container(
-                           // margin: EdgeInsets.only(right: 15),
-                            height:30,
-                            width: 150,
-                            decoration: BoxDecoration(
-                              color: Color(fountColor),
-                            ),
-                            padding: EdgeInsets.only(left: 35,top: 5,),
-                            child: Text('${choice??''}',style: TextStyle(color: Colors.white),),
-                          ),
-                        ],
+                    new Container(
+                      margin: EdgeInsets.only(left: 10),
+                      height: 50.0,
+                      width: 50.0,
+                      decoration: new BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: new DecorationImage(
+                            fit: BoxFit.fill,
+                            image: new NetworkImage(
+                                "https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
+                            )
+                        ),
                       ),
+                      //child: Image.network('https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg'),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Text('${data1[index]['title']??''}',style: TextStyle(color: Colors.black),),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Text('${data1[index]['location']??''}'),
-                          ),
-                        ],
-                      ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10,bottom: 10),
+                          child: Text('${data1[index]['company_name']??''}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text('15 days ago'),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Text('Rate:750'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Text('Part Time:Monthly Salary'),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 5,)
+
                   ],
                 ),
-              ),
-            ],
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 5,top: 15),
+                  child: Text('${data1[index]['job_description']??''}',style: TextStyle(fontSize: 15),),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5,top: 5),
+                  child: Text('1-3 years'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5,),
+                  child: Text('${data1[index]['location']??''}'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5,top: 5),
+                  child: Text('${data1[index]['other_skills']??''}'),
+                ),
+                // SizedBox(height: 20,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      height: 40,
+                      width: 170,
+                      margin: const EdgeInsets.only(top: 10,bottom: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),),
+                        // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
+                        onPressed: () async{
+                          setState(() {
+
+                          });
+                        },
+                        color: Colors.white,
+                        // textColor: Colors.white,
+                        child: Text("${choice}",
+                            style: TextStyle(color: Color(fountColor))),
+                      ),
+                    ),
+                  ],
+                )
+
+              ],
+            ),
           ),
         );
       }),
