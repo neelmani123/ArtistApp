@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
         'page':Home(),
       },
       {
-        'page': FeedScreen(),
+        'page': AddFeed(),
       },
 
       {

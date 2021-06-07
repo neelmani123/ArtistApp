@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/api_helper/http_service.dart';
+import 'package:artist_icon/screens/feed/CommentScreen.dart';
 import 'package:artist_icon/screens/feed/model/Data.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,6 +22,8 @@ class AddFeed extends StatefulWidget {
 class _AddFeedState extends State<AddFeed> {
   bool _isLoading=true;
   List data1;
+  String user_id="";
+  int count;
   Future getAllPost()async
   {
     final _prefs = await SharedPreferences.getInstance();
@@ -28,16 +32,56 @@ class _AddFeedState extends State<AddFeed> {
         "https://artist.devclub.co.in/api/Feed_api/get_all_post",
         body: res);
     Map data = json.decode(response.body);
+    print(data);
     var status = data['status'];
     print('Status is:${status}');
     if(status==true)
     {
       setState(() {
         data1=data['data'];
+       // print("UserId Is:${data[0]['id']}");
         _isLoading=false;
       });
 
     }
+  }
+  Future doLike(String id)async
+  {
+    final _prefs = await SharedPreferences.getInstance();
+    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":id});
+    var response = await http.post(
+        "https://artist.devclub.co.in/api/Feed_api/do_like",
+        body: res);
+    Map data = json.decode(response.body);
+    var status = data['status'];
+    if(status==true)
+    {
+      setState(() {
+        Fluttertoast.showToast(msg: data['message']);
+        getAllPost();
+        count=data['like_count'];
+      });
+    }
+
+  }
+  Future doBookmark(String id)async
+  {
+    final _prefs = await SharedPreferences.getInstance();
+    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":id});
+    var response = await http.post(
+        "https://artist.devclub.co.in/api/Feed_api/do_bookmark",
+        body: res);
+    Map data = json.decode(response.body);
+    var status = data['status'];
+    if(status==true)
+    {
+      setState(() {
+        Fluttertoast.showToast(msg: data['message']);
+        getAllPost();
+
+      });
+    }
+
   }
   @override
   void initState() {
@@ -114,32 +158,81 @@ class _AddFeedState extends State<AddFeed> {
              SizedBox(height: 5,),
              Row(
                children: [
-                 Padding(
-                   padding: const EdgeInsets.only(left: 5),
-                   child: Icon(Icons.favorite_border,size: 20,color: Colors.black,),
+                 InkWell(
+                   onTap: (){
+                    setState(() {
+                      _isLoading==true;
+                      doLike(data1[index]['id']);
+                    });
+                     if (data1[index]['is_like'] == 0) {
+                       setState(() {
+                         data1[index]['is_like'] = 1;
+                       });
+                     } else if (data1[index]['is_like'] == 1) {
+                       setState(() {
+                         data1[index]['is_like'] = 0;
+                         print(
+                             "Tab working here${widget.character.is_like}");
+                       });
+                     }
+                   },
+                   child:data1[index]['is_like']==1?Padding(
+                     padding: const EdgeInsets.only(left: 5),
+                     child: Icon(Icons.favorite,size: 20,color: Colors.red,),
+                   ):Padding(
+                     padding: const EdgeInsets.only(left: 5),
+                     child: Icon(Icons.favorite_border,size: 20,color: Colors.black,),
+                   ),
                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Icon(
-                     FontAwesomeIcons.comment,
-                     size: 18,
-                      color: Colors.black,
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(data: data1[index],)));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Icon(
+                       FontAwesomeIcons.comment,
+                       size: 18,
+                        color: Colors.black,
                  ),
+                    ),
                   ),
                  Padding(
                    padding: const EdgeInsets.only(left: 20),
                    child: Icon(FontAwesomeIcons.shareAlt,size: 18,  color: Colors.black,),
                  ),
                  Spacer(),
-                 Padding(
-                   padding: const EdgeInsets.only(right: 10),
-                   child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.grey,),
+                 InkWell(
+                   onTap: (){
+                     setState(() {
+                       _isLoading==true;
+                       doBookmark(data1[index]['id']);
+                     });
+                     if (data1[index]['is_bookmark'] == 0) {
+                       setState(() {
+                         data1[index]['is_bookmark'] = 1;
+                       });
+                     } else if (data1[index]['is_bookmark'] == 1) {
+                       setState(() {
+                         data1[index]['is_bookmark'] = 0;
+                         print(
+                             "Tab working here${widget.character.is_like}");
+                       });
+                     }
+                   },
+                   child: data1[index]['is_bookmark']==1?Padding(
+                     padding: const EdgeInsets.only(right: 10),
+                     child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.red,),
+                   ):Padding(
+                     padding: const EdgeInsets.only(right: 10),
+                     child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.grey,),
+                   ),
                  )
                ],
              ),
              Padding(
                padding: const EdgeInsets.only(left: 5,top: 10),
-               child: Text('451 likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+               child: Text('${data1[index]['like_count']??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
              ),
              Padding(
                padding: const EdgeInsets.only(top: 10),

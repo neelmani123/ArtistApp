@@ -68,11 +68,11 @@ class _SharePostState extends State<SharePost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Color(0xFF32353C),
       appBar:PreferredSize(
         preferredSize: Size.fromHeight(100.0),
         child: AppBar(
-          backgroundColor: Colors.grey,
+          backgroundColor: Color(0xFF32353C),
           //backgroundColor: Colors.grey,
           title: Text('Share Post'),
          flexibleSpace:  Container(
