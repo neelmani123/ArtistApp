@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:http/http.dart' as http;
 import 'package:artist_icon/screens/AddLanguage/addLanguage.dart';
 import 'package:artist_icon/screens/AddSkill/addskill.dart';
 import 'package:artist_icon/screens/Interest/AddInterest.dart';
@@ -34,6 +34,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
   HttpService _httpService = HttpService();
   final TextEditingController resume_headlines = new TextEditingController();
   Data data;
+  String valuechose;
   bool is_loading=true;
   File file;
   String fileName;
@@ -58,6 +59,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
   void initState() {
     super.initState();
     getDataApi();
+    //_addlanguage();
   }
 
   @override
@@ -698,9 +700,8 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           ),
                           child: Center(
                             child: InkWell(
-                              onTap: (){
-                                print("Language Tab Click ");
-                                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Addlanguage()));
+                              onTap: () async {
+                                await showInformationDialog(context);
                               },
                               child: Text(" + Add",
                                   style: TextStyle(fontSize: 16,color: Color(fountColor))),
@@ -783,7 +784,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
       ),
     );
   }
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> _update_headline(BuildContext context) async {
     var res = await _httpService.uploadHeadline(resume_headlines.text);
     if(res.status == true){
@@ -798,4 +799,158 @@ class EditProfileScreenState extends State<EditProfileScreen>{
     }
   }
 
+  Future<void> showInformationDialog(BuildContext context) async {
+    Map<String, bool> languages= {
+      "write":false, "read": false, "speak":false,
+    };
+
+    return await showDialog(context: context,
+        builder: (context){
+          final TextEditingController _textEditingController = TextEditingController();
+          // bool isChecked = ;
+          return StatefulBuilder(builder: (context,setState){
+            return AlertDialog(
+              content: Form(
+                key: _formKey,
+                child:
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                     /*Container(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width,
+                        //color: Colors.black12,
+                        child: DropdownButton<String>(
+                          hint: Text('Select Language                      '),
+                          items: <String>['English', 'Hindi', 'Americal', 'france'].map((String  dropDownStringItems) {
+                            return new DropdownMenuItem<String>(
+                              value: dropDownStringItems,
+                              child: new Text( dropDownStringItems),
+                            );
+                          }).toList(),
+                          onChanged: (newvalue) {
+                            setState((){
+                              valuechose=newvalue;
+                            });
+                          },
+                          value: valuechose,
+                        ),
+                      ),*/
+                      // SizedBox(height: 40,),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 200,
+                        child: ListView(
+                          children: languages.keys.map((String key) {
+                            return new CheckboxListTile(
+                              //checkColor: Colors.green,
+                              title: Text(key),
+                              value: languages[key],
+                              onChanged: (bool newvalue) {
+                                setState(() {
+                                  languages[key] = newvalue;
+                                  print("language->"+languages[key].toString());
+                                });},);
+                          }).toList(),),),
+                      Container(
+                        padding: EdgeInsets.only(left: 10,right: 10),
+                        height: 50,
+                        child: /*ListView(
+                  children: values.keys.map((String key) {
+                    return new CheckboxListTile(
+                      title: Text(key),
+                      value: values[key],
+                      onChanged: (bool value) {
+                        setState(() {
+                          values[key] = value;
+                          print(values[key]);
+                        });
+                      },
+                    );
+                  }).toList(),
+              ),*/TextFormField(
+                          controller: _textEditingController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(color: Colors.black),
+                            labelText: "Language",
+                            hintText: "Language",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide(
+                                color: Color(fountColor),
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide(
+                                color: Color(fountColor),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20,),
+                      Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.only(top: 20,bottom: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.10),),
+                          // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
+                          onPressed: () async{
+                            setState(() {
+                              _isLoading=true;
+                              _addlanguage(_textEditingController.text);
+                              // languages.clear();
+                             // Fluttertoast.showToast(msg: "Update Successfully");
+                            });
+                          },
+                          color: Color(fountColor),
+                          // textColor: Colors.white,
+                          child: Text("Submit",
+                              style: TextStyle(fontSize: 20,color: Colors.white)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+            );
+          });
+        });
+  }
+  bool _isLoading;
+  Future _addlanguage(String text)async{
+    final prefs = await SharedPreferences.getInstance();
+    print("Token Is :${prefs.getString('userID')}");
+    /*Map reqBody =({
+      "jwtToken":prefs.getString('userID'),
+      "languages": "eng",
+      "is_read":  "1",
+      "is_write": 1,
+      "is_speak": 1,
+    });*/
+    final res = jsonEncode({"jwtToken": prefs.getString('userID'),
+      "languages":text,
+      "is_read":"1",
+      "is_write":"1",
+      "is_speak":"1"});
+    var response=await http.post("https://artist.devclub.co.in/api/Artist_api/add_languages",body: res);
+    Map data=json.decode(response.body);
+    print("response is:${data}");
+    if (data['status'] == true) {
+      _isLoading = false;
+      print(data['message']);
+      Fluttertoast.showToast(msg: data['message']);
+      /*Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditProfileScreen()));*/
+
+    }
+  }
 }

@@ -57,7 +57,7 @@ class _JobPostListState extends State<JobPostList> {
       backgroundColor: Colors.white,
      // appBar: AppBar(title: Text("Job Post List"),),
       body: _isLoading==true?Container(child: Center(child: CircularProgressIndicator(),),):ListView.builder(
-        itemCount: data1.length,
+        itemCount: data1.length-1,
           itemBuilder: (context,index){
             return Card(
               color: colors[index],
@@ -78,7 +78,7 @@ class _JobPostListState extends State<JobPostList> {
                           image: new DecorationImage(
                               fit: BoxFit.fill,
                               image: new NetworkImage(
-                                  "https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
+                                  "${data1[index]['img']??''}"
                               )
                           ),
                         ),

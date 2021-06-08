@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/api_helper/http_service.dart';
 import 'package:artist_icon/screens/feed/CommentScreen.dart';
+import 'package:artist_icon/screens/feed/UserFeed.dart';
 import 'package:artist_icon/screens/feed/model/Data.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -112,7 +113,7 @@ class _AddFeedState extends State<AddFeed> {
                      image: new DecorationImage(
                          fit: BoxFit.fill,
                          image: new NetworkImage(
-                             "https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
+                             "${data1[index]['user_image']??''}"
                          ),
 
                      ),
@@ -141,17 +142,22 @@ class _AddFeedState extends State<AddFeed> {
                child: Text(data1[index]['text']??'',style: TextStyle(color: Colors.grey),),
              ),
            SizedBox(height: 10,),
-           Container(
-             width: MediaQuery.of(context).size.width,
-             height: 200,
-             decoration: new BoxDecoration(
-               shape: BoxShape.rectangle,
-               image: new DecorationImage(
-                 fit: BoxFit.cover,
-                 image: new NetworkImage(
-                     "https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
-                 ),
+           InkWell(
+             onTap: (){
+               Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>UserFeed(id: data1[index]['id'],)));
+             },
+             child: Container(
+               width: MediaQuery.of(context).size.width,
+               height: 250,
+               decoration: new BoxDecoration(
+                 shape: BoxShape.rectangle,
+                 image: new DecorationImage(
+                   fit: BoxFit.cover,
+                   image: new NetworkImage(
+                       "${data1[index]['file_url']??''}"
+                   ),
 
+                 ),
                ),
              ),
            ),

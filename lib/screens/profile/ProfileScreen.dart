@@ -33,7 +33,6 @@ class ProfileScreenState extends State<ProfileScreen>{
     }else{
       is_loading=false;
       Fluttertoast.showToast(msg: "Something went wrong");
-
     }
   }
 
@@ -72,8 +71,8 @@ class ProfileScreenState extends State<ProfileScreen>{
                     ),*/
                     CircleAvatar(
                       radius: 35,
-
-                      child: ClipOval(child: Image.network(data.profile_img??'', height: 60, width: 60, fit: BoxFit.cover,),),
+                      child: ClipOval(
+                        child: Image.network(data.profile_img??'', height: 60, width: 60, fit: BoxFit.cover,),),
                     ),
                     SizedBox(width: 10,),
                     Padding(

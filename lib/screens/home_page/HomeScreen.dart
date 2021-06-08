@@ -1,5 +1,7 @@
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/edit_profile/EditProfileScreen.dart';
+import 'package:artist_icon/screens/feed/Bookmark.dart';
+import 'package:artist_icon/screens/feed/MyFeed.dart';
 import 'package:artist_icon/screens/feed/GetAllFeed.dart';
 import 'package:artist_icon/screens/feed/AllJobPostList.dart';
 import 'package:artist_icon/screens/feed/AppliedJobList.dart';
@@ -122,15 +124,21 @@ class _HomeScreenState extends State<HomeScreen> {
                },
              ),
              ListTile(
-               title: Text('Get Feed',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               title: Text('Get Bookmark',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
                onTap: () {
-                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>AddFeed()));
+                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>Bookmark()));
                },
              ),
              ListTile(
                title: Text('Add Feed',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>SharePost()));
+               },
+             ),
+             ListTile(
+               title: Text('My Feed',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               onTap: () {
+                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>MyFeed()));
                },
              ),
            ],

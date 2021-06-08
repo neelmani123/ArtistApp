@@ -15,38 +15,48 @@ class SharePost extends StatefulWidget {
 }
 
 class _SharePostState extends State<SharePost> {
-  File _image;
+  PickedFile _imageFiler;
+  final ImagePicker _picker = ImagePicker();
   bool _isLoading;
   String name1;
+  String imageUrl="";
+
   TextEditingController mind_controller=new TextEditingController();
+  //Here get Image from Camera and Gallery
+  Future getImage1(source) async {
+    final pickedFile = await _picker.getImage(source: source);
+    setState(() {
+      _imageFiler = pickedFile;
+      print("Pic Name:${File(_imageFiler.path)}");
+    });
+  }
 
   Future _uploadImage()async
   {
     _isLoading=true;
     final _prefs = await SharedPreferences.getInstance();
-    String fileName1 = _image.path.split('/').last;
+    String fileName1 = _imageFiler.path.split('/').last;
     try {
       FormData formData = new FormData.fromMap({
         "jwtToken": _prefs.getString('userID'),
-        /*"file_url":await  MultipartFile.fromFile(
-            _image.path,filename: fileName1),*/
-        "file_url":"",
+        "file_url":await  MultipartFile.fromFile(
+            _imageFiler.path,filename: fileName1),
         "text":mind_controller.text,
-        "media_type":"jpg",
+        "media_type":"1",
       });
       Response response = await Dio().post(
           "https://artist.devclub.co.in/api/Feed_api/add_feed",
-          data: formData);
+          data: formData,);
       print("File Upload Response $response");
-      setState(() {
-        Fluttertoast.showToast(msg: "Post  Successfully.");
-        _isLoading=false;
-      });
-     // Map<String,dynamic> data=jsonDecode(response.data);
-      // var result=data['result'];
-     // var sms=data['message'];
-     // print("Result is:${sms}");
-
+      Map<String, dynamic> data = new Map<String, dynamic>.from(json.decode(response.toString()));
+      var result=data['status'];
+      if(data['status']==true)
+      {
+        setState(() {
+          _isLoading=false;
+          Fluttertoast.showToast(msg: data['message']);
+        });
+      }
     } catch (e) {
       print("Exception caught $e");
     }
@@ -68,7 +78,7 @@ class _SharePostState extends State<SharePost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF32353C),
+      backgroundColor: Color(0xFF32353c),
       appBar:PreferredSize(
         preferredSize: Size.fromHeight(100.0),
         child: AppBar(
@@ -151,10 +161,20 @@ class _SharePostState extends State<SharePost> {
               child: Container(
                 height: 200,
                 width: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: _image == null
-                      ? Text('No image selected.')
-                      : Image.file(File(_image.path)),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                  /*child: CircleAvatar(
+                      radius: 50,
+                      backgroundImage: _imageFiler == null
+                          ? NetworkImage(imageUrl)
+                          : FileImage(File(_imageFiler.path))),*/
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: _imageFiler==null?NetworkImage('https://images.unsplash.com/photo-1547665979-bb809517610d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80'):FileImage(File(_imageFiler.path)),
+                        fit: BoxFit.cover
+                    ) ,
+                  ),
                 ),
               ),
             ),
@@ -208,12 +228,5 @@ class _SharePostState extends State<SharePost> {
       ),
     );
   }
-  //Here get Image from Camera and Gallery
-  void getImage1(source) async {
-    File image =  await ImagePicker.pickImage(source: source);
-    setState(() {
-      _image = image;
-      print("Pic Name:${File(_image.path)}");
-    });
-  }
+
 }

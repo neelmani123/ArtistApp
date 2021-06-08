@@ -18,11 +18,10 @@ class EditIntroduction extends StatefulWidget {
 class _EditIntroductionState extends State<EditIntroduction> {
   @override
   bool _isLoading;
-  //PickedFile _imageFiler;
- // String _imageFiler;
-  File _image;
-  final formKey = new GlobalKey<FormState>();
+  PickedFile _imageFiler;
   final ImagePicker _picker = ImagePicker();
+  String imageUrl="";
+  final formKey = new GlobalKey<FormState>();
   TextEditingController name_controlle=new TextEditingController();
   TextEditingController contact_controller=new TextEditingController();
   TextEditingController profile_controller=new TextEditingController();
@@ -32,7 +31,14 @@ class _EditIntroductionState extends State<EditIntroduction> {
   TextEditingController exp_year_controller=new TextEditingController();
   TextEditingController exp_month_controller=new TextEditingController();
   final TextEditingController _gender = TextEditingController();
-
+//Here get Image from Camera and Gallery
+  void getImage1(source) async {
+    final pickedFile = await _picker.getImage(source: source);
+    setState(() {
+      _imageFiler = pickedFile;
+      print("Pic Name:${File(_imageFiler.path)}");
+    });
+  }
 
   Widget bottomSheet() {
     return Container(
@@ -81,24 +87,24 @@ class _EditIntroductionState extends State<EditIntroduction> {
   {
     _isLoading=true;
     final _prefs = await SharedPreferences.getInstance();
-    //String fileName1 = _image.path.split('/').last;
+    String fileName1 = _imageFiler.path.split('/').last;
     try {
       FormData formData = new FormData.fromMap({
         "jwtToken": _prefs.getString('userID'),
-        /*"profile_img":await  MultipartFile.fromFile(
-            _image.path,filename: fileName1),*/
+        "profile_img":await  MultipartFile.fromFile(
+            _imageFiler.path,filename: fileName1),
         "name":name_controlle.text,
         "gender":"male",
         "profile_summary":profile_controller.text,
         "skill":"php",
         "home_town":home_controller.text,
         "perfect_work_location":work_location_controller.text,
-        "your_interests":"ssr",
+        "your_interests":_prefs.getString('interest'),
         "resume_headline":resume_controller.text,
         "experience_year":exp_year_controller.text,
         "experience_month":exp_month_controller.text,
         "resume":"",
-        "profile_img":""
+
       });
       Response response = await Dio().post(
           "https://artist.devclub.co.in/api/Artist_api/profile_update",
@@ -143,9 +149,9 @@ class _EditIntroductionState extends State<EditIntroduction> {
                           backgroundColor: Colors.blue,
                           child: CircleAvatar(
                               radius: 50,
-                              backgroundImage: _image == null
-                                  ? NetworkImage("https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg")
-                                  : FileImage(File(_image.path))),
+                              backgroundImage: _imageFiler == null
+                                  ? NetworkImage(imageUrl)
+                                  : FileImage(File(_imageFiler.path))),
                         ),
                       ),
                       Positioned(
@@ -533,12 +539,5 @@ class _EditIntroductionState extends State<EditIntroduction> {
       )
     );
   }
-  //Here get Image from Camera and Gallery
-  void getImage1(source) async {
-    File image =  await ImagePicker.pickImage(source: source);
-    setState(() {
-       _image = image;
-       print("Pic Name:${File(_image.path)}");
-    });
-  }
+
 }
