@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/api_helper/http_service.dart';
 import 'package:artist_icon/screens/feed/CommentScreen.dart';
+import 'package:artist_icon/screens/feed/TutorialPAge.dart';
 import 'package:artist_icon/screens/feed/UserFeed.dart';
 import 'package:artist_icon/screens/feed/model/Data.dart';
 import 'package:flutter/material.dart';
@@ -252,12 +253,21 @@ class _AddFeedState extends State<AddFeed> {
                      padding: const EdgeInsets.only(left: 10),
                      child: Text('taht neon life!'),
                    ),
-                   Padding(
+                  /* Padding(
                      padding: const EdgeInsets.only(left: 10),
                      child: Text('View comments',style: TextStyle(fontWeight:FontWeight.bold,color: Color(fountColor)),),
-                   ),
+                   ),*/
                  ],
                ),
+             ),
+             SizedBox(height: 5,),
+             Container(
+               child: RaisedButton(
+                   color: Color(fountColor),
+                   child: Text("${data1[index]['is_tutorial']} Tutorial",style: TextStyle(color: Colors.white),),
+                   onPressed: (){
+                     Navigator.push(context, MaterialPageRoute(builder: (context)=>TutorialPAge(data: data1[index],)));
+                   }),
              ),
              SizedBox(height: 10,)
            ],

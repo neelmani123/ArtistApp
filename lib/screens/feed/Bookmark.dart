@@ -236,10 +236,10 @@ class _BookmarkState extends State<Bookmark> {
                          padding: const EdgeInsets.only(left: 10),
                          child: Text('taht neon life!'),
                        ),
-                       Padding(
+                      /* Padding(
                          padding: const EdgeInsets.only(left: 10),
                          child: Text('View comments',style: TextStyle(fontWeight:FontWeight.bold,color: Color(fountColor)),),
-                       ),
+                       ),*/
                      ],
                    ),
                  ),
