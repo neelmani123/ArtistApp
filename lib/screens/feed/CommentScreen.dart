@@ -15,6 +15,7 @@ class CommentScreen extends StatefulWidget {
 
 class _CommentScreenState extends State<CommentScreen> {
   TextEditingController comment_controller=new TextEditingController();
+  List data1;
 
   Future doComment()async
   {
@@ -29,9 +30,37 @@ class _CommentScreenState extends State<CommentScreen> {
     {
       setState(() {
         Fluttertoast.showToast(msg: data['message']);
+        getAllPost();
+        comment_controller.clear();
       });
     }
 
+  }
+  Future getAllPost()async
+  {
+    final _prefs = await SharedPreferences.getInstance();
+    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"pages":"1"});
+    var response = await http.post(
+        "https://artist.devclub.co.in/api/Feed_api/get_all_post",
+        body: res);
+    Map data = json.decode(response.body);
+    print(data);
+    var status = data['status'];
+    print('Status is:${status}');
+
+    if(status==true)
+    {
+      setState(() {
+        data1=data['data'];
+      });
+
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    getAllPost();
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {
@@ -89,10 +118,10 @@ class _CommentScreenState extends State<CommentScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(widget.data['comment_data'][index]['name']??'',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                    Text(widget.data[index]['comment_data']['name']??'',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 5),
-                                      child: Text(widget.data['comment_data'][index]['comments']??'',style: TextStyle(color: Colors.black),),
+                                      child: Text(widget.data[index]['comment_data']['comments']??'',style: TextStyle(color: Colors.black),),
                                     )
                                   ],
                                 ),

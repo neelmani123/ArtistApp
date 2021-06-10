@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,7 +26,7 @@ class _AddFeedState extends State<AddFeed> {
   bool _isLoading=true;
   List data1;
   String user_id="";
-  int count;
+  int pageCount;
   Future getAllPost()async
   {
     final _prefs = await SharedPreferences.getInstance();
@@ -37,10 +38,12 @@ class _AddFeedState extends State<AddFeed> {
     print(data);
     var status = data['status'];
     print('Status is:${status}');
+
     if(status==true)
     {
       setState(() {
         data1=data['data'];
+        pageCount=data['page_count'];
        // print("UserId Is:${data[0]['id']}");
         _isLoading=false;
       });
@@ -61,7 +64,7 @@ class _AddFeedState extends State<AddFeed> {
       setState(() {
         Fluttertoast.showToast(msg: data['message']);
         getAllPost();
-        count=data['like_count'];
+       // count=data['like_count'];
       });
     }
 
@@ -106,23 +109,33 @@ class _AddFeedState extends State<AddFeed> {
            children: [
              Row(
                children: [
-                 new Container(
-                   height: 40.0,
-                   width: 40.0,
-                   decoration: new BoxDecoration(
-                     shape: BoxShape.circle,
-                     image: new DecorationImage(
-                         fit: BoxFit.fill,
-                         image: new NetworkImage(
-                             "${data1[index]['user_image']??''}"
-                         ),
+                 InkWell(
+                   onTap: (){
+                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>UserFeed(id: data1[index]['user_id'],page_count:pageCount,)));
+                   },
+                   child: new Container(
+                     height: 40.0,
+                     width: 40.0,
+                     decoration: new BoxDecoration(
+                       shape: BoxShape.circle,
+                       image: new DecorationImage(
+                           fit: BoxFit.fill,
+                           image: new NetworkImage(
+                               "${data1[index]['user_image']??''}"
+                           ),
 
+                       ),
                      ),
                    ),
                  ),
-                 Padding(
-                   padding: const EdgeInsets.only(left: 10),
-                   child: Text(data1[index]['user_name']??''),
+                 InkWell(
+                   onTap: (){
+                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>UserFeed(id: data1[index]['user_id'],page_count:pageCount,)));
+                   },
+                   child: Padding(
+                     padding: const EdgeInsets.only(left: 10),
+                     child: Text(data1[index]['user_name']??''),
+                   ),
                  ),
                  Spacer(),
                  Padding(
@@ -143,11 +156,7 @@ class _AddFeedState extends State<AddFeed> {
                child: Text(data1[index]['text']??'',style: TextStyle(color: Colors.grey),),
              ),
            SizedBox(height: 10,),
-           InkWell(
-             onTap: (){
-               Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>UserFeed(id: data1[index]['id'],)));
-             },
-             child: Container(
+            /* Container(
                width: MediaQuery.of(context).size.width,
                height: 250,
                decoration: new BoxDecoration(
@@ -160,8 +169,14 @@ class _AddFeedState extends State<AddFeed> {
 
                  ),
                ),
+             ),*/
+             Container(
+               width: MediaQuery.of(context).size.width,
+               height: 250,
+               child: PhotoView(
+                   imageProvider: NetworkImage("${data1[index]['file_url']??''}")),
              ),
-           ),
+
              SizedBox(height: 5,),
              Row(
                children: [
