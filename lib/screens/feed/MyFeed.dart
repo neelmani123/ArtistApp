@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:artist_icon/screens/Color.dart';
+import 'package:artist_icon/screens/feed/CommentScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -51,6 +52,7 @@ class _MyFeedState extends State<MyFeed> {
     {
       setState(() {
         Fluttertoast.showToast(msg: data['message']);
+        getAllPost();
       });
     }
 
@@ -72,6 +74,27 @@ class _MyFeedState extends State<MyFeed> {
       });
     }
 
+  }
+  Future getAllPost()async
+  {
+    final _prefs = await SharedPreferences.getInstance();
+    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"pages":"1"});
+    var response = await http.post(
+        "https://artist.devclub.co.in/api/Feed_api/get_all_post",
+        body: res);
+    Map data = json.decode(response.body);
+    print(data);
+    var status = data['status'];
+    print('Status is:${status}');
+    if(status==true)
+    {
+      setState(() {
+        data1=data['data'];
+        // print("UserId Is:${data[0]['id']}");
+        _isLoading=false;
+      });
+
+    }
   }
   @override
   void initState() {
@@ -175,7 +198,7 @@ class _MyFeedState extends State<MyFeed> {
                       ),
                       InkWell(
                         onTap: (){
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(data: data1[index],)));
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(data: data1[index],)));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),

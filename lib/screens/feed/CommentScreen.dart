@@ -15,6 +15,7 @@ class CommentScreen extends StatefulWidget {
 
 class _CommentScreenState extends State<CommentScreen> {
   TextEditingController comment_controller=new TextEditingController();
+
   Future doComment()async
   {
     final _prefs = await SharedPreferences.getInstance();
@@ -68,7 +69,7 @@ class _CommentScreenState extends State<CommentScreen> {
                                   image: new DecorationImage(
                                       fit: BoxFit.fill,
                                       image: new NetworkImage(
-                                          "https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
+                                          "${widget.data['user_image']??''}"
                                       )
                                   ),
                                 ),
@@ -98,7 +99,7 @@ class _CommentScreenState extends State<CommentScreen> {
                               )
                             ],
                           ),
-                          Container(
+                        /*  Container(
                             margin: EdgeInsets.symmetric(horizontal: 90),
                             child: Row(
                               children: [
@@ -113,7 +114,7 @@ class _CommentScreenState extends State<CommentScreen> {
                                 )
                               ],
                             ),
-                          )
+                          )*/
 
                         ],
                       );

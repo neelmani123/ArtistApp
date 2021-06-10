@@ -1,4 +1,7 @@
+import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
+
 class TutorialPAge extends StatefulWidget {
   final Map<dynamic,dynamic> data;
   const TutorialPAge({this.data,Key key}) : super(key: key);
@@ -64,7 +67,12 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: 200,
-                    decoration: new BoxDecoration(
+                    child: BetterPlayer.network("${widget.data['product_data'][index]['product']}",
+                      betterPlayerConfiguration: BetterPlayerConfiguration(
+                        aspectRatio: 16 / 9,
+                      ),),
+
+                    /*decoration: new BoxDecoration(
                       shape: BoxShape.rectangle,
                       image: new DecorationImage(
                         fit: BoxFit.cover,
@@ -73,7 +81,7 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                         ),
 
                       ),
-                    ),
+                    ),*/
                   ),
                   SizedBox(height: 5,),
                   /*Row(
