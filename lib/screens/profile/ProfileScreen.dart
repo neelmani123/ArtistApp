@@ -28,6 +28,8 @@ class ProfileScreenState extends State<ProfileScreen>{
     if(res.status == true){
       setState(() {
         data=res.data;
+        prefs.setString('name1', data.name);
+        prefs.setString('img', data.profile_img);
         is_loading=false;
       });
     }else{

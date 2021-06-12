@@ -213,7 +213,7 @@ class _UserFeedState extends State<UserFeed> {
                 ),
                 InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(data: data2[index],)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(comment_data: data2[index],)));
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),

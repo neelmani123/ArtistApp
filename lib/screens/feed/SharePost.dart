@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:artist_icon/screens/Color.dart';
+import 'package:artist_icon/screens/feed/GetAllFeed.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
+import 'package:file_picker/file_picker.dart';
 
 class SharePost extends StatefulWidget {
   const SharePost({Key key}) : super(key: key);
@@ -19,11 +21,13 @@ class _SharePostState extends State<SharePost> {
   PickedFile _imageFiler;
   final ImagePicker _picker = ImagePicker();
   bool _isLoading;
-  String name1;
+  String name;
   String imageUrl="";
   bool rememberMe = false;
   bool visibilityTag = false;
   bool _validate = false;
+  FileType fileType;
+  String path;
 
   TextEditingController mind_controller=new TextEditingController();
   TextEditingController price=new TextEditingController();
@@ -43,13 +47,13 @@ class _SharePostState extends State<SharePost> {
   {
     _isLoading=true;
     final _prefs = await SharedPreferences.getInstance();
-    String fileName1 = _imageFiler.path.split('/').last;
+    String fileName1 = path.split('/').last;
     String videoName1 = videoFile.path.split('/').last;
     try {
       FormData formData = new FormData.fromMap({
         "jwtToken": _prefs.getString('userID'),
         "file_url":await  MultipartFile.fromFile(
-            _imageFiler.path,filename: fileName1),
+            path,filename: fileName1),
         "text":mind_controller.text,
         "media_type":"1",
         "is_tutorial":"1",
@@ -71,18 +75,33 @@ class _SharePostState extends State<SharePost> {
         setState(() {
           _isLoading=false;
           Fluttertoast.showToast(msg: data['message']);
+         Navigator.push(context, MaterialPageRoute(builder: (context)=>AddFeed()));
         });
       }
     } catch (e) {
       print("Exception caught $e");
     }
   }
-
-  Future getData()async
+  void _openFile()async
   {
-    final _prefs = await SharedPreferences.getInstance();
-    name1=_prefs.get("name");
-    print("Name is:${name1}");
+    FilePickerResult result = await FilePicker.platform.pickFiles();
+    if(result != null) {
+      setState(() {
+        path = result.files.single.path ;
+      });
+      print("File Name is:${path}");
+    } else {
+      // User canceled the picker
+    }
+  }
+
+  Future get_name() async{
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      name=prefs.get('name1');
+      imageUrl=prefs.get('img');
+    });
+    print("Name is${name}");
   }
   VideoPlayerController _controller;
   File videoFile;
@@ -106,19 +125,24 @@ class _SharePostState extends State<SharePost> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getData();
+    get_name();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF32353c),
+     // backgroundColor: Color(0xFF32353c),
       appBar:PreferredSize(
         preferredSize: Size.fromHeight(100.0),
         child: AppBar(
-          backgroundColor: Color(0xFF32353C),
+          leading: InkWell(
+            onTap: (){
+              Navigator.pop(context);
+            },
+              child: Icon(Icons.arrow_back,color: Colors.black)),
+         // backgroundColor: Color(0xFF32353C),
           //backgroundColor: Colors.grey,
-          title: Text('Share Post',style: TextStyle(color: Colors.white),),
+          title: Text('Share Post',style: TextStyle(color: Colors.black),),
          flexibleSpace:  Container(
            decoration: BoxDecoration(
              borderRadius: BorderRadius.all(
@@ -130,18 +154,26 @@ class _SharePostState extends State<SharePost> {
             // color: Colors.grey,
              onPressed: (){
               setState(() {
-                /*title.text.isEmpty ? _validate = true : _validate = false;
-                price.text.isEmpty ? _validate = true : _validate = false;
-                desc.text.isEmpty ? _validate = true : _validate = false;
-                validity.text.isEmpty ? _validate = true : _validate = false;*/
-              if(price.text.length==0||title.text.length==0||desc.text.length==0||validity.text.length==0){
-                print('Price is Empty');
-                Fluttertoast.showToast(msg: "Fill All Fields");
+                if(mind_controller.text.length==0||path==null){
+                  Fluttertoast.showToast(msg: "Fill whats on your mind and picture");
+                }
+                else if(visibilityTag==true)
+                  {
+                    if(price.text.length==0||title.text.length==0||desc.text.length==0||validity.text.length==0||_controller==null){
+                     Fluttertoast.showToast(msg: "Fill All Fields And Video");
               }
-              else{
-                _isLoading=true;
-                _uploadImage();
-              }
+                    else
+                      {
+                        _isLoading=true;
+                        _uploadImage();
+                      }
+                  }
+                else
+                  {
+                    _isLoading=true;
+                    _uploadImage();
+                  }
+
               });
              },
              child: Text('Post Upload'),),
@@ -166,7 +198,7 @@ class _SharePostState extends State<SharePost> {
                       image: new DecorationImage(
                         fit: BoxFit.fill,
                         image: new NetworkImage(
-                            "https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
+                            "${imageUrl??''}"
                         ),
 
                       ),
@@ -174,7 +206,7 @@ class _SharePostState extends State<SharePost> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Text('Diya Roy',style: TextStyle(color: Colors.white),),
+                    child: Text('${name??''}',style: TextStyle(color: Colors.black),),
                   )
                 ],
               ),
@@ -183,44 +215,89 @@ class _SharePostState extends State<SharePost> {
               padding: EdgeInsets.only(left: 10,top: 10),
               child: TextField(
                 controller: mind_controller,
-                maxLines: 10,
-                style: TextStyle(color: Colors.white),
+                maxLines: 5,
+                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: "What's On Your Mind",
+                  hintText: "What's On Your Mind?",
                   hintStyle: TextStyle(
-                    color: Colors.white
+                    color: Colors.black
                   )
 
                 ),
               ),
             ),
-            InkWell(
+            /*InkWell(
               onTap: (){
                 showModalBottomSheet(
                     context: context,
                     builder: (builder) => bottomSheet());
               },
-              child: Container(
-                height: 200,
-                width: MediaQuery.of(context).size.width,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  /*child: CircleAvatar(
+              child:
+            ),*/
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 5),
+              width: MediaQuery.of(context).size.width,
+              height: 200,
+              /*child: CircleAvatar(
                       radius: 50,
                       backgroundImage: _imageFiler == null
                           ? NetworkImage(imageUrl)
                           : FileImage(File(_imageFiler.path))),*/
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: _imageFiler==null?NetworkImage('https://images.unsplash.com/photo-1547665979-bb809517610d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80'):FileImage(File(_imageFiler.path)),
-                        fit: BoxFit.cover
-                    ) ,
-                  ),
-                ),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                image: DecorationImage(
+                    image: path==null?NetworkImage(''):FileImage(File(path)),
+                    fit: BoxFit.cover
+                ) ,
               ),
             ),
+        Column(
+          children: [
+          Container(
+          height: 100.0,
+          width: double.infinity,
+          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            children: [
+              Text(
+                "Choose  photo/Video",
+                style: TextStyle(fontSize: 20.0),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton.icon(
+                    icon: Icon(Icons.camera, color: Colors.green),
+                    onPressed: () {
+                      getImage1(ImageSource.camera);
+                    },
+                    label: Text(
+                      "Camera",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  TextButton.icon(
+                    icon: Icon(Icons.image, color: Colors.green),
+                    onPressed: () {
+                      //getImage1(ImageSource.gallery);
+                      _openFile();
+                     // Navigator.pop(context);
+
+                    },
+                    label: Text("Photo/Video",style: TextStyle(color: Colors.black),),
+                  ),
+                ],
+              )
+            ],
+          ),
+        )
+          ],
+        ),
+
         Container(
           padding: EdgeInsets.only(left: 5),
           child: Row(
@@ -245,7 +322,7 @@ class _SharePostState extends State<SharePost> {
                     });
                     Text('Make Tutorial ',style: TextStyle(color: Colors.white),);
                   }),
-                   Text('Make Tutorial ',style: TextStyle(color: Colors.white),)
+                   Text('Make Tutorial ',style: TextStyle(color: Colors.black),)
             ],
           ),
         ),
@@ -258,12 +335,12 @@ class _SharePostState extends State<SharePost> {
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: price,
-                      style: TextStyle(color: Colors.white
+                      style: TextStyle(color: Colors.black
                       ),
                       decoration: InputDecoration(
                         hintText: 'Price',
                         errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
 
                       ),
                     ),
@@ -274,12 +351,12 @@ class _SharePostState extends State<SharePost> {
                     child: TextField(
                       keyboardType: TextInputType.text,
                       controller: title,
-                      style: TextStyle(color: Colors.white
+                      style: TextStyle(color: Colors.black
                       ),
                       decoration: InputDecoration(
                         hintText: 'Title',
                         errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
 
                       ),
                     ),
@@ -290,12 +367,12 @@ class _SharePostState extends State<SharePost> {
                     child: TextField(
                       keyboardType: TextInputType.text,
                       controller: desc,
-                      style: TextStyle(color: Colors.white
+                      style: TextStyle(color: Colors.black
                       ),
                       decoration: InputDecoration(
                         hintText: 'Description',
                         errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
 
                       ),
                     ),
@@ -306,12 +383,12 @@ class _SharePostState extends State<SharePost> {
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: validity,
-                      style: TextStyle(color: Colors.white
+                      style: TextStyle(color: Colors.black
                       ),
                       decoration: InputDecoration(
                         hintText: 'Validity',
                         errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
 
                       ),
                     ),
@@ -330,13 +407,50 @@ class _SharePostState extends State<SharePost> {
                               ),
                             ):Container()
                           else
-                            Text('Click on pick video to selected video',style: TextStyle(color: Colors.white),),
-                          RaisedButton(
-                            color: Colors.white,
-                              child: Text('Pick Video',style: TextStyle(color: Colors.black)),
-                              onPressed: (){
-                                _pickVideo();
-                              })
+                          Column(
+                            children: [
+                              Container(
+                                height: 100.0,
+                                width: double.infinity,
+                                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Choose Tutorial Video",
+                                      style: TextStyle(fontSize: 20.0),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        TextButton.icon(
+                                          icon: Icon(Icons.camera, color: Colors.green),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          label: Text(
+                                            "Camera",
+                                            style: TextStyle(color: Colors.black),
+                                          ),
+                                        ),
+                                        TextButton.icon(
+                                          icon: Icon(Icons.image, color: Colors.green),
+                                          onPressed: () {
+                                            _pickVideo();
+                                            // Navigator.pop(context);
+
+                                          },
+                                          label: Text("Video",style: TextStyle(color: Colors.black),),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ]
                     ),
                   ),
@@ -386,6 +500,15 @@ class _SharePostState extends State<SharePost> {
                 },
                 label: Text("Gallery",style: TextStyle(color: Colors.black),),
               ),
+              TextButton.icon(
+                icon: Icon(Icons.video_collection_rounded, color: Colors.green),
+                onPressed: () {
+                  getImage1(ImageSource.gallery);
+                  Navigator.pop(context);
+
+                },
+                label: Text("Video",style: TextStyle(color: Colors.black),),
+              ),
             ],
           )
         ],
@@ -393,11 +516,6 @@ class _SharePostState extends State<SharePost> {
     );
   }
 
-  /*Widget tutorial(){
-    return Visibility(
-      visible: _isVisible,
-      child:
-    );
-  }*/
+
 
 }

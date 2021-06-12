@@ -3,14 +3,15 @@ import 'dart:convert';
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/api_helper/http_service.dart';
 import 'package:artist_icon/screens/feed/CommentScreen.dart';
+import 'package:artist_icon/screens/feed/PhotoView.dart';
 import 'package:artist_icon/screens/feed/TutorialPAge.dart';
 import 'package:artist_icon/screens/feed/UserFeed.dart';
 import 'package:artist_icon/screens/feed/model/Data.dart';
+import 'package:artist_icon/screens/feed/model/getAllPost/feed/Data.dart';
+import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,10 +25,28 @@ class AddFeed extends StatefulWidget {
 
 class _AddFeedState extends State<AddFeed> {
   bool _isLoading=true;
-  List data1;
+  //List data1;
   String user_id="";
   int pageCount;
-  Future getAllPost()async
+  HttpService _httpService = HttpService();
+  List<Dataa> data=[];
+
+  Future<void> allFeed_listApi() async {
+    final prefs = await SharedPreferences.getInstance();
+    var res = await _httpService.getPostData(jwtToken:prefs.getString('userID'),limit:"1");
+    if(res.status == true){
+      setState(() {
+        data= res.data;
+        print("Data is:${data }");
+        _isLoading=false;
+      });
+    }else{
+      Fluttertoast.showToast(msg: "Something went wrong");
+    }
+  }
+
+
+  /*Future getAllPost()async
   {
     final _prefs = await SharedPreferences.getInstance();
     final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"pages":"1"});
@@ -49,7 +68,7 @@ class _AddFeedState extends State<AddFeed> {
       });
 
     }
-  }
+  }*/
   Future doLike(String id)async
   {
     final _prefs = await SharedPreferences.getInstance();
@@ -63,7 +82,7 @@ class _AddFeedState extends State<AddFeed> {
     {
       setState(() {
         Fluttertoast.showToast(msg: data['message']);
-        getAllPost();
+        allFeed_listApi();
        // count=data['like_count'];
       });
     }
@@ -82,7 +101,7 @@ class _AddFeedState extends State<AddFeed> {
     {
       setState(() {
         Fluttertoast.showToast(msg: data['message']);
-        getAllPost();
+        allFeed_listApi();
 
       });
     }
@@ -91,7 +110,8 @@ class _AddFeedState extends State<AddFeed> {
   @override
   void initState() {
     // TODO: implement initState
-    getAllPost();
+    //getAllPost();
+    allFeed_listApi();
     super.initState();
   }
 
@@ -99,7 +119,7 @@ class _AddFeedState extends State<AddFeed> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _isLoading==true?Container(child: Center(child: CircularProgressIndicator(),),):ListView.builder(
-        itemCount: data1.length,
+        itemCount: data.length,
           itemBuilder: (context,index){
         return Card(
           elevation: 0,
@@ -111,7 +131,7 @@ class _AddFeedState extends State<AddFeed> {
                children: [
                  InkWell(
                    onTap: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>UserFeed(id: data1[index]['user_id'],page_count:pageCount,)));
+                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>UserFeed(id: data[index].user_id,page_count:pageCount,)));
                    },
                    child: new Container(
                      height: 40.0,
@@ -121,7 +141,7 @@ class _AddFeedState extends State<AddFeed> {
                        image: new DecorationImage(
                            fit: BoxFit.fill,
                            image: new NetworkImage(
-                               "${data1[index]['user_image']??''}"
+                               "${data[index].user_image??''}"
                            ),
 
                        ),
@@ -130,11 +150,11 @@ class _AddFeedState extends State<AddFeed> {
                  ),
                  InkWell(
                    onTap: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>UserFeed(id: data1[index]['user_id'],page_count:pageCount,)));
+                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>UserFeed(id: data[index].user_id,page_count:pageCount,)));
                    },
                    child: Padding(
                      padding: const EdgeInsets.only(left: 10),
-                     child: Text(data1[index]['user_name']??''),
+                     child: Text(data[index].user_name??''),
                    ),
                  ),
                  Spacer(),
@@ -153,29 +173,55 @@ class _AddFeedState extends State<AddFeed> {
              ),
              Padding(
                padding: const EdgeInsets.only(left: 5,top: 5),
-               child: Text(data1[index]['text']??'',style: TextStyle(color: Colors.grey),),
+               child: Text(data[index].text??'',style: TextStyle(color: Colors.grey),),
              ),
            SizedBox(height: 10,),
-            /* Container(
-               width: MediaQuery.of(context).size.width,
-               height: 250,
-               decoration: new BoxDecoration(
-                 shape: BoxShape.rectangle,
-                 image: new DecorationImage(
-                   fit: BoxFit.cover,
-                   image: new NetworkImage(
-                       "${data1[index]['file_url']??''}"
+             InkWell(
+               onTap: (){
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView1(image:data[index].file_url,)));
+               },
+               child: _isLoading==null?Container(
+                 width: MediaQuery.of(context).size.width,
+                 height: 250,
+                 decoration: new BoxDecoration(
+                   shape: BoxShape.rectangle,
+                   image: new DecorationImage(
+                     fit: BoxFit.cover,
+                     image: new NetworkImage(
+                         "${data[index].file_url??''}"
+                     ),
                    ),
-
                  ),
+               ):Container(
+                 width: MediaQuery.of(context).size.width,
+                 height: 200,
+                 child: BetterPlayer.network("${data[index].file_url}",
+                   betterPlayerConfiguration: BetterPlayerConfiguration(
+                     aspectRatio: 1,
+                     looping: true,
+                     autoPlay: true,
+                     fit: BoxFit.cover,
+
+                   ),),
+
+                 /*decoration: new BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: new DecorationImage(
+                        fit: BoxFit.cover,
+                        image: new NetworkImage(
+                            "${widget.data['product_data'][index]['product']??''}"
+                        ),
+
+                      ),
+                    ),*/
                ),
-             ),*/
-             Container(
+             ),
+             /*Container(
                width: MediaQuery.of(context).size.width,
                height: 250,
                child: PhotoView(
                    imageProvider: NetworkImage("${data1[index]['file_url']??''}")),
-             ),
+             ),*/
 
              SizedBox(height: 5,),
              Row(
@@ -184,21 +230,21 @@ class _AddFeedState extends State<AddFeed> {
                    onTap: (){
                     setState(() {
                       _isLoading==true;
-                      doLike(data1[index]['id']);
+                      doLike(data[index].id);
                     });
-                     if (data1[index]['is_like'] == 0) {
+                     if (data[index].is_like == 0) {
                        setState(() {
-                         data1[index]['is_like'] = 1;
+                         data[index].is_like = 1;
                        });
-                     } else if (data1[index]['is_like'] == 1) {
+                     } else if (data[index].is_like == 1) {
                        setState(() {
-                         data1[index]['is_like'] = 0;
+                         data[index].is_like = 0;
                          print(
                              "Tab working here${widget.character.is_like}");
                        });
                      }
                    },
-                   child:data1[index]['is_like']==1?Padding(
+                   child:data[index].is_like==1?Padding(
                      padding: const EdgeInsets.only(left: 5),
                      child: Icon(Icons.favorite,size: 20,color: Colors.red,),
                    ):Padding(
@@ -208,7 +254,7 @@ class _AddFeedState extends State<AddFeed> {
                  ),
                   InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(data: data1[index],)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(comment_data: data[index].comment_data,id: data[index].id,)));
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
@@ -228,21 +274,21 @@ class _AddFeedState extends State<AddFeed> {
                    onTap: (){
                      setState(() {
                        _isLoading==true;
-                       doBookmark(data1[index]['id']);
+                       doBookmark(data[index].id);
                      });
-                     if (data1[index]['is_bookmark'] == 0) {
+                     if (data[index].is_bookmark == 0) {
                        setState(() {
-                         data1[index]['is_bookmark'] = 1;
+                         data[index].is_bookmark = 1;
                        });
-                     } else if (data1[index]['is_bookmark'] == 1) {
+                     } else if (data[index].is_bookmark == 1) {
                        setState(() {
-                         data1[index]['is_bookmark'] = 0;
+                         data[index].is_bookmark = 0;
                          print(
                              "Tab working here${widget.character.is_like}");
                        });
                      }
                    },
-                   child: data1[index]['is_bookmark']==1?Padding(
+                   child: data[index].is_bookmark==1?Padding(
                      padding: const EdgeInsets.only(right: 10),
                      child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.red,),
                    ):Padding(
@@ -254,7 +300,7 @@ class _AddFeedState extends State<AddFeed> {
              ),
              Padding(
                padding: const EdgeInsets.only(left: 5,top: 10),
-               child: Text('${data1[index]['like_count']??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+               child: Text('${data[index].like_count??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
              ),
              Padding(
                padding: const EdgeInsets.only(top: 10),
@@ -279,9 +325,9 @@ class _AddFeedState extends State<AddFeed> {
              Container(
                child: RaisedButton(
                    color: Color(fountColor),
-                   child: Text("${data1[index]['is_tutorial']} Tutorial",style: TextStyle(color: Colors.white),),
+                   child: Text("${data[index].is_tutorial} Tutorial",style: TextStyle(color: Colors.white),),
                    onPressed: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (context)=>TutorialPAge(data: data1[index],)));
+                     Navigator.push(context, MaterialPageRoute(builder: (context)=>TutorialPAge(data: data[index].product_data,name: data[index].user_name,img: data[index].user_image)));
                    }),
              ),
              SizedBox(height: 10,)
@@ -289,7 +335,8 @@ class _AddFeedState extends State<AddFeed> {
          ),
         );
       }),
-     
     );
   }
 }
+
+

@@ -8,6 +8,7 @@ import 'package:artist_icon/screens/edit_profile/model/EditProfileBean.dart';
 import 'package:artist_icon/screens/feed/model/CreateJobPostModel.dart';
 import 'package:artist_icon/screens/feed/model/CreatePostModel.dart';
 import 'package:artist_icon/screens/feed/model/GetAllFeedsBean.dart';
+import 'package:artist_icon/screens/feed/model/getAllPost/feed/FeedModel.dart';
 import 'package:artist_icon/screens/home_page/model/RecentSearchJobModel.dart';
 import 'package:artist_icon/screens/home_page/template_listModel/TemplateListModel.dart';
 import 'package:artist_icon/screens/profile/model/GetProfileData.dart';
@@ -222,6 +223,21 @@ class HttpService {
       return null;
     }
   }
+  Future<FeedModel> getPostData(
+      {String jwtToken, String limit}) async {
+    Map reqBody = {
+      "jwtToken": jwtToken,
+      "pages": limit
+    };
+    final response = await _apiHelper.post('Feed_api/get_all_post', reqBody);
+    try {
+      return FeedModel.fromJson(response);
+    } catch (e) {
+      showExceptionToast();
+      return null;
+    }
+  }
+
 
 
   Future<CityListBean> city_list(

@@ -1,10 +1,13 @@
+import 'package:artist_icon/screens/feed/model/getAllPost/feed/ProductData.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class TutorialPAge extends StatefulWidget {
-  final Map<dynamic,dynamic> data;
-  const TutorialPAge({this.data,Key key}) : super(key: key);
+  final List<ProductData> data;
+  final String name;
+  final String img;
+  const TutorialPAge({this.img,this.name,this.data,Key key}) : super(key: key);
 
   @override
   _TutorialPAgeState createState() => _TutorialPAgeState();
@@ -12,12 +15,18 @@ class TutorialPAge extends StatefulWidget {
 
 class _TutorialPAgeState extends State<TutorialPAge> {
   bool _isLoading;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Tutorial Page"),),
       body: _isLoading==true?Container(child: Center(child: CircularProgressIndicator(),),):ListView.builder(
-          itemCount: widget.data['product_data'].length,
+          itemCount: widget.data.length,
           itemBuilder: (context,index){
             return Card(
               elevation: 0,
@@ -35,7 +44,7 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                           image: new DecorationImage(
                             fit: BoxFit.fill,
                             image: new NetworkImage(
-                                "${widget.data['user_image']??''}"
+                                "${widget.img??''}"
                             ),
 
                           ),
@@ -43,7 +52,7 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: Text(widget.data['user_name']??''),
+                        child: Text(widget.name??''),
                       ),
                       Spacer(),
                       Padding(
@@ -61,15 +70,19 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5,top: 5),
-                    child: Text(widget.data['text']??'',style: TextStyle(color: Colors.grey),),
+                    child: Text(widget.data[index].title??'',style: TextStyle(color: Colors.grey),),
                   ),
                   SizedBox(height: 10,),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: 200,
-                    child: BetterPlayer.network("${widget.data['product_data'][index]['product']}",
+                    child: BetterPlayer.network("${widget.data[index].product}",
                       betterPlayerConfiguration: BetterPlayerConfiguration(
-                        aspectRatio: 16 / 9,
+                        aspectRatio: 1,
+                        looping: true,
+                        autoPlay: true,
+                        fit: BoxFit.cover,
+
                       ),),
 
                     /*decoration: new BoxDecoration(

@@ -198,7 +198,7 @@ class _MyFeedState extends State<MyFeed> {
                       ),
                       InkWell(
                         onTap: (){
-                           Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(data: data1[index],)));
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(comment_data: data1[index],)));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),

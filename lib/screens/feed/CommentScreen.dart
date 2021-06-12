@@ -1,13 +1,16 @@
 import 'dart:convert';
 
+import 'package:artist_icon/screens/feed/model/getAllPost/feed/CommentData.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 class CommentScreen extends StatefulWidget {
-  final Map<dynamic,dynamic> data;
-  const CommentScreen({this.data,Key key}) : super(key: key);
+   final List<CommentData> comment_data;
+   final String id;
+  const CommentScreen({this.id,this.comment_data,Key key}) : super(key: key);
 
   @override
   _CommentScreenState createState() => _CommentScreenState();
@@ -15,12 +18,11 @@ class CommentScreen extends StatefulWidget {
 
 class _CommentScreenState extends State<CommentScreen> {
   TextEditingController comment_controller=new TextEditingController();
-  List data1;
 
   Future doComment()async
   {
     final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":widget.data['id'],"comments":comment_controller.text});
+    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":widget.id,"comments":comment_controller.text});
     var response = await http.post(
         "https://artist.devclub.co.in/api/Feed_api/do_comment",
         body: res);
@@ -30,13 +32,13 @@ class _CommentScreenState extends State<CommentScreen> {
     {
       setState(() {
         Fluttertoast.showToast(msg: data['message']);
-        getAllPost();
+        widget.comment_data;
         comment_controller.clear();
       });
     }
 
   }
-  Future getAllPost()async
+ /* Future getAllPost()async
   {
     final _prefs = await SharedPreferences.getInstance();
     final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"pages":"1"});
@@ -44,22 +46,29 @@ class _CommentScreenState extends State<CommentScreen> {
         "https://artist.devclub.co.in/api/Feed_api/get_all_post",
         body: res);
     Map data = json.decode(response.body);
-    print(data);
     var status = data['status'];
     print('Status is:${status}');
-
     if(status==true)
     {
       setState(() {
-        data1=data['data'];
+        allData=data['data'];
+        for(int i=0;i<=allData.length;i++)
+          {
+           setState(() {
+             data2=allData[i]['comment_data'];
+             print("Comment Data is :${data2}");
+             _isLoading=false;
+           });
+
+          }
       });
 
     }
-  }
-  @override
+  }*/
+ @override
   void initState() {
     // TODO: implement initState
-    getAllPost();
+//   getAllPost();
     super.initState();
   }
   @override
@@ -79,7 +88,7 @@ class _CommentScreenState extends State<CommentScreen> {
                 width: MediaQuery.of(context).size.width,
                 height: 510,
                 child: ListView.builder(
-                    itemCount: widget.data['comment_data'].length,
+                    itemCount: widget.comment_data.length,
                     itemBuilder: (BuildContext,index)
                     {
                       return Column(
@@ -98,7 +107,7 @@ class _CommentScreenState extends State<CommentScreen> {
                                   image: new DecorationImage(
                                       fit: BoxFit.fill,
                                       image: new NetworkImage(
-                                          "${widget.data['user_image']??''}"
+                                          "${widget.comment_data[index].profile_image??''}"
                                       )
                                   ),
                                 ),
@@ -118,33 +127,19 @@ class _CommentScreenState extends State<CommentScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(widget.data[index]['comment_data']['name']??'',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                    SizedBox(height: 3,),
+                                    Text("${widget.comment_data[index].name ?? ''}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                   // SizedBox(height: 10,),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 5),
-                                      child: Text(widget.data[index]['comment_data']['comments']??'',style: TextStyle(color: Colors.black),),
+                                      child: Text("${widget.comment_data[index].comments ?? ''}",style: TextStyle(color: Colors.black),),
                                     )
                                   ],
                                 ),
-                              )
+                              ),
                             ],
                           ),
-                        /*  Container(
-                            margin: EdgeInsets.symmetric(horizontal: 90),
-                            child: Row(
-                              children: [
-                                Text('7m'),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text('${widget.data['like_count']??''} like'),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text('Reply'),
-                                )
-                              ],
-                            ),
-                          )*/
-
+                          SizedBox(height: 20,)
                         ],
                       );
                     }),
