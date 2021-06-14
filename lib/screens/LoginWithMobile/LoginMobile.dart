@@ -74,69 +74,85 @@ class LoginMobileState extends State<LoginMobile>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      backgroundColor: Colors.white,
+     /* appBar: AppBar(
+        leading: Icon(Icons.arrow_back),
         elevation: 0,
         //backgroundColor: Color(blueGreyColor),
         title: Text('Artist Icon',style: TextStyle(color: Colors.black,fontSize: 20),),
 
-      ),
+      ),*/
       body:
       SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.30,
-              child:   Image.asset('images/dancer.png'),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              // height: MediaQuery.of(context).size.height * 0.30,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text('Here To Get\n Welcome!',style: TextStyle(color: Color(fountColor),fontSize: 40,fontWeight: FontWeight.bold),),
+            SizedBox(height: 50,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+              child: Row(
+                children: [
+                  Icon(Icons.arrow_back,size: 30,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Text("Artist Icon",style: TextStyle(color: Colors.black,fontSize: 20),),
+                  )
+                ],
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.30,
+              child:   Image.asset('images/dancer.png',),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              width: MediaQuery.of(context).size.width,
+              // height: MediaQuery.of(context).size.height * 0.30,
+              child: Text('Here To Get\nWelcome!',style: TextStyle(color: Color(fountColor),fontSize: 50,fontWeight: FontWeight.bold),),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 25,vertical: 5),
               child: Row(
                 children: [
                   Expanded(
                     flex: 1,
                     child: Container(
+                      padding: EdgeInsets.only(right: 10),
                       child: TextField(
                           showCursor: false,
                           readOnly: true,
                           decoration: InputDecoration(
-                            hintText: "+91",
-                            hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
+                            hintText: " +91",
+                            hintStyle: TextStyle(fontSize: 20.0, color: Colors.black87),
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
+                              borderSide: BorderSide(color: Colors.blueGrey),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
+                              borderSide: BorderSide(color: Colors.blueGrey),
                             ),
                             border: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
+                              borderSide: BorderSide(color: Colors.blueGrey),
                             ),
                           )
                       ),
                     ),
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 15,),
                   Expanded(
                     flex: 4,
-                    child: Container(child:
+                    child: Container(
+                      padding: EdgeInsets.only(right: 10),
+                      child:
                     TextField(keyboardType: TextInputType.number,
                         controller: mobile_number,
                         inputFormatters: [
                           WhitelistingTextInputFormatter.digitsOnly,
                           LengthLimitingTextInputFormatter(10),
                         ],
-                        style: TextStyle(fontSize: 20.0, color: Colors.black),
+                        style: TextStyle(fontSize: 20.0, color: Colors.black87),
                         decoration: InputDecoration(
                           hintText: "Enter Phone Number",
-                          hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
+                          hintStyle: TextStyle(fontSize: 22.0, color: Colors.black87),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           ),
@@ -158,9 +174,11 @@ class LoginMobileState extends State<LoginMobile>{
               children: [
                 Container(
                   //margin: const EdgeInsets.only(left: 0.0, right: 180.0),
-                  height: 60,
-                  width: 140,
-                  margin: EdgeInsets.all(30),
+                  padding: EdgeInsets.only(left: 20),
+                  margin: EdgeInsets.only(top: 50),
+                  height: 70,
+                  width: 160,
+                  //margin: EdgeInsets.all(40),
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.10),),
@@ -180,13 +198,14 @@ class LoginMobileState extends State<LoginMobile>{
                 ),
               ],
             ),
-            Container( margin: const EdgeInsets.only(left: 0.0, right: 180.0),
+            Container(
+              margin: const EdgeInsets.only(left: 0.0, right: 220.0,top: 30),
               child: Text('Or Sign In ',style: TextStyle(color: Color(fountColor),fontSize: 20),),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.only(left:30.0,top: 30),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     margin: const EdgeInsets.only(left: 0.0, right: 0.0),
@@ -196,13 +215,13 @@ class LoginMobileState extends State<LoginMobile>{
                     child:
                     Image.asset('images/google.png'),),
                   Container(
-                    margin: const EdgeInsets.only(left: 0.0, right: 10.0),
+                    margin: const EdgeInsets.only(left: 20.0, right: 10.0),
                     height: 50,
                     width: 50,
                     // color: Colors.black12,
                     child:
                     Image.asset('images/twitter.png'),),
-                  Container(margin: const EdgeInsets.only(left: 0.0,right: 100.0),
+                  Container(margin: const EdgeInsets.only(left: 20.0,right: 100.0),
                     height: 40,
                     width: 40,
                     //color: Colors.black12,

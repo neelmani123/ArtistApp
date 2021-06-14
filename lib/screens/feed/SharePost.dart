@@ -42,7 +42,6 @@ class _SharePostState extends State<SharePost> {
       print("Pic Name:${File(_imageFiler.path)}");
     });
   }
-
   Future _uploadImage()async
   {
     _isLoading=true;

@@ -29,7 +29,18 @@ class RecentSearchViewallScreenState extends State<RecentSearchViewallScreen>{
 
     }
   }
-
+  var colors = [
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+  ];
   buildItem(BuildContext context, int index) {
     return InkWell(
       child: Stack(
@@ -39,17 +50,18 @@ class RecentSearchViewallScreenState extends State<RecentSearchViewallScreen>{
             child: Container(
               child: Column(
                 children: [
+                  SizedBox(height: 10,),
                   Card(
-                    color: Color(primarycolor),
+                    color:colors[index],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     elevation: 0,
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(
+                        /*border: Border.all(
                           color: Color(card_border_color),
-                        ),
+                        ),*/
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Row(
@@ -81,14 +93,13 @@ class RecentSearchViewallScreenState extends State<RecentSearchViewallScreen>{
                                 children: [
                                   Column(
                                     children: <Widget>[
-
                                       SizedBox(height: 10,),
                                       Container(
                                         child: Align(
                                           alignment : Alignment.topLeft,
                                           child: Text(
                                             "  "+'${job_categories_list[index].job_type??''}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(fontSize: 18,color: Color(rec_job_heading)),
+                                            style: TextStyle(fontSize: 20,color: Colors.black),
                                           ),
                                         ),
                                       ),
@@ -96,10 +107,10 @@ class RecentSearchViewallScreenState extends State<RecentSearchViewallScreen>{
                                       Container(
                                         color: Colors.transparent,
                                         alignment: Alignment.topLeft,
-                                        margin: new EdgeInsets.symmetric(horizontal: 5.0),
+                                        margin: new EdgeInsets.symmetric(horizontal: 5.0,vertical: 5),
                                         child: Text(
                                           "  "+'${job_categories_list[index].skills_name}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(fontSize: 16,color: Color(text_white)),
+                                          style: TextStyle(fontSize: 16,color: Colors.black),
                                         ),
                                       ),
 
@@ -109,7 +120,7 @@ class RecentSearchViewallScreenState extends State<RecentSearchViewallScreen>{
                                         margin: new EdgeInsets.symmetric(horizontal: 5.0),
                                         child: Text(
                                           "  "+'${job_categories_list[index].salary_from+"/mo"}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(fontSize: 16,color: Color(text_white)),
+                                          style: TextStyle(fontSize: 16,color: Colors.black),
                                         ),
                                       ),
 
@@ -153,7 +164,7 @@ class RecentSearchViewallScreenState extends State<RecentSearchViewallScreen>{
                                                     padding: const EdgeInsets.only(top: 8,bottom: 8),
                                                     child: Text(
                                                       "  "+getDate(job_categories_list[index].created_at)+" day ago", maxLines: 1,overflow: TextOverflow.ellipsis,
-                                                      style: TextStyle(fontSize: 13,color: Color(text_white)),
+                                                      style: TextStyle(fontSize: 13,color: Colors.black),
                                                     ),
                                                   ),
                                                 ),
@@ -195,19 +206,18 @@ class RecentSearchViewallScreenState extends State<RecentSearchViewallScreen>{
   void initState() {
     super.initState();
     recent_search_jobApi();
-
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      backgroundColor: Color(primarycolor),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(primarycolor),
+        backgroundColor: Colors.white,
         title: Text(
           "Recent search",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
       ),
       body: ListView.builder(

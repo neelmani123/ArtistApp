@@ -170,10 +170,6 @@ class _OtpScreenState extends State<OTPScreen> {
       backgroundColor: Color(fountColor),
       appBar: AppBar(
         elevation: 0,
-        title: Text(
-          "Verify OTP",
-          style: TextStyle(color: Colors.black),
-        ),
         centerTitle: true,
         backgroundColor: Color(blueGreyColor),
       ),
@@ -199,7 +195,7 @@ class _OtpScreenState extends State<OTPScreen> {
                   ),
                   Center(
                     child: Text(
-                      "Mobile Verification",
+                      "Verification Code",
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.black,
@@ -208,17 +204,20 @@ class _OtpScreenState extends State<OTPScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
-                  Center(
-                    child: Text(
-                      "We have sent you a verification code on your mobile +91 " +
-                          widget.mobileNumber,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Center(
+                      child: Text(
+                        "We sent you a code to verify your mobile +91 " +
+                            widget.mobileNumber,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
                   ),
@@ -227,7 +226,7 @@ class _OtpScreenState extends State<OTPScreen> {
                   ),
                   new Center(
                     child: Padding(
-                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                        padding: EdgeInsets.only(left: 40.0, right: 40.0),
                         child: new Form(
                           autovalidate: false,
                           child: new Column(
@@ -256,7 +255,7 @@ class _OtpScreenState extends State<OTPScreen> {
                                     )
                                   ],
                                   keyboardType: TextInputType.number,
-                                  autoFocus: true,
+                                  autoFocus: false,
                                   pinTheme: PinTheme(
                                     shape: PinCodeFieldShape.box,
                                     borderRadius: BorderRadius.circular(10),

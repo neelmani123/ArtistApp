@@ -180,7 +180,7 @@ class _AddFeedState extends State<AddFeed> {
                onTap: (){
                  Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView1(image:data[index].file_url,)));
                },
-               child: _isLoading==null?Container(
+               child:data[index].media_type==1?Container(
                  width: MediaQuery.of(context).size.width,
                  height: 250,
                  decoration: new BoxDecoration(

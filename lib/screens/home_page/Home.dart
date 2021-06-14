@@ -113,6 +113,9 @@ class HomeState extends State<Home>{
                       color: Color(blueGreyColor),
                       child: Container(
                         decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(color: Colors.grey,),
+                          ],
                           borderRadius: BorderRadius.circular(10.0),
                           color: Colors.white,
                         ),
@@ -122,10 +125,6 @@ class HomeState extends State<Home>{
                             padding: const EdgeInsets.all(4.0),
                             child: Row(
                               children: [
-                                Icon(Icons.search,color: Colors.grey,),
-                                SizedBox(
-                                  width: 10,
-                                ),
                                 Row(
                                   children: [
                                     InkWell(
@@ -137,10 +136,22 @@ class HomeState extends State<Home>{
                                                 ),
                                               ));
                                         },
-                                        child: Text("Search Job..",style: TextStyle(color: Colors.grey,fontSize: 16),))
+                                        child: Text(" Search",style: TextStyle(color: Colors.grey,fontSize: 16),))
 
                                   ],
-                                )
+                                ),
+                                Spacer(),
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    color: Color(fountColor)
+                                  ),
+                                    child: Icon(Icons.search,color: Colors.white,)),
+                                SizedBox(
+                                  width: 10,
+                                ),
                               ],
                             )),
                       ),
@@ -149,7 +160,6 @@ class HomeState extends State<Home>{
                     SizedBox(
                       height: 10,
                     ),
-
                     Container(
                       child: Column(
                         children: [

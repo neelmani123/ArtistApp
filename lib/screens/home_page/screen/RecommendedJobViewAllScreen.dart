@@ -37,14 +37,23 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
     super.initState();
     job_categories_listApi();
   }
-
-
-
+  var colors = [
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+  ];
   buildItem(BuildContext context, int index) {
     return InkWell(
       child: Column(
         children: [
           Card(
+            color: colors[index],
             child: Container(
               height: 220,
               width: MediaQuery.of(context).size.width,
@@ -61,7 +70,7 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Color(rec_job_bg), // Set border width
+                                      //color: colors1[index], // Set border width
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(30.0)), // Set rounded corner radius
                                     ),
@@ -83,7 +92,7 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
                             Expanded(
                               flex: 1,
                               child: Center(
-                                child: IconButton(icon: Icon(Icons.bookmark), onPressed: (
+                                child: IconButton(icon: Icon(Icons.bookmark_border,color: Colors.grey,), onPressed: (
                                     ){
                                   // Navigator.push(
                                   //     context,
@@ -109,7 +118,6 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
                           style: TextStyle(fontSize: 22,color: Color(blackColor)),
                         ),
                       ),
-
                       Positioned(
                         bottom: 0,
                         child: Row(
@@ -142,7 +150,6 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
                             Expanded(
                               flex: 1,
                               child: Container(
-
                                 alignment: Alignment.topLeft,
                                 margin: new EdgeInsets.symmetric(horizontal: 5.0),
                                 child: Center(
@@ -168,19 +175,19 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
               ),
             ),
           ),
-          Container(
+          /*Container(
             width: MediaQuery.of(context).size.width,
-            height: 200,
+            height: 100,
             color: Colors.transparent,
             alignment: Alignment.topLeft,
             margin: new EdgeInsets.symmetric(horizontal: 5.0),
             child: Center(
               child: Text(
                 "  "+'${job_categories_list[index].name}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 15,color: Color(job_title_color)),
+                style: TextStyle(fontSize: 15,color: Colors.black),
               ),
             ),
-          ),
+          ),*/
         ],
       ),
 
@@ -194,12 +201,13 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Color(primarycolor),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(primarycolor),
+        elevation: 0,
+        backgroundColor: Colors.white,
         title: Text(
           "Recommended For you",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
       ),
       body: GridView.builder(

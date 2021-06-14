@@ -36,15 +36,25 @@ class JobViewAllScreenState extends State<JobViewAllScreen>{
     super.initState();
     job_categories_listApi();
   }
-
-
+  var colors = [
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+  ];
 
   buildItem(BuildContext context, int index) {
     return InkWell(
       child: Column(
         children: [
+          SizedBox(height: 10,),
           Card(
-            color: Colors.transparent,
+            color: colors[index],
             child: Container(
               child: Column(
                 children: <Widget>[
@@ -100,7 +110,7 @@ class JobViewAllScreenState extends State<JobViewAllScreen>{
             child: Center(
               child: Text(
                 "  "+'${job_categories_list[index].name}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 15,color: Color(job_title_color)),
+                style: TextStyle(fontSize: 15,color: Colors.black),
               ),
             ),
           ),
@@ -117,12 +127,12 @@ class JobViewAllScreenState extends State<JobViewAllScreen>{
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Color(primarycolor),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(primarycolor),
+        elevation: 0,
         title: Text(
-          "Job Categories",
-          style: TextStyle(color: Colors.white),
+          "All Categories",
+          style: TextStyle(color: Colors.black),
         ),
       ),
       body: GridView.builder(

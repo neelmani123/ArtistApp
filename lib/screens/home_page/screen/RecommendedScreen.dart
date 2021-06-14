@@ -23,13 +23,23 @@ class AllCollectionsState extends State<RecommendedScreen>{
   void initState() {
     super.initState();
   }
+  var colors = [
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+  ];
 
   buildItem(BuildContext context, int index) {
     return InkWell(
       child: Column(
         children: [
           Card(
-
             child: Container(
               height: 220,
               width: 200,
@@ -46,7 +56,7 @@ class AllCollectionsState extends State<RecommendedScreen>{
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                              color: Color(rec_job_bg),
+                              color: colors[index],
                                       // Set border width
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(30.0)),
@@ -70,7 +80,7 @@ class AllCollectionsState extends State<RecommendedScreen>{
                             Expanded(
                               flex: 1,
                               child: Center(
-                                child: IconButton(icon: Icon(Icons.bookmark), onPressed: (
+                                child: IconButton(icon: Icon(Icons.bookmark_border,color: Colors.grey,), onPressed: (
                                     ){
                                   // Navigator.push(
                                   //     context,

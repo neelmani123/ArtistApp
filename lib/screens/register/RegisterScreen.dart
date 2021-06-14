@@ -22,6 +22,8 @@ class RegisterScreenState extends State<RegisterScreen>{
   final TextEditingController name = new TextEditingController();
   final TextEditingController email = new TextEditingController();
   final TextEditingController mobile_number = new TextEditingController();
+  bool rememberMe = false;
+  bool _isLoading;
 
   _send_otp(BuildContext context) {
     bool status=true;
@@ -48,6 +50,7 @@ class RegisterScreenState extends State<RegisterScreen>{
     print("===>"+mobile_number.text);
     var res = await _httpService.request_otp_for_regester(number:mobile_number.text);
     if(res.status == true){
+      _isLoading=false;
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -89,6 +92,7 @@ class RegisterScreenState extends State<RegisterScreen>{
     return Scaffold(
       // backgroundColor:   Color(blueGreyColor),
       appBar: AppBar(
+        elevation: 0,
       ),
       body:  SingleChildScrollView(
         child: Column(
@@ -99,25 +103,26 @@ class RegisterScreenState extends State<RegisterScreen>{
               child: Container(
                 child: Text(
                   "Lets 'Get Started ",
-                  style: TextStyle(color: Colors.black,fontSize: 30,fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.black87,fontSize: 30,fontWeight: FontWeight.bold),
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20),
-              child: Container(child: Text('Singing up or login to see our top and latest gadgets and jobs',style: TextStyle(color: Colors.black,fontSize: 20),)
+              child: Container(child: Text('Singing up or login to see our top\nand latest gadgets and jobs',style: TextStyle(color: Colors.black87,fontSize: 20),)
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(15.0),
               child: Column(
                 children: [
-                  Container(decoration: BoxDecoration(
+                  Container(
+                    decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         //color: Colors.grey,
                         offset: Offset(0.0, 1.0), //(x,y)
-                        blurRadius: 4.0,
+                        blurRadius: 2.0,
                       ),
                     ],
                     borderRadius: BorderRadius.circular(10.10),
@@ -130,7 +135,8 @@ class RegisterScreenState extends State<RegisterScreen>{
                           decoration: InputDecoration(
                           border:  OutlineInputBorder(
                           ),
-                          hintText: 'Enter Name',
+                          hintText: 'Name',
+                            hintStyle: TextStyle(color: Colors.grey)
                         ),
                         ),
                       ],
@@ -160,6 +166,7 @@ class RegisterScreenState extends State<RegisterScreen>{
                       decoration: InputDecoration(
                       border:  OutlineInputBorder(),
                       hintText: 'Enter Email-ID',
+                          hintStyle: TextStyle(color: Colors.grey)
                     ),
                     ),
                   ),
@@ -191,23 +198,33 @@ class RegisterScreenState extends State<RegisterScreen>{
                       decoration: InputDecoration(
                       border:  OutlineInputBorder(),
                       hintText: 'Enter Phone Number',
+                          hintStyle: TextStyle(color: Colors.grey)
                     ),
                     ),
                   ),
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left:30.0),
-                  child: Container(
-                    height: 80,
-                    width: 300,
-                    child: Text('By creating an account,you agree to our teams of service and privercy policy',style: TextStyle(fontSize: 17,color: Colors.black),textAlign: TextAlign.center,),),
-                )
-              ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Checkbox(value: rememberMe,
+                      activeColor: Colors.green,
+                      onChanged:(bool newValue){
+                        setState(() {
+                          rememberMe = newValue;
+                        });
+                        Text('Remember me');
+                      }),
+                  Padding(
+                    padding: const EdgeInsets.only(left:1.0,top: 10),
+                    child: Container(
+                      child: Text('By creating an account,you agree to our\n\t\t\t\t \t teams of service and privercy policy',style: TextStyle(fontSize: 17,color: Colors.black),),),
+                  )
+                ],
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -216,7 +233,7 @@ class RegisterScreenState extends State<RegisterScreen>{
                   //margin: const EdgeInsets.only(left: 0.0, right: 180.0),
                   height: 70,
                   width: 140,
-                  margin: const EdgeInsets.only(left: 10.0, right: 0.0),
+                  margin: const EdgeInsets.only(left: 20.0, right: 0.0,top: 30),
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.10),),
@@ -226,7 +243,7 @@ class RegisterScreenState extends State<RegisterScreen>{
                     },
                     color: Color(fountColor),
                     // textColor: Colors.white,
-                    child: Text("Sign up",
+                    child: _isLoading==true ?Container(height:20,width:20,child: CircularProgressIndicator(),):Text("Sign up",
                         style: TextStyle(fontSize: 20,color: Colors.white)),
                   ),
                 ),
@@ -235,13 +252,15 @@ class RegisterScreenState extends State<RegisterScreen>{
             Row(mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.only(left:10.0,top: 20),
                   child: Container(
                     child: Text('Already have an account?',style: TextStyle(fontSize:20,color: Colors.black),
                     ),
                   ),
                 ),
-                Container(child: Text('Or login',style: TextStyle(fontSize: 20,color: Color(fountColor)),),)
+                Container(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Text('Or login',style: TextStyle(fontSize: 20,color: Color(fountColor)),),)
               ],
             ),
             Padding(

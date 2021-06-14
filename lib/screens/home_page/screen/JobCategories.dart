@@ -16,20 +16,28 @@ class JobCategories extends StatefulWidget{
 }
 class AllCollectionsState extends State<JobCategories>{
 
-
-
   @override
   void initState() {
     super.initState();
   }
+  var colors = [
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
+    Color(0xFFC8ABCA),
+    Color(0xFFF3B0C2),
+  ];
 
   buildItem(BuildContext context, int index) {
     return InkWell(
       child: Column(
         children: [
           Card(
-
-            color: Colors.transparent,
+            color: colors[index],
             child: Container(
               height: 152,
               width: 150,
@@ -88,7 +96,7 @@ class AllCollectionsState extends State<JobCategories>{
             child: Center(
               child: Text(
                 "  "+'${widget.job_categories_list[index].name}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 15,color: Color(job_title_color)),
+                style: TextStyle(fontSize: 15,color: Colors.black),
               ),
             ),
           ),
