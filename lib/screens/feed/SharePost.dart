@@ -28,6 +28,7 @@ class _SharePostState extends State<SharePost> {
   bool _validate = false;
   FileType fileType;
   String path;
+  var result1=0;
 
   TextEditingController mind_controller=new TextEditingController();
   TextEditingController price=new TextEditingController();
@@ -54,14 +55,14 @@ class _SharePostState extends State<SharePost> {
         "file_url":await  MultipartFile.fromFile(
             path,filename: fileName1),
         "text":mind_controller.text,
-        "media_type":"1",
-        "is_tutorial":"1",
+        "media_type":"2",
+        "is_tutorial":result1,
         "price":price.text,
         "title":title.text,
         "desc":desc.text,
         "validity":validity.text,
         "product_image":await MultipartFile.fromFile(
-            videoFile.path),
+            videoFile.path,filename: videoName1),
       });
       Response response = await Dio().post(
           "https://artist.devclub.co.in/api/Feed_api/add_feed",
@@ -120,13 +121,27 @@ class _SharePostState extends State<SharePost> {
       );
     });
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     get_name();
   }
-
+ getTutorial(bool rememberMe){
+    switch(rememberMe)
+    {
+      case true :
+        result1=1;
+        print("Result is :${result1}");
+        break;
+      case false:
+        result1=0;
+        print("Result is :${result1}");
+        break;
+    }
+    return result1;
+ }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -316,7 +331,7 @@ class _SharePostState extends State<SharePost> {
                         }else{
                         visibilityTag=false;
                       }
-
+                      getTutorial(rememberMe);
                     });
                     });
                     Text('Make Tutorial ',style: TextStyle(color: Colors.white),);
