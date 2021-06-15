@@ -88,55 +88,55 @@ class _HomeScreenState extends State<HomeScreen> {
                child: Text(''),
              ),
              ListTile(
-               title: Text('Create Post',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               title: Text('Create Post',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>CreatePost()));
                },
              ),
              ListTile(
-               title: Text('Job Post',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               title: Text('Job Post',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>CreateJobPost()));
                },
              ),
              ListTile(
-               title: Text('Your Job List',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               title: Text('Your Job List',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>JobPostList()));
                },
              ),
              ListTile(
-               title: Text('Search List',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               title: Text('Search List',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>AllJobPostList()));
                },
              ),
              ListTile(
-               title: Text('Job Search List',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               title: Text('Job Search List',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>JobSearchList()));
                },
              ),
              ListTile(
-               title: Text('Applied Job List',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               title: Text('Applied Job List',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>AppliedJobList()));
                },
              ),
              ListTile(
-               title: Text('Get Bookmark',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               title: Text('Get Bookmark',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>Bookmark()));
                },
              ),
              ListTile(
-               title: Text('Add Feed',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               title: Text('Add Feed',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>SharePost()));
                },
              ),
              ListTile(
-               title: Text('My Feed',style: TextStyle(fontFamily: 'OpenSans',fontSize: 20,fontWeight: FontWeight.bold),),
+               title: Text('My Feed',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>MyFeed()));
                },
@@ -155,10 +155,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                      (_selectedPageIndex==0)?Text(
                       tital(),
-                      style: TextStyle(color: Color(fountColor),fontSize: 20),
+                      style: TextStyle(color: Color(fountColor),fontSize: 20,fontFamily: 'RobotoSlab'),
                      ):Text(
                           tital(),
-                       style: TextStyle(color: Color(fountColor)),
+                       style: TextStyle(color: Color(fountColor),fontFamily: 'RobotoSlab'),
                      ),
                      ],
                   ),
@@ -248,35 +248,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
-                    child: Row(
-                      children: [
-                        IconButton(icon: Icon(Icons.edit,color: Color(fountColor),), onPressed: (
-                            ){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditProfileScreen(
-                                ),
-                              ));
-                        }),
-                        InkWell(
-                          onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditProfileScreen(
-                                  ),
-                                ));
-                          },
-                          child: Text("Edit",style: TextStyle(
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditProfileScreen(
+                              ),
+                            ));
+                      },
+                      child: Row(
+                        children: [
+                          Text("Edit Profile",style: TextStyle(
                             fontSize: 20,
+                            fontFamily: 'RobotoSlab',
                             color:Color(fountColor),
                           ),),
-                        ),
-                      ],
+                          IconButton(icon: Icon(Icons.edit,color: Color(fountColor),),
+                              ),
+                        ],
+                      ),
                     ),
                   ),
-
                 ),
               ],
             ),

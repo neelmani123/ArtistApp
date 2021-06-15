@@ -96,7 +96,7 @@ class AllCollectionsState extends State<JobCategories>{
             child: Center(
               child: Text(
                 "  "+'${widget.job_categories_list[index].name}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 15,color: Colors.black),
+                style: TextStyle(fontSize: 15,color: Colors.black,fontFamily: 'RobotoSlab'),
               ),
             ),
           ),

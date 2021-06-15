@@ -38,24 +38,24 @@ class AllCollectionsState extends State<EducationScreen>{
                     child:Column(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.only(left: 15),
+                          padding: EdgeInsets.only(left: 5),
                           color: Colors.transparent,
                           alignment: Alignment.topLeft,
-                          margin: new EdgeInsets.symmetric(horizontal: 5),
+                          margin: new EdgeInsets.only(left: 5),
                           child: Text(
                             "  "+'${widget.job_categories_list[index].education_level}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 20,color: Colors.black),
+                            style: TextStyle(fontSize: 20,color: Colors.black,fontFamily: 'RobotoSlab',),
                           ),
                         ),
 
                         Container(
-                          padding: EdgeInsets.only(left: 15,top: 7),
+                          padding: EdgeInsets.only(left: 12,top: 7),
                           color: Colors.transparent,
                           alignment: Alignment.topLeft,
                           margin: new EdgeInsets.symmetric(horizontal: 5.0),
                           child: Text(
                             "  "+'${widget.job_categories_list[index].school_name}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 16,color: Colors.grey),
+                            style: TextStyle(fontSize: 12,color: Colors.grey,fontFamily: 'RobotoSlab',),
                           ),
                         ),
 
@@ -76,15 +76,18 @@ class AllCollectionsState extends State<EducationScreen>{
                           child: Row(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(left: 20,top: 7),
+                                padding: const EdgeInsets.only(left: 15,top: 7),
                                 child: Text(
                                   '${""+widget.job_categories_list[index].start_date}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontSize: 16,color: Colors.grey),
+                                  style: TextStyle(fontSize: 16,color: Colors.grey,fontFamily: 'RobotoSlab',),
                                 ),
                               ),
-                              Text(
-                                '${""+widget.job_categories_list[index].end_date}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 16,color: Colors.grey),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Text(
+                                  '${" "+widget.job_categories_list[index].end_date}', maxLines: 1,overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 16,color: Colors.grey,fontFamily: 'RobotoSlab',),
+                                ),
                               ),
                             ],
                           ),

@@ -50,15 +50,16 @@ class ProfileScreenState extends State<ProfileScreen>{
         child: CupertinoActivityIndicator(radius:22,
         )):SingleChildScrollView(
       child: Container(
+        //color: Colors.blueGrey,
         alignment: Alignment.center,
         child: Column(
           children: <Widget>[
             Card(
               color: Color( blueGreyColor),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(2.0),
               ),
-              elevation: 5,
+              elevation: 0,
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Column(
@@ -71,10 +72,38 @@ class ProfileScreenState extends State<ProfileScreen>{
 
                       ],
                     ),*/
-                    CircleAvatar(
-                      radius: 35,
-                      child: ClipOval(
-                        child: Image.network(data.profile_img??'', height: 60, width: 60, fit: BoxFit.cover,),),
+                    Stack(
+                      children: [
+                        Container(
+                          height: 230,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              image: new DecorationImage(
+                                fit: BoxFit.fill,
+                                image: new NetworkImage(
+                                    "https://cdn.pixabay.com/photo/2018/07/11/21/51/toast-3532016_1280.jpg"
+                                ),
+
+                              ),
+                            borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(color: Colors.white, spreadRadius: 3)
+                              ]
+                          ),
+                          //alignment: Alignment.center,
+                        ),
+                         Container(
+                           padding: EdgeInsets.only(top: 180,left: 10),
+                           child: CircleAvatar(
+                             backgroundColor: Color(fountColor),
+                             radius: 50,
+                             child: CircleAvatar(
+                               radius: 45,
+                               backgroundImage: NetworkImage(data.profile_img??''),
+                             )
+                           ),
+                         )
+                      ],
                     ),
                     SizedBox(width: 10,),
                     Padding(
@@ -83,18 +112,10 @@ class ProfileScreenState extends State<ProfileScreen>{
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(data.name??'',style: TextStyle(
-                            fontSize: 20,
-                            color:Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'OPenSans'
+                            fontSize: 18,
+                            fontFamily: 'RobotoSlab'
                           ),),
-                          /*Align(
-                            alignment : Alignment.topLeft,
-                            child: Text(data.profile_summary??'',style: TextStyle(
-                              fontSize: 20,
-                              color:Colors.grey,
-                            ),),
-                          ),*/
+
                         ],
                       ),
                     ),
@@ -106,7 +127,8 @@ class ProfileScreenState extends State<ProfileScreen>{
                           child: Text(data.profile_summary??'',style: TextStyle(
                           fontSize: 16,
                           color:Colors.grey,
-                          fontFamily: 'OPensSans'
+                          fontFamily: 'RobotoSlab',
+
                         ),),
                       ),
                     ),
@@ -119,14 +141,14 @@ class ProfileScreenState extends State<ProfileScreen>{
                         child: Row(
                           children: [
                             Text(data.home_town??'',style: TextStyle(
-                              fontSize: 16,
-                              color:Colors.grey,
-                              fontFamily: 'OpenSans'
+                              fontSize: 17,
+                                color:Color(0xFFa6a6a6),
+                              fontFamily: 'RobotoSlab',
                             ),),
                             Text(data.country??'',style: TextStyle(
-                              fontSize: 16,
-                              color:Colors.grey,
-                              fontFamily: 'OpenSans'
+                              fontSize: 17,
+                                color:Color(0xFFa6a6a6),
+                              fontFamily: 'RobotoSlab'
                             ),),
                           ],
                         ),
@@ -138,9 +160,9 @@ class ProfileScreenState extends State<ProfileScreen>{
                       child: Align(
                         alignment : Alignment.topLeft,
                         child: Text(data.email??'',style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 17,
                           color:Colors.grey,
-                          fontFamily: 'OpenSans'
+                          fontFamily: 'RobotoSlab'
                         ),),
                       ),
                     ),
@@ -151,9 +173,9 @@ class ProfileScreenState extends State<ProfileScreen>{
                       child: Align(
                         alignment : Alignment.topLeft,
                         child: Text(data.phone??'',style: TextStyle(
-                          fontSize: 20,
+                          fontSize:17,
                           color:Colors.grey,
-                          fontFamily: 'OpenSans'
+                          fontFamily: 'RobotoSlab'
                         ),),
                       ),
                     ),
@@ -181,11 +203,12 @@ class ProfileScreenState extends State<ProfileScreen>{
                           Text("Res",style: TextStyle(
                             fontSize: 18,
                             decoration: TextDecoration.underline,
+                            fontFamily: 'RobotoSlab',
                             color:Color(rec_job_heading),
                           ),),
                           Text("ume Headline",style: TextStyle(
                             fontSize: 18,
-                            fontFamily: 'OpenSans',
+                            fontFamily: 'RobotoSlab',
                             color:Color(rec_job_heading),
                           ),),
                         ],
@@ -199,7 +222,7 @@ class ProfileScreenState extends State<ProfileScreen>{
                         child: Text(data.resume_headline??'',style: TextStyle(
                           fontSize: 14,
                           color:Colors.black,
-                          fontFamily: 'OpenSans'
+                          fontFamily: 'RobotoSlab'
                         ),),
                       ),
                     ),
@@ -226,13 +249,13 @@ class ProfileScreenState extends State<ProfileScreen>{
                         children: [
                           Text("Up",style: TextStyle(
                             fontSize: 18,
-                            fontFamily: 'OpenSans',
+                            fontFamily: 'RobotoSlab',
                             decoration: TextDecoration.underline,
                             color:Color(fountColor),
                           ),),
                           Text("date Resume",style: TextStyle(
                             fontSize: 18,
-                            fontFamily: 'OpenSans',
+                            fontFamily: 'RobotoSlab',
                             color:Color(fountColor),
                           ),),
                         ],
@@ -256,7 +279,7 @@ class ProfileScreenState extends State<ProfileScreen>{
                           child: Text(data.resume??'',
                             style: TextStyle(
                             fontSize: 18,
-                            fontFamily: 'OpenSans',
+                            fontFamily: 'RobotoSlab',
                             color:Color(fountColor),
                           ),),
                         ),
@@ -286,13 +309,13 @@ class ProfileScreenState extends State<ProfileScreen>{
                         children: [
                           Text("Wo",style: TextStyle(
                             fontSize: 18,
-                            fontFamily: 'OpenSans',
+                            fontFamily: 'RobotoSlab',
                             decoration: TextDecoration.underline,
                             color:Color(rec_job_heading),
                           ),),
                           Text("rk Experience",style: TextStyle(
                             fontSize: 18,
-                            fontFamily: 'OpenSans',
+                            fontFamily: 'RobotoSlab',
                             color:Color(rec_job_heading),
                           ),),
                         ],
@@ -331,10 +354,12 @@ class ProfileScreenState extends State<ProfileScreen>{
                           Text("Edu",style: TextStyle(
                             fontSize: 18,
                             decoration: TextDecoration.underline,
+                            fontFamily: 'RobotoSlab',
                             color:Color(rec_job_heading),
                           ),),
                           Text("cation ",style: TextStyle(
                             fontSize: 18,
+                            fontFamily: 'RobotoSlab',
                             color:Color(rec_job_heading),
                           ),),
                         ],
@@ -373,9 +398,11 @@ class ProfileScreenState extends State<ProfileScreen>{
                             fontSize: 18,
                             decoration: TextDecoration.underline,
                             color:Color(rec_job_heading),
+                            fontFamily: 'RobotoSlab',
                           ),),
                           Text("ills",style: TextStyle(
                             fontSize: 18,
+                            fontFamily: 'RobotoSlab',
                             color:Color(rec_job_heading),
                           ),),
                         ],
@@ -412,11 +439,13 @@ class ProfileScreenState extends State<ProfileScreen>{
                         children: [
                           Text("Lan",style: TextStyle(
                             fontSize: 18,
+                            fontFamily: 'RobotoSlab',
                             decoration: TextDecoration.underline,
                             color:Color(rec_job_heading),
                           ),),
                           Text("guages",style: TextStyle(
                             fontSize: 18,
+                            fontFamily: 'RobotoSlab',
                             color:Color(rec_job_heading),
                           ),),
                         ],
@@ -450,9 +479,11 @@ class ProfileScreenState extends State<ProfileScreen>{
                             fontSize: 18,
                             decoration: TextDecoration.underline,
                             color:Color(rec_job_heading),
+                            fontFamily: 'RobotoSlab',
                           ),),
                           Text("r interests",style: TextStyle(
                             fontSize: 18,
+                            fontFamily: 'RobotoSlab',
                             color:Color(rec_job_heading),
                           ),),
                         ],
@@ -462,8 +493,9 @@ class ProfileScreenState extends State<ProfileScreen>{
                     Align(
                       alignment : Alignment.topLeft,
                       child: Text(data.your_interests??'',style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
                         color:Colors.black,
+                        fontFamily: 'RobotoSlab',
                       ),),
                     ),
                   ],

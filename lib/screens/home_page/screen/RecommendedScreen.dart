@@ -69,7 +69,7 @@ class AllCollectionsState extends State<RecommendedScreen>{
                                         padding: const EdgeInsets.only(top: 8,bottom: 8),
                                         child: Text(
                                           "  "+'${widget.job_categories_list[index].job_type??''}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(fontSize: 13,color: Color(primarycolor)),
+                                          style: TextStyle(fontSize: 13,color: Color(primarycolor),fontFamily: 'RobotoSlab'),
                                         ),
                                       ),
                                     ),
@@ -103,7 +103,7 @@ class AllCollectionsState extends State<RecommendedScreen>{
                         margin: new EdgeInsets.symmetric(horizontal: 5.0),
                         child: Text(
                           "  "+'${widget.job_categories_list[index].title}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 22,color: Color(blackColor)),
+                          style: TextStyle(fontSize: 22,color: Color(blackColor),fontFamily: 'RobotoSlab'),
                         ),
                       ),
 
@@ -172,7 +172,7 @@ class AllCollectionsState extends State<RecommendedScreen>{
             child: Center(
               child: Text(
                 "  "+'${widget.job_categories_list[index].name}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 15,color: Color(job_title_color)),
+                style: TextStyle(fontSize: 15,color: Color(job_title_color),fontFamily: 'RobotoSlab'),
               ),
             ),
           ),

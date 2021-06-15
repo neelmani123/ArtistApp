@@ -132,7 +132,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
   }
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('EditIntro'),
+      appBar: AppBar(title: Text('EditIntro',style: TextStyle(fontFamily: 'RobotoSlab'),),
       ),
       body: _isLoading==true?Center(child: CircularProgressIndicator(),):SingleChildScrollView(
         child: Container(
@@ -164,7 +164,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
                                 builder: (builder) => bottomSheet());
                           },
                           child: Container(
-                            child: Icon(Icons.edit),
+                            child: Icon(Icons.edit,color: Color(fountColor),),
                           ),
                         ),
                       )
@@ -178,9 +178,10 @@ class _EditIntroductionState extends State<EditIntroduction> {
                     controller: name_controlle,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black),
+                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
                       labelText: "Your Full Name",
                       hintText: "Your Full Name",
+                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -207,7 +208,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
                           int selectedRadio;
                           return AlertDialog(
                             title: Text(
-                              'Select Gender', textAlign: TextAlign.center,),
+                              'Select Gender', textAlign: TextAlign.center,style: TextStyle( fontFamily: 'RobotoSlab',),),
                             content: StatefulBuilder(
                                 builder: (BuildContext context,StateSetter setState)
                                 {
@@ -229,7 +230,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
                                                       setState(() => selectedRadio = val,
                                                       );
                                                     }),
-                                                Text("Male"),
+                                                Text("Male", style: TextStyle(fontFamily: 'RobotoSlab'),),
                                               ],
                                             ),
                                           ),
@@ -242,7 +243,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
                                                       _gender.text = "Female";
                                                       setState(() => selectedRadio = val);
                                                     }),
-                                                Text("Female"),
+                                                Text("Female", style: TextStyle(fontFamily: 'RobotoSlab'),),
                                               ],
                                             ),
                                           ),
@@ -259,7 +260,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
-                                                child: Text("Cancel"),
+                                                child: Text("Cancel", style: TextStyle(fontFamily: 'RobotoSlab'),),
                                               ),
                                             ),
                                             SizedBox(width: 5,),
@@ -270,7 +271,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
-                                                child: Text("OK"),
+                                                child: Text("OK", style: TextStyle(fontFamily: 'RobotoSlab'),),
                                               ),
                                             ),
                                           ],
@@ -295,6 +296,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: Colors.black),
                           labelText: "Gender",
+                          hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
@@ -322,9 +324,10 @@ class _EditIntroductionState extends State<EditIntroduction> {
                     keyboardType: TextInputType.number,
                     controller: contact_controller,
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black),
+                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
                       labelText: "Contact Number",
                       hintText: "Contact Number",
+                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -350,9 +353,10 @@ class _EditIntroductionState extends State<EditIntroduction> {
                     keyboardType: TextInputType.text,
                     controller: profile_controller,
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black),
+                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
                       labelText: "Enter profile summary",
                       hintText: "Enter profile summary",
+                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -378,8 +382,9 @@ class _EditIntroductionState extends State<EditIntroduction> {
                     keyboardType: TextInputType.text,
                     controller: home_controller,
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black),
+                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
                       labelText: "Home Town",
+                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
                       hintText: "Home Town",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -406,9 +411,10 @@ class _EditIntroductionState extends State<EditIntroduction> {
                     keyboardType: TextInputType.text,
                     controller: work_location_controller,
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black),
+                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
                       labelText: "Perfect work location ",
                       hintText: "Perfect work location",
+                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -434,9 +440,10 @@ class _EditIntroductionState extends State<EditIntroduction> {
                     keyboardType: TextInputType.text,
                     controller: resume_controller,
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black),
+                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
                       labelText: "Resume headline ",
                       hintText: "Resume headline",
+                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -462,9 +469,10 @@ class _EditIntroductionState extends State<EditIntroduction> {
                     keyboardType: TextInputType.number,
                     controller: exp_year_controller,
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black),
+                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
                       labelText: "Experience Year",
                       hintText: "Experience Year",
+                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -490,8 +498,9 @@ class _EditIntroductionState extends State<EditIntroduction> {
                     keyboardType: TextInputType.number,
                     controller: exp_month_controller,
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black),
+                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
                       labelText: "Experience Month",
+                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
                       hintText: "Experience Month",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -529,7 +538,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
                     color: Color(fountColor),
                     // textColor: Colors.white,
                     child: _isLoading==true?Container(height:20,width:20,child: CircularProgressIndicator(),):Text("SAVE",
-                        style: TextStyle(fontSize: 20,color: Colors.white)),
+                        style: TextStyle(fontSize: 20,color: Colors.white,fontFamily: 'RobotoSlab')),
                   ),
                 ),
               ],

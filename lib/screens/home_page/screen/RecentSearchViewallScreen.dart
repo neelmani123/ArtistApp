@@ -99,18 +99,17 @@ class RecentSearchViewallScreenState extends State<RecentSearchViewallScreen>{
                                           alignment : Alignment.topLeft,
                                           child: Text(
                                             "  "+'${job_categories_list[index].job_type??''}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(fontSize: 20,color: Colors.black),
+                                            style: TextStyle(fontSize: 20,color: Colors.black,fontFamily: 'RobotoSlab'),
                                           ),
                                         ),
                                       ),
-
                                       Container(
                                         color: Colors.transparent,
                                         alignment: Alignment.topLeft,
                                         margin: new EdgeInsets.symmetric(horizontal: 5.0,vertical: 5),
                                         child: Text(
                                           "  "+'${job_categories_list[index].skills_name}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(fontSize: 16,color: Colors.black),
+                                          style: TextStyle(fontSize: 16,color: Colors.black,fontFamily: 'RobotoSlab'),
                                         ),
                                       ),
 
@@ -120,7 +119,7 @@ class RecentSearchViewallScreenState extends State<RecentSearchViewallScreen>{
                                         margin: new EdgeInsets.symmetric(horizontal: 5.0),
                                         child: Text(
                                           "  "+'${job_categories_list[index].salary_from+"/mo"}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(fontSize: 16,color: Colors.black),
+                                          style: TextStyle(fontSize: 16,color: Colors.black,fontFamily: 'RobotoSlab'),
                                         ),
                                       ),
 
@@ -217,7 +216,7 @@ class RecentSearchViewallScreenState extends State<RecentSearchViewallScreen>{
         backgroundColor: Colors.white,
         title: Text(
           "Recent search",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
         ),
       ),
       body: ListView.builder(

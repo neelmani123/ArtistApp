@@ -110,7 +110,7 @@ class JobViewAllScreenState extends State<JobViewAllScreen>{
             child: Center(
               child: Text(
                 "  "+'${job_categories_list[index].name}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 15,color: Colors.black),
+                style: TextStyle(fontSize: 15,color: Colors.black,fontFamily: 'RobotoSlab'),
               ),
             ),
           ),
@@ -132,7 +132,7 @@ class JobViewAllScreenState extends State<JobViewAllScreen>{
         elevation: 0,
         title: Text(
           "All Categories",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
         ),
       ),
       body: GridView.builder(

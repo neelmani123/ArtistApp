@@ -105,7 +105,7 @@ class HomeState extends State<Home>{
                   children: [
                     Text(
                       "  Lets Search Job, Explore Products",
-                      style: TextStyle(color: Colors.grey, fontSize: 18),
+                      style: TextStyle(color: Colors.grey, fontSize: 18,fontFamily: 'RobotoSlab'),
                     ),
                     Container(
                       height: 70,
@@ -136,7 +136,7 @@ class HomeState extends State<Home>{
                                                 ),
                                               ));
                                         },
-                                        child: Text(" Search",style: TextStyle(color: Colors.grey,fontSize: 16),))
+                                        child: Text(" Search",style: TextStyle(color: Colors.grey,fontSize: 16,fontFamily: 'RobotoSlab'),))
 
                                   ],
                                 ),
@@ -170,7 +170,7 @@ class HomeState extends State<Home>{
 
                               Text(
                                 "  Job Categories",
-                                style: TextStyle(color: Colors.black, fontSize: 20),
+                                style: TextStyle(color: Colors.black, fontSize: 20,fontFamily: 'RobotoSlab'),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(15.0),
@@ -186,7 +186,7 @@ class HomeState extends State<Home>{
                                   child: Text(
                                     'See All',
                                     style: TextStyle(
-                                        color: Color(boldColor), fontSize: 16),
+                                        color: Color(boldColor), fontSize: 16,fontFamily: 'RobotoSlab'),
                                   ),
                                 ),
                               )
@@ -210,7 +210,7 @@ class HomeState extends State<Home>{
                             children: <Widget>[
                               Text(
                                 "  Recommended For you",
-                                style: TextStyle(color: Colors.black, fontSize: 20),
+                                style: TextStyle(color: Colors.black, fontSize: 20,fontFamily: 'RobotoSlab'),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(15.0),
@@ -226,7 +226,7 @@ class HomeState extends State<Home>{
                                   child: Text(
                                     'See All',
                                     style: TextStyle(
-                                        color: Color(boldColor), fontSize: 16),
+                                        color: Color(boldColor), fontSize: 16,fontFamily: 'RobotoSlab'),
                                   ),
                                 ),
                               )
@@ -251,7 +251,7 @@ class HomeState extends State<Home>{
                             children: <Widget>[
                               Text(
                                 "  Recent search",
-                                style: TextStyle(color: Colors.black, fontSize: 20),
+                                style: TextStyle(color: Colors.black, fontSize: 20,fontFamily: 'RobotoSlab'),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(15.0),

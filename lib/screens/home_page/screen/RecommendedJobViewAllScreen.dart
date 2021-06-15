@@ -47,6 +47,7 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
     Color(0xFFACDEE5),
     Color(0xFFC8ABCA),
     Color(0xFFF3B0C2),
+    Color(0xFFACDEE5),
   ];
   buildItem(BuildContext context, int index) {
     return InkWell(
@@ -81,7 +82,7 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
                                         padding: const EdgeInsets.only(top: 8,bottom: 8),
                                         child: Text(
                                           "  "+'${job_categories_list[index].job_type??''}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(fontSize: 13,color: Color(primarycolor)),
+                                          style: TextStyle(fontSize: 13,color: Color(primarycolor),fontFamily: 'RobotoSlab'),
                                         ),
                                       ),
                                     ),
@@ -115,7 +116,7 @@ class RecommendedJobViewAllScreenState extends State<RecommendedJobViewAllScreen
                         margin: new EdgeInsets.symmetric(horizontal: 5.0),
                         child: Text(
                           "  "+'${job_categories_list[index].name}', maxLines: 1,overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 22,color: Color(blackColor)),
+                          style: TextStyle(fontSize: 22,color: Color(blackColor),fontFamily: 'RobotoSlab'),
                         ),
                       ),
                       Positioned(

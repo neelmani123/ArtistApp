@@ -62,11 +62,17 @@ class EditProfileScreenState extends State<EditProfileScreen>{
     //_addlanguage();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        elevation: 0,
+        leading: InkWell(
+          onTap: (){
+            Navigator.pop(context);
+          },
+            child: Icon(Icons.arrow_back,size: 25)),
       ),
       body: (is_loading)?Center(
           child: CupertinoActivityIndicator(radius:22,
@@ -83,7 +89,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
+                     /* Row(
                        // crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -114,6 +120,53 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                             ),
                           )
                         ],
+                      ),*/
+                      Stack(
+                        children: [
+                          Container(
+                            height: 230,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                image: new DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: new NetworkImage(
+                                      "https://cdn.pixabay.com/photo/2018/07/11/21/51/toast-3532016_1280.jpg"
+                                  ),
+
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(color: Colors.white, spreadRadius: 3)
+                                ]
+                            ),
+                            //alignment: Alignment.center,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(top: 180,left: 10),
+                                child: CircleAvatar(
+                                    backgroundColor: Color(fountColor),
+                                    radius: 50,
+                                    child: CircleAvatar(
+                                      radius: 45,
+                                      backgroundImage: NetworkImage(data.profile_img??''),
+                                    )
+                                ),
+                              ),
+                              Spacer(),
+                              InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditIntroduction()));
+                                },
+                                child: Container(
+                                    padding: EdgeInsets.only(top: 220,left: 10),
+                                    child: IconButton(icon: Icon(Icons.edit,color: Color(fountColor),))),
+                              ),
+                            ],
+                          ),
+
+                        ],
                       ),
                       SizedBox(height: 10),
                       Padding(
@@ -121,16 +174,18 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         child: Text(data.name??'',style: TextStyle(
                           fontSize: 20,
                           color:Colors.black,
-                          fontWeight: FontWeight.bold
+                          fontFamily: 'RobotoSlab'
                         ),),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: Align(
                           alignment : Alignment.topLeft,
                           child: Text(data.profile_summary??'',style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 17,
+                            fontFamily: 'RobotoSlab',
                             color:Colors.grey,
+
                           ),),
                         ),
                       ),
@@ -143,11 +198,13 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           child: Row(
                             children: [
                               Text(data.home_town??'',style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 17,
+                                fontFamily: 'RobotoSlab',
                                 color:Colors.grey,
                               ),),
                               Text("${data.country??''}",style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 17,
+                                fontFamily: 'RobotoSlab',
                                 color:Colors.grey,
                               ),),
                             ],
@@ -161,7 +218,8 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         child: Align(
                           alignment : Alignment.topLeft,
                           child: Text(data.email??'',style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 17,
+                            fontFamily: 'RobotoSlab',
                             color:Colors.grey,
                           ),),
                         ),
@@ -173,7 +231,8 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         child: Align(
                           alignment : Alignment.topLeft,
                           child: Text(data.phone??'',style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 17,
+                            fontFamily: 'RobotoSlab',
                             color:Colors.grey,
                           ),),
                         ),
@@ -199,11 +258,15 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                               children: [
                                 Text("Res",style: TextStyle(
                                   fontSize: 18,
+                                  color: Color(fountColor),
+                                  fontFamily: 'RobotoSlab',
                                   decoration: TextDecoration.underline,
                                   //color:Color(rec_job_heading),
                                 ),),
                                 Text("ume Headline",style: TextStyle(
                                   fontSize: 18,
+                                  color: Color(fountColor),
+                                  fontFamily: 'RobotoSlab',
                                   //color:Color(rec_job_heading),
                                 ),),
                               ],
@@ -239,11 +302,15 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                                       children: [
                                                         Text("Res",style: TextStyle(
                                                           fontSize: 18,
+                                                          //color: Color(fountColor),
+                                                          fontFamily: 'RobotoSlab',
                                                           decoration: TextDecoration.underline,
                                                        //   color:Color(rec_job_heading),
                                                         ),),
                                                         Text("ume Headline",style: TextStyle(
                                                           fontSize: 18,
+                                                          //color: Color(fountColor),
+                                                          fontFamily: 'RobotoSlab',
                                                          // color:Color(rec_job_heading),
                                                         ),),
                                                       ],
@@ -269,7 +336,8 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                                         decoration: InputDecoration(
                                                           hintText: 'Enter here..',
                                                           hintStyle: TextStyle(
-                                                              color: Colors.grey
+                                                              color: Colors.grey,
+                                                            fontFamily: 'RobotoSlab',
                                                           ),
                                                           border: OutlineInputBorder(
                                                             borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -298,7 +366,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                                           color: Color(fountColor),
                                                           textColor: Colors.white,
                                                           child: Text("Save",
-                                                              style: TextStyle(fontSize: 20)),
+                                                              style: TextStyle(fontSize: 20,fontFamily: 'RobotoSlab',)),
                                                         ),
                                                       ),
                                                     ],
@@ -313,12 +381,10 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                   );
                                 },
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     IconButton(icon: Icon(Icons.edit,color: Color(fountColor),)),
-                                    Text("Edit",style: TextStyle(
-                                      fontSize: 20,
-                                      color:Color(fountColor),
-                                    ),),
                                   ],
                                 ),
                               ),
@@ -331,6 +397,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         alignment : Alignment.topLeft,
                         child: Text(data.resume_headline??'',style: TextStyle(
                           fontSize: 14,
+                          fontFamily: 'RobotoSlab',
                           color:Colors.black,
                         ),),
                       ),
@@ -345,7 +412,6 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
-
                     children: [
                       Align(
                         alignment : Alignment.topLeft,
@@ -355,9 +421,11 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                               fontSize: 18,
                               decoration: TextDecoration.underline,
                               color:Color(rec_job_heading),
+                              fontFamily: 'RobotoSlab',
                             ),),
                             Text("date Resume",style: TextStyle(
                               fontSize: 18,
+                              fontFamily: 'RobotoSlab',
                               color:Color(rec_job_heading),
                             ),),
                           ],
@@ -405,6 +473,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                          fileName??'',
                                         style: TextStyle(
                                           fontSize: 18,
+                                          fontFamily: 'RobotoSlab',
                                           color:Colors.black,
                                         ),),
                                     ),
@@ -440,29 +509,31 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                               children: [
                                 Text("Wo",style: TextStyle(
                                   fontSize: 18,
+                                  fontFamily: 'RobotoSlab',
                                   decoration: TextDecoration.underline,
                                   color:Color(rec_job_heading),
                                 ),),
                                 Text("rk Experience",style: TextStyle(
                                   fontSize: 18,
+                                  fontFamily: 'RobotoSlab',
                                   color:Color(rec_job_heading),
                                 ),),
+
                               ],
                             ),
-                            Padding(
+                            /*Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 80),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   IconButton(icon: Icon(Icons.edit,color: Color(fountColor),)),
-                                  Text("Edit",style: TextStyle(
-                                    fontSize: 20,
-                                    color:Color(fountColor),
-                                  ),),
                                 ],
                               ),
-                            )
+                            )*/
+                            Spacer(),
+                            IconButton(icon: Icon(Icons.edit,color: Color(fountColor),)),
                           ],
+
                         ),
                       ),
                       SizedBox(height: 10),
@@ -498,7 +569,9 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                     ));
                               },
                               child: Text(" + Add",
-                                  style: TextStyle(fontSize: 16,color: Color(fountColor))),
+                                  style: TextStyle(
+                                      fontFamily: 'RobotoSlab',
+                                      fontSize: 16,color: Color(fountColor))),
                             ),
                           ),
                         ),
@@ -524,27 +597,19 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                               children: [
                                 Text("Edu",style: TextStyle(
                                   fontSize: 18,
+                                  fontFamily: 'RobotoSlab',
                                   decoration: TextDecoration.underline,
                                   color:Color(rec_job_heading),
                                 ),),
                                 Text("cation ",style: TextStyle(
                                   fontSize: 18,
+                                  fontFamily: 'RobotoSlab',
                                   color:Color(rec_job_heading),
                                 ),),
                               ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 100),
-                              child: Row(
-                                children: [
-                                  IconButton(icon: Icon(Icons.edit,color: Color(fountColor),)),
-                                  Text("Edit",style: TextStyle(
-                                    fontSize: 20,
-                                    color:Color(fountColor),
-                                  ),),
-                                ],
-                              ),
-                            )
+                            Spacer(),
+                            IconButton(icon: Icon(Icons.edit,color: Color(fountColor),)),
                           ],
                         ),
                       ),
@@ -581,7 +646,9 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                     ));
                               },
                               child: Text(" + Add",
-                                  style: TextStyle(fontSize: 16,color: Color(fountColor))),
+                                  style: TextStyle(
+                                      fontFamily: 'RobotoSlab',
+                                      fontSize: 16,color: Color(fountColor))),
                             ),
                           ),
                         ),
@@ -604,11 +671,13 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           children: [
                             Text("Sk",style: TextStyle(
                               fontSize: 18,
+                              fontFamily: 'RobotoSlab',
                               decoration: TextDecoration.underline,
                               color:Color(rec_job_heading),
                             ),),
                             Text("ills",style: TextStyle(
                               fontSize: 18,
+                              fontFamily: 'RobotoSlab',
                               color:Color(rec_job_heading),
                             ),),
                           ],
@@ -642,7 +711,9 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                             },
                             child: Center(
                               child: Text(" + Add",
-                                  style: TextStyle(fontSize: 16,color: Color(fountColor))),
+                                  style: TextStyle(
+                                      fontFamily: 'RobotoSlab',
+                                      fontSize: 16,color: Color(fountColor))),
                             ),
                           ),
                         ),
@@ -667,11 +738,13 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           children: [
                             Text("Lan",style: TextStyle(
                               fontSize: 18,
+                              fontFamily: 'RobotoSlab',
                               decoration: TextDecoration.underline,
                               color:Color(rec_job_heading),
                             ),),
                             Text("guages",style: TextStyle(
                               fontSize: 18,
+                              fontFamily: 'RobotoSlab',
                               color:Color(rec_job_heading),
                             ),),
                           ],
@@ -704,7 +777,9 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                 await showInformationDialog(context);
                               },
                               child: Text(" + Add",
-                                  style: TextStyle(fontSize: 16,color: Color(fountColor))),
+                                  style: TextStyle(
+                                      fontFamily: 'RobotoSlab',
+                                      fontSize: 16,color: Color(fountColor))),
                             ),
                           ),
                         ),
@@ -728,11 +803,13 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           children: [
                             Text("You",style: TextStyle(
                               fontSize: 18,
+                              fontFamily: 'RobotoSlab',
                               decoration: TextDecoration.underline,
                               color:Color(rec_job_heading),
                             ),),
                             Text("r interests",style: TextStyle(
                               fontSize: 18,
+                              fontFamily: 'RobotoSlab',
                               color:Color(rec_job_heading),
                             ),),
                           ],
@@ -743,6 +820,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                         alignment : Alignment.topLeft,
                         child: Text(data.your_interests??'',style: TextStyle(
                           fontSize: 16,
+                          fontFamily: 'RobotoSlab',
                           color:Color(text_white),
                         ),),
                       ),
@@ -767,7 +845,9 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>AddInterest()));
                               },
                               child: Text(" + Add",
-                                  style: TextStyle(fontSize: 16,color: Color(fountColor))),
+                                  style: TextStyle(
+                                      fontFamily: 'RobotoSlab',
+                                      fontSize: 16,color: Color(fountColor))),
                             ),
                           ),
                         ),
