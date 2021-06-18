@@ -87,12 +87,12 @@ class _HomeScreenState extends State<HomeScreen> {
                ),
                child: Text(''),
              ),
-             ListTile(
+             /*ListTile(
                title: Text('Create Post',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>CreatePost()));
                },
-             ),
+             ),*/
              ListTile(
                title: Text('Job Post',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {

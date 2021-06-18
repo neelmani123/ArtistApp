@@ -308,15 +308,15 @@ class HttpService {
 
   //Add Work Experience Api  Call
   Future<AddWorkExperienceModel> add_Work_exp(
-      {String position, String comp_name, String current_work, String location}) async {
+      {String position, String comp_name,String startDate,String endDate,int current_work1,String company_location }) async {
     final prefs = await SharedPreferences.getInstance();
     Map reqBody = {
       'position': position,
       'company_name': comp_name,
-      'start_date': "12-10-2021",
-      'end_date': "12-10-2021",
-      'currently_work_here': "0",
-      'company_location': position,
+      'start_date': startDate,
+      'end_date': endDate,
+      'currently_work_here': current_work1,
+      'company_location': company_location,
       'jwtToken': prefs.getString('userID')
     };
     final response = await _apiHelper.post(

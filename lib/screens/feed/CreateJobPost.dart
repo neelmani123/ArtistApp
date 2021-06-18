@@ -184,7 +184,7 @@ class _CreateJobPostState extends State<CreateJobPost> {
     final prefs = await SharedPreferences.getInstance();
     Map<String, String>headers = {'Content-Type': 'application/json'};
     Map reqBody = {
-      "jwtToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ0aW1lU3RhbXAiOiIyMDIxLTA0LTEzIDEwOjQwOjAxIn0.2TNWx0yu22Uj37oqGbgNwB2cfvPNEREC6KqlbgnBJjk",
+      "jwtToken":  prefs.getString('userID'),
       "category_id": job_category_controller.text,
       "location": location_controller.text,
       "title": title_controller.text,
@@ -246,477 +246,510 @@ class _CreateJobPostState extends State<CreateJobPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create Job Post"),
+        elevation: 0,
+        title: Text("Create Job Post",style: TextStyle(fontFamily: 'RobotoSlab'),),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 20,),
-              Text("Location",style: TextStyle(color: Colors.black,fontSize: 20,),),
-              SizedBox(height: 5,),
-              TextField(
-                controller: location_controller,
-                decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Colors.black),
-                  hintText: 'Location',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 20,),
+            Card(
+              elevation: 3,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,top: 10),
+                      child: Text('Location',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
                     ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text("Title",style: TextStyle(color: Colors.black,fontSize: 20,),),
-              SizedBox(height: 5,),
-              TextField(
-                controller: title_controller,
-                decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Colors.black),
-                  hintText: 'Title',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text("Company Name",style: TextStyle(color: Colors.black,fontSize: 20),),
-              SizedBox(height: 5,),
-              TextField(
-                controller: company_name_controller,
-                decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Colors.black),
-                  hintText: 'Company Name',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text('Skills',style: TextStyle(color: Colors.black,fontSize: 20),),
-              SizedBox(height: 5,),
-              MultiSelectBottomSheetField<DataSkills>(
-                confirmText: Text('Ok',style: TextStyle(color: Color(fountColor)),),
-                cancelText: Text('Cancel',style: TextStyle(color: Color(fountColor)),),
-                checkColor: Colors.black,
-                key: _skillsSelectKey,
-                initialChildSize: 0.7,
-                maxChildSize: 0.95,
-                title: Text("Skills"),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(
-                    color: Color(fountColor),
-                    width: 1,
-                  ),
-                ),
-                buttonIcon: Icon(
-                  Icons.shopping_bag,
-                  color: Colors.black54,
-                ),
-                buttonText: Text(
-                  "Skills",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                  ),
-                ),
-                items: _items,
-                searchable: true,
-                validator: (values) {
-                  if (values == null || values.isEmpty) {
-                    return "Required";
-                  }
-                  List<String> names = values.map((e) => e.skills_name).toList();
-                  print("Selected Skill is:${names}");
-                  if (false) {
-                  }
-                  return null;
-                },
-                onConfirm: (values) {
-                  setState(() {
-                    _selectedskills3 = values;
-
-                  });
-                  _skillsSelectKey.currentState.validate();
-                },
-                chipDisplay: MultiSelectChipDisplay(
-                  chipColor:Color(boldColor),
-                  textStyle: TextStyle(fontSize: 14,color: Color(text_white)),
-                  onTap: (item) {
-                    setState(() {
-                      _selectedskills3.remove(item);
-                      //print("Selected Skill is:${_selectedskills3}");
-                    });
-                    _skillsSelectKey.currentState.validate();
-                  },
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text("Other Skills",style: TextStyle(color: Colors.black,fontSize: 20,),),
-              SizedBox(height: 5,),
-              TextField(
-                controller: other_skill_controller,
-                decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Colors.black),
-                  hintText: 'Other Skills',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text("Salary From",style: TextStyle(color: Colors.black,fontSize: 20,),),
-              SizedBox(height: 5,),
-              TextField(
-                controller: salary_form_controller,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  //labelText: 'Salary From',
-                  labelStyle: TextStyle(color: Colors.black),
-                  hintText: 'LPA',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text("Salary To",style: TextStyle(color: Colors.black,fontSize: 20,),),
-              SizedBox(height: 5,),
-              TextField(
-                controller: salary_to_controller,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  //labelText: 'Salary To',
-                  labelStyle: TextStyle(color: Colors.black),
-                  hintText: 'LPA',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text("Experience From",style: TextStyle(color: Colors.black,fontSize: 20,),),
-              SizedBox(height: 5,),
-              TextField(
-                controller: exp_from_controller,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  //labelText: 'Experience From',
-                  labelStyle: TextStyle(color: Colors.black),
-                  hintText: '0 to 5 year',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text("Experience To",style: TextStyle(color: Colors.black,fontSize: 20,),),
-              SizedBox(height: 5,),
-              TextField(
-                controller: exp_to_controller,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                 // labelText: 'Experience To',
-                  labelStyle: TextStyle(color: Colors.black),
-                  hintText: '5 to 10 year',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10,),
-              /*TextField(
-                controller: job_type_controller,
-                decoration: InputDecoration(
-                  labelText: 'Job Type',
-                  labelStyle: TextStyle(color: Colors.black),
-                  hintText: 'Job Type',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                ),
-              ),*/
-              Text("Job Type",style: TextStyle(color: Colors.black,fontSize: 20,),),
-              SizedBox(height: 5,),
-              MultiSelectBottomSheetField<JobType>(
-                confirmText: Text('Ok',style: TextStyle(color: Color(fountColor)),),
-                cancelText: Text('Cancel',style: TextStyle(color: Color(fountColor)),),
-                checkColor: Colors.black,
-                key: _multiSelectKey,
-                initialChildSize: 0.7,
-                maxChildSize: 0.95,
-                title: Text("Job Types"),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(
-                    color: Color(fountColor),
-
-                  ),
-                ),
-                buttonIcon: Icon(
-                  Icons.shopping_bag,
-                  color: Colors.black54,
-                ),
-                buttonText: Text(
-                  "Job Types",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                  ),
-                ),
-                items: _itemsJob,
-                searchable: true,
-                validator: (values) {
-                  if (values == null || values.isEmpty) {
-                    return "Required";
-                  }
-                  List<String> names = values.map((e) => e.name).toList();
-                  print("Names${names}");
-                  if (false) {
-
-                  }
-                  return null;
-                },
-                onConfirm: (values) {
-                  setState(() {
-                    _selectedJobs = values;
-                  });
-                  _multiSelectKey.currentState.validate();
-                },
-                chipDisplay: MultiSelectChipDisplay(
-                  chipColor:Color(boldColor),
-                  textStyle: TextStyle(fontSize: 14,color: Colors.black),
-                  onTap: (item) {
-                    setState(() {
-                      _selectedJobs.remove(item);
-                    });
-                    _multiSelectKey.currentState.validate();
-                  },
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text('Working Hours',style: TextStyle(color: Colors.black,fontSize: 20,),),
-              SizedBox(height: 5,),
-              TextField(
-                controller: working_hours_controller,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Colors.black),
-                  hintText: 'Working hours',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text('Select City',style: TextStyle(color: Colors.black,fontSize: 20,),),
-              SizedBox(height: 5,),
-              Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(
-                        color: Color(fountColor),
-                      )),
-                  margin: EdgeInsets.only(top: 5),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      isExpanded: true,
-                      value: value2,
-                      hint: Text(
-                        ' Select City',
-                        style: TextStyle(color: Colors.black),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextFormField(
+                        controller: location_controller,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            //prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
+                        ),
                       ),
-                      items: listDrop,
-                      iconSize: 30.0,
-                      elevation: 16,
-                      iconEnabledColor: Colors.black,
-                      onChanged: (val) {
-                        setState(() {
-                          value2 = val;
-                          print(value2);
-                        });
-                      },
-                    ),
-                  )),
-              SizedBox(height: 10,),
-              Text('Category Type',
-                style: TextStyle(color: Colors.black,fontSize: 20,),),
-              SizedBox(height: 5,),
-              Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(
-                        color: Color(fountColor),
-                      )),
-                  margin: EdgeInsets.only(top: 5),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      value: value1,
-                      hint: Text(
-                        ' Category Type',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      items: listDrop1,
-                      iconSize: 30.0,
-                      elevation: 16,
-                      iconEnabledColor: Colors.black,
-                      onChanged: (val) {
-                        setState(() {
-                          value1 = val;
-                          print(value1);
-                        });
-                      },
-                    ),
-                  )),
-              SizedBox(height: 10,),
-              Text('Description',style: TextStyle(color: Colors.black,fontSize: 20,),),
-              SizedBox(height: 5,),
-              TextField(
-                controller: description_controller,
-                decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Colors.black),
-                  hintText: 'Description',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(fountColor),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
+                    )
+
+                  ],
                 ),
               ),
-              SizedBox(height: 10,),
-              Container(
-                height: 60,
+            ),
+            Card(
+              elevation: 3,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,top: 10),
+                      child: Text('Title',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextFormField(
+                        controller: title_controller,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          //prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              elevation: 3,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,top: 10),
+                      child: Text('Company Name',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextFormField(
+                        controller: company_name_controller,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          //prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+              ),
+            ),
+           Card(
+             child: Container(
+               child: Column(
+                 mainAxisAlignment: MainAxisAlignment.start,
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   Padding(
+                     padding: const EdgeInsets.only(left:20,top: 10),
+                     child: Text('Skills',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                   ),
+                   MultiSelectBottomSheetField<DataSkills>(
+                     confirmText: Text('Ok',style: TextStyle(color: Color(fountColor)),),
+                     cancelText: Text('Cancel',style: TextStyle(color: Color(fountColor)),),
+                     checkColor: Colors.black,
+                     key: _skillsSelectKey,
+                     initialChildSize: 0.7,
+                     maxChildSize: 0.95,
+                    // title: Text("Skills"),
+                     buttonIcon: Icon(
+                       Icons.shopping_bag,
+                       color: Colors.black54,
+                     ),
+                     buttonText: Text(
+                       "   Skills",
+                       style: TextStyle(
+                         color: Colors.black,
+                         fontSize: 16,
+                       ),
+                     ),
+                     items: _items,
+                     searchable: true,
+                     validator: (values) {
+                       if (values == null || values.isEmpty) {
+                         return "Required";
+                       }
+                       List<String> names = values.map((e) => e.skills_name).toList();
+                       print("Selected Skill is:${names}");
+                       if (false) {
+                       }
+                       return null;
+                     },
+                     onConfirm: (values) {
+                       setState(() {
+                         _selectedskills3 = values;
+
+                       });
+                       _skillsSelectKey.currentState.validate();
+                     },
+                     chipDisplay: MultiSelectChipDisplay(
+                       chipColor:Color(boldColor),
+                       textStyle: TextStyle(fontSize: 14,color: Color(text_white)),
+                       onTap: (item) {
+                         setState(() {
+                           _selectedskills3.remove(item);
+                           //print("Selected Skill is:${_selectedskills3}");
+                         });
+                         _skillsSelectKey.currentState.validate();
+                       },
+                     ),
+                   ),
+
+                 ],
+               ),
+             ),
+           ),
+            Card(
+              elevation: 3,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,top: 10),
+                      child: Text('Other Skills',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextFormField(
+                        controller: other_skill_controller,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          //prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              elevation: 3,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,top: 10),
+                      child: Text('Salary From',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextFormField(
+                        controller: salary_form_controller,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          //prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              elevation: 3,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,top: 10),
+                      child: Text('Salary To',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextFormField(
+                        controller: salary_to_controller,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          //prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              elevation: 3,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,top: 10),
+                      child: Text('Experience From',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextFormField(
+                        controller: exp_from_controller,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          //prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              elevation: 3,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,top: 10),
+                      child: Text('Experience To',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextFormField(
+                        controller: exp_to_controller,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          //prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,top: 10),
+                      child: Text('Job Type',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    MultiSelectBottomSheetField<JobType>(
+                      confirmText: Text('Ok',style: TextStyle(color: Color(fountColor)),),
+                      cancelText: Text('Cancel',style: TextStyle(color: Color(fountColor)),),
+                      checkColor: Colors.black,
+                      key: _multiSelectKey,
+                      initialChildSize: 0.7,
+                      maxChildSize: 0.95,
+                     // title: Text("Job Types"),
+                      buttonIcon: Icon(
+                        Icons.shopping_bag,
+                        color: Colors.black54,
+                      ),
+                      buttonText: Text(
+                        "   Job Type",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                      items: _itemsJob,
+                      searchable: true,
+                      validator: (values) {
+                        if (values == null || values.isEmpty) {
+                          return "Required";
+                        }
+                        List<String> names = values.map((e) => e.name).toList();
+                        print("Names${names}");
+                        if (false) {
+
+                        }
+                        return null;
+                      },
+                      onConfirm: (values) {
+                        setState(() {
+                          _selectedJobs = values;
+                        });
+                        _multiSelectKey.currentState.validate();
+                      },
+                      chipDisplay: MultiSelectChipDisplay(
+                        chipColor:Color(boldColor),
+                        textStyle: TextStyle(fontSize: 14,color: Colors.black),
+                        onTap: (item) {
+                          setState(() {
+                            _selectedJobs.remove(item);
+                          });
+                          _multiSelectKey.currentState.validate();
+                        },
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              elevation: 3,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,top: 10),
+                      child: Text('Working hours',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextFormField(
+                        controller: working_hours_controller,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          //prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+              ),
+            ),
+            Card(child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,top: 10),
+                    child: Text('Select City',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        isExpanded: true,
+                        value: value2,
+                        hint: Text(
+                          ' Select City',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        items: listDrop,
+                        iconSize: 30.0,
+                        elevation: 16,
+                        iconEnabledColor: Colors.black,
+                        onChanged: (val) {
+                          setState(() {
+                            value2 = val;
+                            print(value2);
+                          });
+                        },
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),),
+            Card(
+              child: Container(
                 width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(top: 20,bottom: 20),
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.10),),
-                  // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
-                  onPressed: () async{
-                    setState(() {
-                      _isLoading=true;
-                      //_addCreateJobPost();
-                      _addCreateJobPost1();
+              child: Column(
+               mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,top: 10),
+                    child: Text('Category Type',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.only(left: 20),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        value: value1,
+                        hint: Text(
+                          ' Category Type',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        items: listDrop1,
+                        iconSize: 30.0,
+                        elevation: 16,
+                        iconEnabledColor: Colors.black,
+                        onChanged: (val) {
+                          setState(() {
+                            value1 = val;
+                            print(value1);
+                          });
+                        },
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),),
+            Card(
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,top: 10),
+                      child: Text('Description',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextFormField(
+                        controller: description_controller,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          //prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
+                        ),
+                      ),
+                    )
 
-                    });
-                  },
-                  color: Color(fountColor),
-                  // textColor: Colors.white,
-                  child: _isLoading==true?Container(height:20,width: 20,child: CircularProgressIndicator(),):Text("POST",
-                      style: TextStyle(fontSize: 20,color: Colors.white)),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: 10,),
+            Container(
+              height: 70,
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.only(top: 20,bottom: 20),
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),),
+                // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
+                onPressed: () async{
+                  setState(() {
+                    _isLoading=true;
+                    //_addCreateJobPost();
+                    _addCreateJobPost1();
+
+                  });
+                },
+                color: Color(fountColor),
+                // textColor: Colors.white,
+                child: _isLoading==true?Container(height:20,width: 20,child: CircularProgressIndicator(),):Text("POST",
+                    style: TextStyle(fontSize: 20,color: Colors.white,fontFamily: 'RobotoSlab')),
+              ),
+            ),
+          ],
         ),
       ),
     );

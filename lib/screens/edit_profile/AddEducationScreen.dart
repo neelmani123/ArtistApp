@@ -71,331 +71,265 @@ class AddEducationScreenState extends State<AddEducationScreen>{
             child:ListView(
                 children: <Widget>[
                   SizedBox(height: 10,),
-                  ListTile(
-                      title: Container(
-                       height: 60,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              //color: Colors.grey,
-                              //offset: Offset(1.0, 1.0), //(x,y)
-                              blurRadius: 4.0,
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(5.10),
-                          color: Color(blueGreyColor),
-                        ),
-                        child: Column(
-                            children: [
-                              Expanded(
-                              flex: 5,
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 10),
-                                  height: 30,
-                                  child: TextField(
-                                    controller: school_name,
-                                     style: TextStyle(fontSize: 17,color: Colors.black),
-                                    decoration: InputDecoration(
-                                        //border: InputBorder.none,
-                                        labelText: 'Enter your School name',
-                                        labelStyle: TextStyle(color:Color(fountColor)),
-                                    ),
-                                  ),
-                                ),
-                                 )
-                            ]
-                        ),
-                      )
-                  ),
-                  ListTile(
-                      title: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              //color: Colors.grey,
-                              //offset: Offset(1.0, 1.0), //(x,y)
-                              blurRadius: 4.0,
-                            ),
-                          ],
-                           borderRadius: BorderRadius.circular(5.10),
-                          color: Color(blueGreyColor),
-                        ),
-                        child: Column(
-                            children: [
-                              Expanded(
-                                flex: 5,
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 10),
-                                  height: 30,
-                                  child: TextField(
-                                    controller: education,
-                                    style: TextStyle(fontSize: 17,color: Colors.black),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      labelText: 'Enter your Education',
-                                      labelStyle: TextStyle(color:Color(fountColor)),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ]
-
-                        ),
-                      )
-                  ),
-                  ListTile(
-                      title: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              //color: Colors.grey,
-                              //offset: Offset(1.0, 1.0), //(x,y)
-                              blurRadius: 4.0,
-                            ),
-                          ],
-                           borderRadius: BorderRadius.circular(5.10),
-                          color: Color(blueGreyColor),
-                        ),
-                        child: Column(
-                            children: [
-                              Expanded(
-                                flex: 5,
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 10),
-                                  height: 30,
-                                  child: TextField(
-                                    controller: filled_of_study,
-                                    style: TextStyle(fontSize: 17,color: Colors.black),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      labelText: 'Enter your filled of study',
-                                      labelStyle: TextStyle(color:Color(fountColor)),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ]
-
-                        ),
-                        ),
-                      ),
-                  ListTile(
-                    title: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            //color: Colors.grey,
-                            //offset: Offset(1.0, 1.0), //(x,y)
-                            blurRadius: 4.0,
+                  Card(
+                    elevation: 5,
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 47,top: 10),
+                            child: Text('School',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
                           ),
+                          TextFormField(
+                            controller: school_name,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                /*prefixIcon: Image.asset(
+                                  'images/job.png',
+                                  width: 40,
+                                  height: 40,
+                                  color: Colors.black,
+                                )*/
+                            ),
+                          )
                         ],
-                         borderRadius: BorderRadius.circular(5.10),
-                        color: Color(blueGreyColor),
                       ),
-                      child: InkWell(
-                        onTap: (){
-                          setState(() {
-                            selectDate(context);
-                          });
-                        },
+                    ),
+                  ),
+                  Card(
+                    elevation: 5,
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 47,top: 10),
+                            child: Text('Education',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                          ),
+                          TextFormField(
+                            controller: education,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                               /* prefixIcon: Image.asset(
+                                  'images/job.png',
+                                  width: 40,
+                                  height: 40,
+                                  color: Colors.black,
+                                )*/
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Card(
+                    elevation: 5,
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 47,top: 10),
+                            child: Text('Filled of study',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                          ),
+                          TextFormField(
+                            controller: filled_of_study,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                               /* prefixIcon: Image.asset(
+                                  'images/job.png',
+                                  width: 40,
+                                  height: 40,
+                                  color: Colors.black,
+                                )*/
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  Card(
+                    elevation: 5,
+                    child: InkWell(
+                      onTap: (){
+                        setState(() {
+                          selectDate(context);
+                          print(_formatteddate);
+                        });
+                      },
+                      child: Container(
+                        height: 80,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                                padding: EdgeInsets.only(left: 10),
-                                //margin: EdgeInsets.only(top: 10),
-                                child: Text(
-                                  "Enter your start date",
-                                  style: TextStyle(
-                                      color:Color(fountColor),
-                                    fontSize: 17
-                                  ),
-                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 47,top: 10),
+                              child: Text('Start Date',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                               /* Container(
-                                  margin: EdgeInsets.only(left: 10),
-                                  child: Image.asset('images/calendar-alt.png'),
-                                ),*/
-                                Container(
-                                 /* margin: EdgeInsets.only(
-                                    right: 180,
-                                    left: 10,
-                                  ),*/
-                                  padding: EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    "$_formatteddate",
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                                Container(
-                                  // margin: EdgeInsets.only(),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5),
                                   child: Image.asset(
                                     'images/calendar-alt.png',
+                                    width: 40,
+                                    height: 40,
+                                    color: Colors.black,
                                   ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top:10),
+                                  child: Text(
+                                    "${_formatteddate} ",
+                                    style: TextStyle(color: Colors.black,fontSize: 15),
+                                  ),
+                                ),
+                                Spacer(),
+                                Image.asset(
+                                  'images/calendar-alt.png',
+                                  width: 40,
+                                  height: 40,
+                                  color: Color(fountColor),
+                                ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  ListTile(
-                    title: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            //color: Colors.grey,
-                            //offset: Offset(1.0, 1.0), //(x,y)
-                            blurRadius: 4.0,
-                          ),
-                        ],
-                         borderRadius: BorderRadius.circular(5.10),
-                        color: Color(blueGreyColor),
-                      ),
-                      child: InkWell(
-                        onTap: (){
-                          setState(() {
-                            selectDate1(context);
-                          });
-                        },
+                  Card(
+                    elevation: 5,
+                    child: InkWell(
+                      onTap: (){
+                        setState(() {
+                          selectDate1(context);
+                          print(_formatteddate);
+                        });
+                      },
+                      child: Container(
+                        height: 80,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                                padding: EdgeInsets.only(left: 10),
-                               // margin: EdgeInsets.only(top: 10),
-                                child: Text(
-                                  "Enter your end date",
-                                  style: TextStyle(
-                                      color:Color(fountColor),
-                                      fontSize: 17
-                                  ),
-                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 47,top: 10),
+                              child: Text('End Date',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                 /* margin: EdgeInsets.only(left: 10),
-                                  child: Image.asset('images/calendar-alt.png'),*/
-                                ),
-                                Container(
-                                  /*margin: EdgeInsets.only(
-                                    right: 180,
-                                    left: 10,
-                                  ),*/
-                                  padding: EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    "$_formatteddate1",
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                                Container(
-                                  // margin: EdgeInsets.only(),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5),
                                   child: Image.asset(
                                     'images/calendar-alt.png',
+                                    width: 40,
+                                    height: 40,
+                                    color: Colors.black,
                                   ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top:10),
+                                  child: Text(
+                                    "${_formatteddate1} ",
+                                    style: TextStyle(color: Colors.black,fontSize: 15),
+                                  ),
+                                ),
+                                Spacer(),
+                                Image.asset(
+                                  'images/calendar-alt.png',
+                                  width: 40,
+                                  height: 40,
+                                  color: Color(fountColor),
+                                ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ),
-
-                  ListTile(
-                      title: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.10),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 4.0,
+                  Card(
+                    elevation: 5,
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 47,top: 10),
+                            child: Text('current study',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                          ),
+                          TextFormField(
+                            controller: currently_study_here,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                /*prefixIcon: Image.asset(
+                                  'images/job.png',
+                                  width: 40,
+                                  height: 40,
+                                  color: Colors.black,
+                                )*/
                             ),
-                          ],
-                          color: Color(blueGreyColor),
-                        ),
-                        child:  Column(
-                            children: [
-                              Expanded(
-                                flex: 5,
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 10),
-
-                                  height: 30,
-                                  child: TextField(
-                                    controller:  currently_study_here,
-                                    style: TextStyle(fontSize: 17,color: Colors.black),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      labelText: 'Enter your current study ',
-                                      labelStyle: TextStyle(color:Color(fountColor)),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ]
-
-                        ),
-                      )
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                  ListTile(
-                      title: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.10),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 4.0,
+                  Card(
+                    elevation: 5,
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 47,top: 10),
+                            child: Text('What did learn?',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                          ),
+                          TextFormField(
+                            controller: education_sub_category,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                /*prefixIcon: Image.asset(
+                                  'images/job.png',
+                                  width: 40,
+                                  height: 40,
+                                  color: Colors.black,
+                                )*/
                             ),
-                          ],
-                          color: Color(blueGreyColor),
-                        ),
-                        child:  Column(
-                            children: [
-                              Expanded(
-                                flex: 5,
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 10),
-                                  height: 30,
-                                  child: TextField(
-                                    controller:  education_sub_category,
-                                    style: TextStyle(fontSize: 17,color: Colors.black),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      labelText: 'Enter your education',
-                                      labelStyle: TextStyle(color:Color(fountColor)),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ]
-
-                        ),
-                      )
+                          )
+                        ],
+                      ),
+                    ),
                   ),
+
                   Row(
                     // mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        height: 60,
+                        height: 70,
                         width: MediaQuery.of(context).size.width,
                         margin: const EdgeInsets.only(top: 20),
                         padding: EdgeInsets.symmetric(horizontal: 30),
                         child: RaisedButton(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.10),),
+                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),),
                           // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
                           onPressed: () async{
                             setState(() {
@@ -410,6 +344,7 @@ class AddEducationScreenState extends State<AddEducationScreen>{
                       ),
                     ],
                   ),
+                  SizedBox(height: 20,)
                 ]
             )
         )

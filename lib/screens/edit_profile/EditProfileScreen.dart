@@ -924,7 +924,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           children: languages.keys.map((String key) {
                             return new CheckboxListTile(
                               //checkColor: Colors.green,
-                              title: Text(key),
+                              title: Text(key,style: TextStyle(fontFamily:'RobotoSlab'),),
                               value: languages[key],
                               onChanged: (bool newvalue) {
                                 setState(() {
@@ -975,13 +975,13 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                       ),
                       SizedBox(height: 20,),
                       Container(
-                        height: 50,
+                        height: 60,
                         width: MediaQuery.of(context).size.width,
                         margin: const EdgeInsets.only(top: 20,bottom: 20),
                         padding: EdgeInsets.symmetric(horizontal: 30),
                         child: RaisedButton(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.10),),
+                            borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20)),),
                           // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
                           onPressed: () async{
                             setState(() {
@@ -993,8 +993,8 @@ class EditProfileScreenState extends State<EditProfileScreen>{
                           },
                           color: Color(fountColor),
                           // textColor: Colors.white,
-                          child: Text("Submit",
-                              style: TextStyle(fontSize: 20,color: Colors.white)),
+                          child: Text("Done",
+                              style: TextStyle(fontSize: 20,color: Colors.white,fontFamily: 'RobotoSlab')),
                         ),
                       ),
                     ],

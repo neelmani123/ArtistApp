@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/api_helper/http_service.dart';
 import 'package:artist_icon/screens/edit_profile/EditProfileScreen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -33,13 +34,16 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
   DateTime _date = DateTime.now();
   DateTime _date1 = DateTime.now();
   String _formatteddate="",_formatteddate1="";
-  /*_addData() async {
-   // _isLoading=true;
+  _addData() async {
+    _isLoading=true;
     var res = await _httpService.add_Work_exp(
         position: position.text,
         comp_name: company_name.text,
-        current_work: current_work.text,
-        location: 'noida');
+        current_work1: result1,
+        company_location: location.text,
+      startDate: _formatteddate,
+      endDate: _formatteddate1
+    );
     if (res.status == true) {
       setState(() {
         _isLoading = false;
@@ -48,7 +52,7 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditProfileScreen()));
       });
     }
-  }*/
+  }
   /*This Method is use for the Date Picker Dialog*/
   Future<Null> selectDate(BuildContext context) async {
     DateTime _datePicker = await showDatePicker(
@@ -78,7 +82,6 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
   }
   var textValue = 'Switch is OFF';
   void toggleSwitch(bool value) {
-
     if(isSwitched == false)
     {
       setState(() {
@@ -96,6 +99,21 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
       print('Switch Button is OFF');
     }
   }
+  var result1=0;
+  getTutorial(bool isSwitched){
+    switch(isSwitched)
+    {
+      case true :
+        result1=1;
+        print("Result is :${result1}");
+        break;
+      case false:
+        result1=0;
+        print("Result is :${result1}");
+        break;
+    }
+    return result1;
+  }
   Future _addWorkExperience() async
   {
     final prefs = await SharedPreferences.getInstance();
@@ -105,7 +123,7 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
       "company_name":company_name.text,
       "start_date":_formatteddate,
       "end_date":_formatteddate1,
-      "currently_work_here":"0",
+      "currently_work_here":result1,
       "company_location":location.text,
       "jwtToken":prefs.getString('userID')
     });
@@ -132,7 +150,7 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
       appBar: AppBar(
         title: Text(
           'Add Work Experience',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
         ),
       ),
       body: /*_isLoading?Container(child: Center(child: CircularProgressIndicator(),),):*/Container(
@@ -141,201 +159,119 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
         margin: EdgeInsets.only(top: 10),
         child: ListView(
           children: <Widget>[
-            ListTile(
-              title: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 70,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      //color: Colors.grey,
-                      //offset: Offset(1.0, 1.0), //(x,y)
-                      blurRadius: 4.0,
-                    ),
-                  ],
-                  // borderRadius: BorderRadius.circular(10.10),
-                  color: Color(blueGreyColor),
-                ),
+            Card(
+              elevation: 5,
+              child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                        margin: EdgeInsets.only(left: 50, top: 10),
-                        child: Text(
-                          "Position",
-                          style: TextStyle(
-                            color: Colors.green,
-                          ),
-                        )),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Image.asset(
-                                'images/job.png',
-                                color: Colors.black,
-                              )),
-                        ),
-                        Expanded(
-                          flex: 7,
-                          child: Container(
+                    Padding(
+                      padding: const EdgeInsets.only(left: 47,top: 10),
+                      child: Text('Position',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    TextFormField(
+                      controller: position,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Image.asset(
+                            'images/job.png',
+                            width: 40,
                             height: 40,
-                            child: TextField(
-                              style: TextStyle(color: Colors.black),
-                              controller: position,
-                              cursorColor: Colors.black,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Enter Your Designation',
-                                  hintStyle: TextStyle(color: Colors.black)),
-                            ),
-                          ),
-                        ),
-                      ],
+                            color: Colors.black,
+                          )
+                      ),
                     )
                   ],
                 ),
               ),
             ),
-            ListTile(
-              title: Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      //color: Colors.grey,
-                      //offset: Offset(1.0, 1.0), //(x,y)
-                      blurRadius: 4.0,
-                    ),
-                  ],
-                  // borderRadius: BorderRadius.circular(10.10),
-                  color: Color(blueGreyColor),
-                ),
+            Card(
+              elevation: 5,
+              child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                        margin: EdgeInsets.only(left: 50, top: 10),
-                        child: Text(
-                          "Where did you work?",
-                          style: TextStyle(
-                            color: Colors.green,
-                          ),
-                        )),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Image.asset(
-                                'images/building.png',
-                                color: Colors.black,
-                                height: 20,
-                                width: 20,
-                              )),
-                        ),
-                        Expanded(
-                          flex: 7,
-                          child: Container(
+                    Padding(
+                      padding: const EdgeInsets.only(left: 47,top: 10),
+                      child: Text('Where did you work?',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    TextFormField(
+                      controller: company_name,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Image.asset(
+                            'images/job.png',
+                            width: 40,
                             height: 40,
-                            child: TextField(
-                              style: TextStyle(color: Colors.black),
-                              controller: company_name,
-                              cursorColor: Colors.black,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Enter Company Name',
-                                  hintStyle: TextStyle(color: Colors.black)),
-                            ),
-                          ),
-                        ),
-                      ],
+                            color: Colors.black,
+                          )
+                      ),
                     )
+
                   ],
                 ),
               ),
             ),
-            ListTile(
-              title: Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      //color: Colors.grey,
-                      //offset: Offset(1.0, 1.0), //(x,y)
-                      blurRadius: 4.0,
-                    ),
-                  ],
-                  // borderRadius: BorderRadius.circular(10.10),
-                  color: Color(blueGreyColor),
-                ),
-                child: InkWell(
-                  onTap: (){
-                    setState(() {
-                      selectDate(context);
-                      print(_formatteddate);
-                    });
-                  },
+            Card(
+              elevation: 5,
+              child: InkWell(
+                onTap: (){
+                  setState(() {
+                    selectDate(context);
+                    print(_formatteddate);
+                  });
+                },
+                child: Container(
+                  height: 80,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                          margin: EdgeInsets.only(left: 60, top: 10),
-                          child: Text(
-                            "Start date",
-                            style: TextStyle(
-                              color: Colors.green,
-                            ),
-                          )),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 47,top: 10),
+                        child: Text('Start Date',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                      ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 20),
-                            child: Icon(Icons.calendar_today_sharp,size: 20,)
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              right: 180,
-                              left: 20,
-                            ),
-                            child: Text(
-                                "${_formatteddate} ",
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ),
-                          /*Container(
-                            // margin: EdgeInsets.only(),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5),
                             child: Image.asset(
                               'images/calendar-alt.png',
+                              width: 40,
+                              height: 40,
+                              color: Colors.black,
                             ),
-                          ),*/
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top:10),
+                            child: Text(
+                              "${_formatteddate} ",
+                              style: TextStyle(color: Colors.black,fontSize: 15),
+                            ),
+                          ),
+                          Spacer(),
+                          Image.asset(
+                            'images/calendar-alt.png',
+                            width: 40,
+                            height: 40,
+                            color: Color(fountColor),
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
-            ListTile(
-              title: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      //color: Colors.grey,
-                      //offset: Offset(1.0, 1.0), //(x,y)
-                      blurRadius: 4.0,
-                    ),
-                  ],
-                  // borderRadius: BorderRadius.circular(10.10),
-                  color: Colors.white,
-                ),
+            Card(
+              elevation: 5,
+              child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -347,140 +283,103 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                           margin: EdgeInsets.only(left: 30, top: 10),
                           child: Text(
                             'I currently work here',
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.black,fontSize: 15),
                           ),
                         ),
+                        Spacer(),
                         Container(
-                          height: 40,
-                          margin: EdgeInsets.only(left: 90, top: 10),
-                          child: Switch(
-                            onChanged: toggleSwitch,
-                            value: isSwitched,
-                            inactiveThumbColor: Colors.white,
-                            inactiveTrackColor: Colors.grey,
-                          )
+                            height: 40,
+                            margin: EdgeInsets.only(top: 10,right: 10),
+                            child: Switch(
+                              onChanged: toggleSwitch,
+                              value: isSwitched,
+                              activeColor: Color(fountColor),
+                              inactiveThumbColor: Colors.white,
+                              inactiveTrackColor: Colors.grey,
+                            )
                         ),
-
-
                       ],
                     )
                   ],
                 ),
               ),
             ),
-            ListTile(
-              title: Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      //color: Colors.grey,
-                      //offset: Offset(1.0, 1.0), //(x,y)
-                      blurRadius: 4.0,
-                    ),
-                  ],
-                  // borderRadius: BorderRadius.circular(10.10),
-                  color: Color(blueGreyColor),
-                ),
-                child: InkWell(
-                  onTap: (){
-                    setState(() {
-                      selectDate1(context);
-                    });
-                  },
+            Card(
+              elevation: 5,
+              child: InkWell(
+                onTap: (){
+                  setState(() {
+                    selectDate1(context);
+                    print(_formatteddate);
+                  });
+                },
+                child: Container(
+                  height: 80,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                          margin: EdgeInsets.only(left: 60, top: 10),
-                          child: Text(
-                            "End date",
-                            style: TextStyle(
-                              color: Colors.green,
-                            ),
-                          )),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 47,top: 10),
+                        child: Text('End Date',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 20),
-                            child: Icon(Icons.calendar_today_sharp,size: 20,)
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              //right: 180,
-                              left: 20,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: Image.asset(
+                              'images/calendar-alt.png',
+                              width: 40,
+                              height: 40,
+                              color: Colors.black,
                             ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top:10),
                             child: Text(
                               "${_formatteddate1} ",
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.black,fontSize: 15),
                             ),
                           ),
-
+                          Spacer(),
+                          Image.asset(
+                            'images/calendar-alt.png',
+                            width: 40,
+                            height: 40,
+                            color: Color(fountColor),
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
-            ListTile(
-              title: Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      //color: Colors.grey,
-                      //offset: Offset(1.0, 1.0), //(x,y)
-                      blurRadius: 4.0,
-                    ),
-                  ],
-                  // borderRadius: BorderRadius.circular(10.10),
-                  color: Color(blueGreyColor),
-                ),
+            Card(
+              elevation: 5,
+              child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                        margin: EdgeInsets.only(left: 50, top: 10),
-                        child: Text(
-                          "What did you do?",
-                          style: TextStyle(
-                            color: Colors.green,
-                          ),
-                        )),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Image.asset(
-                                'images/home.png',
-                                color: Colors.black,
-                                height: 20,
-                                width: 20,
-                              )),
-                        ),
-                        Expanded(
-                          flex: 7,
-                          child: Container(
-                            height: 40,
-                            child: TextField(
-                              style: TextStyle(color: Colors.black),
-                              controller: location,
-                              cursorColor: Colors.black,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Enter Company Location',
-                                  hintStyle: TextStyle(color: Colors.black)),
-                            ),
-                          ),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 47,top: 10),
+                      child: Text('What did you do?',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                    ),
+                    TextFormField(
+                      controller: location,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon:  Image.asset(
+                            'images/home.png',
+                            color: Colors.black,
+                            height: 20,
+                            width: 20,
+                          )
+                      ),
                     )
                   ],
                 ),
@@ -490,17 +389,18 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  height: 60,
+                  height: 70,
                   width: MediaQuery.of(context).size.width,
                   margin: const EdgeInsets.only(top: 40),
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.10),
+                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20)),
                     ),
-                    // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
+
                     onPressed: () {
                       setState(() {
+                        getTutorial(isSwitched);
                         _isLoading = true;
                         //_addData();
                         _addWorkExperience();
@@ -509,11 +409,12 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                     color: Color(fountColor),
                     // textColor: Colors.white,
                     child: _isLoading==true?Container(height:20,width:20,child: CircularProgressIndicator(),):Text("SAVE",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
+                        style: TextStyle(fontSize: 20, color: Colors.white,fontFamily: 'RobotoSlab')),
                   ),
                 ),
               ],
             ),
+            SizedBox(height: 20,)
           ],
         ),
       ),

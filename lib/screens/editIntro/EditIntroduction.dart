@@ -94,7 +94,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
         "profile_img":await  MultipartFile.fromFile(
             _imageFiler.path,filename: fileName1),
         "name":name_controlle.text,
-        "gender":"male",
+        "gender":_gender.text,
         "profile_summary":profile_controller.text,
         "skill":"php",
         "home_town":home_controller.text,
@@ -132,7 +132,9 @@ class _EditIntroductionState extends State<EditIntroduction> {
   }
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('EditIntro',style: TextStyle(fontFamily: 'RobotoSlab'),),
+      appBar: AppBar(
+        elevation: 0,
+        title: Text('Edit Intro',style: TextStyle(color:Colors.black,fontFamily: 'RobotoSlab'),),
       ),
       body: _isLoading==true?Center(child: CircularProgressIndicator(),):SingleChildScrollView(
         child: Container(
@@ -143,20 +145,42 @@ class _EditIntroductionState extends State<EditIntroduction> {
                   child: Stack(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 20),
-                        child: CircleAvatar(
-                          radius: 52,
-                          backgroundColor: Colors.blue,
-                          child: CircleAvatar(
-                              radius: 50,
-                              backgroundImage: _imageFiler == null
-                                  ? NetworkImage(imageUrl)
-                                  : FileImage(File(_imageFiler.path))),
+                        height: 230,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            image: new DecorationImage(
+                              fit: BoxFit.fill,
+                              image: new NetworkImage(
+                                  "https://cdn.pixabay.com/photo/2018/07/11/21/51/toast-3532016_1280.jpg"
+                              ),
+
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(color: Colors.white, spreadRadius: 3)
+                            ]
                         ),
+                        //alignment: Alignment.center,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(top: 180,left: 20),
+                            child: CircleAvatar(
+                              radius: 52,
+                              backgroundColor: Colors.blue,
+                              child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage: _imageFiler == null
+                                      ? NetworkImage(imageUrl)
+                                      : FileImage(File(_imageFiler.path))),
+                            ),
+                          ),
+                        ],
                       ),
                       Positioned(
-                        right: 1,
-                        bottom: 10,
+                        right: 290,
+                        bottom: 20,
                         child: InkWell(
                           onTap: (){
                             showModalBottomSheet(
@@ -167,11 +191,40 @@ class _EditIntroductionState extends State<EditIntroduction> {
                             child: Icon(Icons.edit,color: Color(fountColor),),
                           ),
                         ),
-                      )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 300,left: 20),
+                        child: Text('Profile photo',style: TextStyle(color: Colors.black,fontSize: 20),),
+                      ),
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(height: 30,),
+                Card(
+                  elevation: 3,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 47,top: 10),
+                          child: Text('Your Full Name *',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                        ),
+                        TextFormField(
+                          controller: name_controlle,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
+                          ),
+                        )
+
+                      ],
+                    ),
+                  ),
+                ),
+               /* Container(
                   margin: EdgeInsets.only(top: 20),
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
@@ -199,7 +252,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
                       ),
                     ),
                   ),
-                ),
+                ),*/
                 InkWell(
                   onTap: () {
                     showDialog(
@@ -287,247 +340,209 @@ class _EditIntroductionState extends State<EditIntroduction> {
                         }
                     );
                   },
-                  child: IgnorePointer(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 10),
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: TextFormField(
-                        controller: _gender,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: Colors.black),
-                          labelText: "Gender",
-                          hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: BorderSide(
-                              color: Color(fountColor),
+                  child: Card(
+                    elevation: 3,
+                    child: IgnorePointer(
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 47,top: 10),
+                                  child: Text('Gender ',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                                ),
+                                Spacer(),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: Icon(Icons.arrow_drop_down,size: 30,),
+                                )
+                              ],
                             ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Color(fountColor),
+                            TextFormField(
+                              controller: _gender,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: 3,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 47,top: 10),
+                          child: Text('Contact Number ',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: contact_controller,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.phone_outlined,color: Colors.black,),
+                            border: InputBorder.none,
                           ),
                         ),
-                      ),
+                      ],
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: 3,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 47,top: 10),
+                          child: Text('Enter Profile Summary ',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.text,
+                          controller: profile_controller,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.phone_outlined,color: Colors.black,),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: 3,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 47,top: 10),
+                          child: Text('Home Town ',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.text,
+                          controller: home_controller,
+                          decoration: InputDecoration(
+                           border: InputBorder.none,
+                            prefixIcon: Icon(Icons.phone_outlined,color: Colors.black,),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: 3,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 47,top: 10),
+                          child: Text('Perfect Work Location',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.text,
+                          controller: work_location_controller,
+                          decoration: InputDecoration(
+                           border: InputBorder.none,
+                            prefixIcon: Icon(Icons.location_on,color: Colors.black,),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: 3,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 47,top: 10),
+                          child: Text('Resume Headline',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.text,
+                          controller: resume_controller,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.location_on,color: Colors.black,),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: 3,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 47,top: 10),
+                          child: Text('Experience Year',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: exp_year_controller,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            prefixIcon: Icon(Icons.location_on,color: Colors.black,),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: 3,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 47,top: 10),
+                          child: Text('Experience Month',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 17,color: Color(fountColor)),),
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: exp_month_controller,
+                          decoration: InputDecoration(
+                           border: InputBorder.none,
+                            prefixIcon: Icon(Icons.location_on,color: Colors.black,),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: contact_controller,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
-                      labelText: "Contact Number",
-                      hintText: "Contact Number",
-                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    controller: profile_controller,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
-                      labelText: "Enter profile summary",
-                      hintText: "Enter profile summary",
-                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    controller: home_controller,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
-                      labelText: "Home Town",
-                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
-                      hintText: "Home Town",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    controller: work_location_controller,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
-                      labelText: "Perfect work location ",
-                      hintText: "Perfect work location",
-                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    controller: resume_controller,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
-                      labelText: "Resume headline ",
-                      hintText: "Resume headline",
-                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: exp_year_controller,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
-                      labelText: "Experience Year",
-                      hintText: "Experience Year",
-                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: exp_month_controller,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
-                      labelText: "Experience Month",
-                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
-                      hintText: "Experience Month",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 60,
+                  height: 70,
                   width: MediaQuery.of(context).size.width,
                   margin: const EdgeInsets.only(top: 20,bottom: 20),
                   padding: EdgeInsets.symmetric(horizontal: 30),
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.10),),
+                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),),
                     // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
                     onPressed: () async{
                       setState(() {

@@ -1,6 +1,9 @@
+import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/feed/model/getAllPost/feed/ProductData.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:video_player/video_player.dart';
 
 class TutorialPAge extends StatefulWidget {
@@ -15,11 +18,60 @@ class TutorialPAge extends StatefulWidget {
 
 class _TutorialPAgeState extends State<TutorialPAge> {
   bool _isLoading;
+  Razorpay razorpay;
+  TextEditingController amount_controller=TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    razorpay=new Razorpay();
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    razorpay.clear();
+  }
+
+  void openCheckOut(){
+    var options={
+      "key":"rzp_live_RT4VvGiGJK6nMv",
+      "amount":amount_controller.text,
+      "name":"ArtistIcon App",
+      "description":"Payment for the some random product",
+      "prefill":{
+        "contact":"",
+        "email":""
+      },
+      "external":{
+        "wallets":['payment']
+      }
+    };
+    try{
+      razorpay.open(options);
+
+    }catch(e){
+      print(e.toString());
+
+    }
+  }
+  void _handlePaymentSuccess()
+  {
+    Fluttertoast.showToast(msg: "Payment Success");
+  }
+  void _handlePaymentError(PaymentFailureResponse response) 
+  {
+    Fluttertoast.showToast(msg: "Payment Failed..");
+    // Do something when payment fails
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet was selected
+    Fluttertoast.showToast(msg: "External Wallet");
   }
   @override
   Widget build(BuildContext context) {
@@ -52,12 +104,12 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: Text(widget.name??''),
+                        child: Text(widget.name??'',style: TextStyle(fontFamily: 'RobotoSlab'),),
                       ),
                       Spacer(),
                       Padding(
                         padding: const EdgeInsets.only(right: 5),
-                        child: Text('09-11-2020'),
+                        child: Text('09-11-2020',style: TextStyle(fontFamily: 'RobotoSlab'),),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 5),
@@ -70,7 +122,7 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5,top: 5),
-                    child: Text(widget.data[index].title??'',style: TextStyle(color: Colors.grey),),
+                    child: Text(widget.data[index].title??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
                   ),
                   SizedBox(height: 10,),
                   Container(
@@ -179,11 +231,11 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 5),
-                          child: Text("Livin'"),
+                          child: Text("Livin'",style: TextStyle(fontFamily: 'RobotoSlab'),),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 10),
-                          child: Text('taht neon life!'),
+                          child: Text('taht neon life!',style: TextStyle(fontFamily: 'RobotoSlab'),),
                         ),
                        /* Padding(
                           padding: const EdgeInsets.only(left: 10),
@@ -192,7 +244,35 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10,)
+                  SizedBox(height: 50,),
+                  TextField(
+                    controller: amount_controller,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Enter Amount',
+                    hintText: 'Enter Amount',
+                    hintStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab')
+                  ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    height: 60,
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(top: 20,bottom: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.10),),
+                      // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
+                      onPressed: () async{
+                        openCheckOut();
+                      },
+                      color: Color(fountColor),
+                      // textColor: Colors.white,
+                      child: Text("Pay",
+                          style: TextStyle(fontSize: 20,color: Colors.white,fontFamily: 'RobotoSlab')),
+                    ),
+                  ),
                 ],
               ),
             );
