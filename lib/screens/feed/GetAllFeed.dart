@@ -178,7 +178,7 @@ class _AddFeedState extends State<AddFeed> {
            SizedBox(height: 10,),
              InkWell(
                onTap: (){
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView1(image:data[index].file_url,)));
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView1(image:data[index].file_url,imagetype: data[index].media_type,)));
                },
                child:data[index].media_type=="1"?Container(
                  width: MediaQuery.of(context).size.width,
@@ -204,16 +204,6 @@ class _AddFeedState extends State<AddFeed> {
 
                    ),),
 
-                 /*decoration: new BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: new DecorationImage(
-                        fit: BoxFit.cover,
-                        image: new NetworkImage(
-                            "${widget.data['product_data'][index]['product']??''}"
-                        ),
-
-                      ),
-                    ),*/
                ),
              ),
              /*Container(
@@ -222,7 +212,6 @@ class _AddFeedState extends State<AddFeed> {
                child: PhotoView(
                    imageProvider: NetworkImage("${data1[index]['file_url']??''}")),
              ),*/
-
              SizedBox(height: 5,),
              Row(
                children: [

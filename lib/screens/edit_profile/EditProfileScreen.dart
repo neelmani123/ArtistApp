@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:artist_icon/screens/search/model/skills/Data.dart';
 import 'package:http/http.dart' as http;
 import 'package:artist_icon/screens/AddLanguage/addLanguage.dart';
 import 'package:artist_icon/screens/AddSkill/addskill.dart';
@@ -21,6 +22,7 @@ import 'package:artist_icon/screens/profile/model/Data.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class EditProfileScreen extends StatefulWidget{
   @override
@@ -54,6 +56,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
 
     }
   }
+
 
   @override
   void initState() {
