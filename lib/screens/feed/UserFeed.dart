@@ -120,7 +120,7 @@ class _UserFeedState extends State<UserFeed> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("User Feed"),
+        title: Text("User Feed",style: TextStyle(fontFamily: 'RobotoSlab'),),
       ),
       body: loading==true?Container(child: Center(child: CircularProgressIndicator(
       ),),):
@@ -162,7 +162,7 @@ class _UserFeedState extends State<UserFeed> {
             ]),
             Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: Text(data['user_name']??'',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 20),),
+              child: Text(data['user_name']??'',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 20,fontFamily: "RobotoSlab"),),
             ),
             /*Padding(
             padding: const EdgeInsets.only(left: 5,top: 5),
@@ -258,7 +258,7 @@ class _UserFeedState extends State<UserFeed> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 5,top: 10),
-              child: Text('${data2[index]['like_count']??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+              child: Text('${data2[index]['like_count']??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
@@ -266,11 +266,11 @@ class _UserFeedState extends State<UserFeed> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 5),
-                    child: Text("Livin'"),
+                    child: Text("Livin'",style: TextStyle(fontFamily: "RobotoSlab"),),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Text('taht neon life!'),
+                    child: Text('taht neon life!',style: TextStyle(fontFamily: 'RobotoSlab'),),
                   ),
                   /*Padding(
                   padding: const EdgeInsets.only(left: 10),

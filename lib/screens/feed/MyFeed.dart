@@ -15,7 +15,7 @@ class MyFeed extends StatefulWidget {
 }
 
 class _MyFeedState extends State<MyFeed> {
-  bool _isLoading;
+  bool _isLoading=true;
   List data1;
   Future getMyFeed()async
   {
@@ -105,7 +105,7 @@ class _MyFeedState extends State<MyFeed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('My Feed'),),
+      appBar: AppBar(title: Text('My Feed',style: TextStyle(fontFamily: 'RobotoSlab'),),),
       body: _isLoading==true?Container(child: Center(child: CircularProgressIndicator(),),):ListView.builder(
           itemCount: data1.length,
           itemBuilder: (context,index){
@@ -133,12 +133,12 @@ class _MyFeedState extends State<MyFeed> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: Text(data1[index]['user_name']??''),
+                        child: Text(data1[index]['user_name']??'',style: TextStyle(fontFamily: 'RobotoSlab'),),
                       ),
                       Spacer(),
                       Padding(
                         padding: const EdgeInsets.only(right: 5),
-                        child: Text('09-11-2020'),
+                        child: Text('09-11-2020',style: TextStyle(fontFamily: 'RobotoSlab'),),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 5),
@@ -151,7 +151,7 @@ class _MyFeedState extends State<MyFeed> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5,top: 5),
-                    child: Text(data1[index]['text']??'',style: TextStyle(color: Colors.grey),),
+                    child: Text(data1[index]['text']??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
                   ),
                   SizedBox(height: 10,),
                   Container(
@@ -243,7 +243,7 @@ class _MyFeedState extends State<MyFeed> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5,top: 10),
-                    child: Text('${data1[index]['like_count']??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                    child: Text('${data1[index]['like_count']??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
@@ -251,16 +251,16 @@ class _MyFeedState extends State<MyFeed> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 5),
-                          child: Text("Livin'"),
+                          child: Text("Livin'",style: TextStyle(fontFamily: 'RobotoSlab'),),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 10),
-                          child: Text('taht neon life!'),
+                          child: Text('taht neon life!',style: TextStyle(fontFamily: 'RobotoSlab'),),
                         ),
-                        Padding(
+                        /*Padding(
                           padding: const EdgeInsets.only(left: 10),
                           child: Text('View comments',style: TextStyle(fontWeight:FontWeight.bold,color: Color(fountColor)),),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),

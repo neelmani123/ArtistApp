@@ -78,7 +78,7 @@ class _CommentScreenState extends State<CommentScreen> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
-          title: Text("Comments"),),
+          title: Text("Comments",style: TextStyle(fontFamily: 'RobotoSlab'),),),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -128,11 +128,11 @@ class _CommentScreenState extends State<CommentScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(height: 3,),
-                                    Text("${widget.comment_data[index].name ?? ''}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                    Text("${widget.comment_data[index].name ?? ''}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
                                    // SizedBox(height: 10,),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 5),
-                                      child: Text("${widget.comment_data[index].comments ?? ''}",style: TextStyle(color: Colors.black),),
+                                      child: Text("${widget.comment_data[index].comments ?? ''}",style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),),
                                     )
                                   ],
                                 ),

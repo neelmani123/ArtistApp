@@ -156,7 +156,7 @@ class _SharePostState extends State<SharePost> {
               child: Icon(Icons.arrow_back,color: Colors.black)),
          // backgroundColor: Color(0xFF32353C),
           //backgroundColor: Colors.grey,
-          title: Text('Share Post',style: TextStyle(color: Colors.black),),
+          title: Text('Share Post',style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),),
          flexibleSpace:  Container(
            decoration: BoxDecoration(
              borderRadius: BorderRadius.all(
@@ -190,7 +190,7 @@ class _SharePostState extends State<SharePost> {
 
               });
              },
-             child: Text('Post Upload'),),
+             child: Text('Post Upload',style: TextStyle(fontFamily: 'RobotoSlab'),),),
          ),
         )
       ),
@@ -220,7 +220,7 @@ class _SharePostState extends State<SharePost> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Text('${name??''}',style: TextStyle(color: Colors.black),),
+                    child: Text('${name??''}',style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),),
                   )
                 ],
               ),
@@ -235,7 +235,8 @@ class _SharePostState extends State<SharePost> {
                   border: InputBorder.none,
                   hintText: "What's On Your Mind?",
                   hintStyle: TextStyle(
-                    color: Colors.black
+                    color: Colors.black,
+                    fontFamily: 'RobotoSlab'
                   )
 
                 ),
@@ -276,7 +277,7 @@ class _SharePostState extends State<SharePost> {
             children: [
               Text(
                 "Choose  photo/Video",
-                style: TextStyle(fontSize: 20.0),
+                style: TextStyle(fontSize: 20.0,fontFamily: 'RobotoSlab'),
               ),
               SizedBox(
                 height: 20,
@@ -291,7 +292,7 @@ class _SharePostState extends State<SharePost> {
                     },
                     label: Text(
                       "Camera",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
                     ),
                   ),
                   TextButton.icon(
@@ -302,7 +303,7 @@ class _SharePostState extends State<SharePost> {
                      // Navigator.pop(context);
 
                     },
-                    label: Text("Photo/Video",style: TextStyle(color: Colors.black),),
+                    label: Text("Photo/Video",style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),),
                   ),
                 ],
               )
@@ -336,7 +337,7 @@ class _SharePostState extends State<SharePost> {
                     });
                     Text('Make Tutorial ',style: TextStyle(color: Colors.white),);
                   }),
-                   Text('Make Tutorial ',style: TextStyle(color: Colors.black),)
+                   Text('Make Tutorial ',style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),)
             ],
           ),
         ),
@@ -349,12 +350,12 @@ class _SharePostState extends State<SharePost> {
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: price,
-                      style: TextStyle(color: Colors.black
+                      style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'
                       ),
                       decoration: InputDecoration(
                         hintText: 'Price',
                         errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
 
                       ),
                     ),
@@ -365,12 +366,12 @@ class _SharePostState extends State<SharePost> {
                     child: TextField(
                       keyboardType: TextInputType.text,
                       controller: title,
-                      style: TextStyle(color: Colors.black
+                      style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'
                       ),
                       decoration: InputDecoration(
                         hintText: 'Title',
                         errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
 
                       ),
                     ),
@@ -381,12 +382,12 @@ class _SharePostState extends State<SharePost> {
                     child: TextField(
                       keyboardType: TextInputType.text,
                       controller: desc,
-                      style: TextStyle(color: Colors.black
+                      style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'
                       ),
                       decoration: InputDecoration(
                         hintText: 'Description',
                         errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                        hintStyle: TextStyle(color: Colors.black),
+                        // hintStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
 
                       ),
                     ),
@@ -397,12 +398,12 @@ class _SharePostState extends State<SharePost> {
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: validity,
-                      style: TextStyle(color: Colors.black
+                      style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'
                       ),
                       decoration: InputDecoration(
                         hintText: 'Validity',
                         errorText: _validate ? 'Value Can\'t Be Empty' : null,
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
 
                       ),
                     ),
@@ -431,7 +432,7 @@ class _SharePostState extends State<SharePost> {
                                   children: [
                                     Text(
                                       "Choose Tutorial Video",
-                                      style: TextStyle(fontSize: 20.0),
+                                      style: TextStyle(fontSize: 20.0,fontFamily: 'RobotoSlab'),
                                     ),
                                     SizedBox(
                                       height: 20,
@@ -446,7 +447,7 @@ class _SharePostState extends State<SharePost> {
                                           },
                                           label: Text(
                                             "Camera",
-                                            style: TextStyle(color: Colors.black),
+                                            style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
                                           ),
                                         ),
                                         TextButton.icon(
@@ -456,7 +457,7 @@ class _SharePostState extends State<SharePost> {
                                             // Navigator.pop(context);
 
                                           },
-                                          label: Text("Video",style: TextStyle(color: Colors.black),),
+                                          label: Text("Video",style: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),),
                                         ),
                                       ],
                                     )

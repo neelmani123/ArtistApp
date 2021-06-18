@@ -111,12 +111,12 @@ class _HomeScreenState extends State<HomeScreen> {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>AllJobPostList()));
                },
              ),
-             ListTile(
+             /*ListTile(
                title: Text('Job Search List',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>JobSearchList()));
                },
-             ),
+             ),*/
              ListTile(
                title: Text('Applied Job List',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {

@@ -154,13 +154,13 @@ class _AddFeedState extends State<AddFeed> {
                    },
                    child: Padding(
                      padding: const EdgeInsets.only(left: 10),
-                     child: Text(data[index].user_name??''),
+                     child: Text(data[index].user_name??'',style: TextStyle(fontFamily: 'RobotoSlab'),),
                    ),
                  ),
                  Spacer(),
                  Padding(
                    padding: const EdgeInsets.only(right: 5),
-                   child: Text('09-11-2020'),
+                   child: Text('09-11-2020',style: TextStyle(fontFamily: 'RobotoSlab'),),
                  ),
                  Padding(
                    padding: const EdgeInsets.only(right: 5),
@@ -173,7 +173,7 @@ class _AddFeedState extends State<AddFeed> {
              ),
              Padding(
                padding: const EdgeInsets.only(left: 5,top: 5),
-               child: Text(data[index].text??'',style: TextStyle(color: Colors.grey),),
+               child: Text(data[index].text??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
              ),
            SizedBox(height: 10,),
              InkWell(
@@ -300,7 +300,7 @@ class _AddFeedState extends State<AddFeed> {
              ),
              Padding(
                padding: const EdgeInsets.only(left: 5,top: 10),
-               child: Text('${data[index].like_count??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+               child: Text('${data[index].like_count??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
              ),
              Padding(
                padding: const EdgeInsets.only(top: 10),
@@ -308,11 +308,11 @@ class _AddFeedState extends State<AddFeed> {
                  children: [
                    Padding(
                      padding: const EdgeInsets.only(left: 5),
-                     child: Text("Livin'"),
+                     child: Text("Livin'",style: TextStyle(fontFamily: 'RobotoSlab'),),
                    ),
                    Padding(
                      padding: const EdgeInsets.only(left: 10),
-                     child: Text('taht neon life!'),
+                     child: Text('taht neon life!',style: TextStyle(fontFamily: 'RobotoSlab'),),
                    ),
                   /* Padding(
                      padding: const EdgeInsets.only(left: 10),
@@ -325,7 +325,7 @@ class _AddFeedState extends State<AddFeed> {
              Container(
                child: RaisedButton(
                    color: Color(fountColor),
-                   child: Text("${data[index].is_tutorial} Tutorial",style: TextStyle(color: Colors.white),),
+                   child: Text("${data[index].is_tutorial} Tutorial",style: TextStyle(color: Colors.white,fontFamily: 'RobotoSlab'),),
                    onPressed: (){
                      Navigator.push(context, MaterialPageRoute(builder: (context)=>TutorialPAge(data: data[index].product_data,name: data[index].user_name,img: data[index].user_image)));
                    }),

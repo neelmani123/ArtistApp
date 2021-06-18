@@ -62,7 +62,7 @@ class _JobPostListState extends State<JobPostList> {
         itemCount: data1.length-1,
           itemBuilder: (context,index){
             return Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(8.0),
               child: Card(
                 color: colors[index],
                 elevation: 5,
@@ -82,7 +82,7 @@ class _JobPostListState extends State<JobPostList> {
                             image: new DecorationImage(
                                 fit: BoxFit.fill,
                                 image: new NetworkImage(
-                                    "${data1[index]['img']??''}"
+                                    "https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
                                 )
                             ),
                           ),
@@ -104,20 +104,52 @@ class _JobPostListState extends State<JobPostList> {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                      child: Text('${data1[index]['job_description']??''}',style: TextStyle(fontSize: 15,fontFamily: 'RobotoSlab'),),
+                      padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 15),
+                      child: Row(
+                        children: [
+                          Image.asset('images/description.png',width: 28,height: 28,color: Color(fountColor),),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text('${data1[index]['job_description']??''}',style: TextStyle(fontSize: 15,fontFamily: 'RobotoSlab'),),
+                          ),
+                        ],
+                      ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 15,),
-                      child: Text('1-3 years',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                      padding: const EdgeInsets.only(left: 18,),
+                      child: Row(
+                        children: [
+                          Icon(Icons.access_time,color: Color(fountColor),size: 25,),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text('1-3 years',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                          ),
+                        ],
+                      ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 15,top: 5),
-                      child: Text('${data1[index]['location']??''}',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                      padding: const EdgeInsets.only(left: 18,top: 10),
+                      child: Row(
+                        children: [
+                          Image.asset('images/location.png',width: 25,height: 25,color: Color(fountColor),),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text('${data1[index]['location']??''}',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                          ),
+                        ],
+                      ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 15,top: 5),
-                      child: Text('${data1[index]['other_skills']??''}',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                      padding: const EdgeInsets.only(left: 18,top: 10),
+                      child: Row(
+                        children: [
+                          Image.asset('images/skills.png',width: 25,height: 25,color: Color(fountColor),),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text('${data1[index]['other_skills']??''}',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                          ),
+                        ],
+                      ),
                     ),
                     // SizedBox(height: 20,),
                     Row(

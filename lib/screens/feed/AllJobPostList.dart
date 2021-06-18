@@ -151,7 +151,7 @@ class _AllJobPostListState extends State<AllJobPostList> {
                               image: new DecorationImage(
                                   fit: BoxFit.fill,
                                   image: new NetworkImage(
-                                      "${data1[index]['img']??''}"
+                                      "https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
                                   )
                               ),
                             ),
@@ -162,7 +162,11 @@ class _AllJobPostListState extends State<AllJobPostList> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left: 10,bottom: 10),
-                                child: Text('${data1[index]['company_name']??''}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
+                                child: Row(
+                                  children: [
+                                    Text('${data1[index]['company_name']??''}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
+                                  ],
+                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
@@ -170,25 +174,56 @@ class _AllJobPostListState extends State<AllJobPostList> {
                               ),
                             ],
                           ),
-
                         ],
                       ),
 
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                        child: Text('${data1[index]['job_description']??''}',style: TextStyle(fontSize: 15,fontFamily: 'RobotoSlab'),),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15,),
-                        child: Text('1-3 years',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+                        child: Row(
+                          children: [
+                            Image.asset('images/description.png',width: 30,height: 30,color: Color(fountColor),),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: Text('${data1[index]['job_description']??''}',style: TextStyle(fontSize: 15,fontFamily: 'RobotoSlab'),),
+                            ),
+                          ],
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 15,top: 5),
-                        child: Text('${data1[index]['location']??''}',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                        child: Row(
+                          children: [
+                            Icon(Icons.access_time,color: Color(fountColor),),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 22),
+                              child: Text('1-3 years',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                            ),
+                          ],
+                        ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 15,top: 5),
-                        child: Text('${data1[index]['other_skills']??''}',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                        padding: const EdgeInsets.only(left: 15,top: 15),
+                        child: Row(
+                          children: [
+                            Image.asset('images/location.png',width: 30,height: 30,color: Color(fountColor),),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: Text('${data1[index]['location']??''}',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15,top: 15),
+                        child: Row(
+                          children: [
+                            Image.asset('images/skills.png',width: 30,height: 30,color: Color(fountColor),),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: Text('${data1[index]['other_skills']??''}',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                            ),
+                          ],
+                        ),
                       ),
                       // SizedBox(height: 20,),
                       Row(
