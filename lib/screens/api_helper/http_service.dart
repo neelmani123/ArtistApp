@@ -3,6 +3,7 @@ import 'dart:io' show File, Platform;
 import 'package:artist_icon/helper/api_heper.dart';
 import 'package:artist_icon/helper/setup.dart';
 import 'package:artist_icon/model/RequestUserLoginModel/RequestUserLoginModel.dart';
+import 'package:artist_icon/model/TutorialPurchaseModel/TutorialPurchase.dart';
 import 'package:artist_icon/model/register/register_apiModel.dart';
 import 'package:artist_icon/screens/edit_profile/model/EditProfileBean.dart';
 import 'package:artist_icon/screens/feed/model/CreateJobPostModel.dart';
@@ -355,9 +356,9 @@ class HttpService {
 
 
   Future<CreateJobPostModel> create_job_post({
-    String category_id, String location, String company_name, String title, String other_skill, String salary_from, String salary_to, String experience_from, String experience_to, String job_type, String working_hours, String city_id, String job_description }) async {
+    String category_id, String location, String company_name, String title, String other_skill, String salary_from, String salary_to, String experience_from, String experience_to, String job_type, String working_hours, String city_id, String job_description ,String skills}) async {
     final prefs = await SharedPreferences.getInstance();
-    /*Map<String,dynamic> reqBody = jsonEncode({
+    Map reqBody = {
       "jwtToken": prefs.getString('userID'),
       "category_id": category_id,
       "location": location,
@@ -373,14 +374,33 @@ class HttpService {
       "company_name": company_name,
       "working_hours": working_hours,
       "city_id": city_id
-    });*/
-   /* final response = await _apiHelper.post(
-        "Artist_api/create_job_post", reqBody);*/
-    /*try {
+    } ;
+    final response = await _apiHelper.post(
+        "Artist_api/create_job_post", reqBody);
+    try {
       return CreateJobPostModel.fromJson(response);
     } catch (e) {
       showExceptionToast();
       return null;
-    }*/
+    }
   }
+
+  Future<TutorialPurchase> tutorial_purchase({String postId,String price}) async{
+    final prefs = await SharedPreferences.getInstance();
+    Map reqBody = {
+      "jwtToken": prefs.getString('userID'),
+      "post_id":postId,
+      "price":price
+    } ;
+    final response = await _apiHelper.post('Artist_api/tutorial_purchase', reqBody);
+    try{
+      return TutorialPurchase.fromJson(response);
+    }
+    catch(e){
+      showExceptionToast();
+      return null;
+    }
+  }
+
+
 }

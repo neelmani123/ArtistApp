@@ -199,7 +199,7 @@ class _AddFeedState extends State<AddFeed> {
                    betterPlayerConfiguration: BetterPlayerConfiguration(
                      aspectRatio: 1,
                      looping: true,
-                     autoPlay: true,
+                     autoPlay: false,
                      fit: BoxFit.cover,
 
                    ),),
@@ -316,7 +316,7 @@ class _AddFeedState extends State<AddFeed> {
                    color: Color(fountColor),
                    child: Text("${data[index].is_tutorial} Tutorial",style: TextStyle(color: Colors.white,fontFamily: 'RobotoSlab'),),
                    onPressed: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (context)=>TutorialPAge(data: data[index].product_data,name: data[index].user_name,img: data[index].user_image)));
+                     Navigator.push(context, MaterialPageRoute(builder: (context)=>TutorialPAge(isPlay:data[index].is_play,id:data[index].id,data: data[index].product_data,name: data[index].user_name,img: data[index].user_image,price: data[index].price,)));
                    }),
              ),
              SizedBox(height: 10,)

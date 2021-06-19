@@ -132,7 +132,11 @@ class _BookmarkState extends State<Bookmark> {
                    child: Text(data1[index]['text']??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
                  ),
                  SizedBox(height: 10,),
-                 Container(
+                 data1[index]['is_play']==0?Container(child: Center(child: Column(
+                   children: [
+                     Icon(Icons.lock,color: Color(fountColor),size: 40,)
+                   ],
+                 ),),):Container(
                    width: MediaQuery.of(context).size.width,
                    height: 200,
                    decoration: new BoxDecoration(

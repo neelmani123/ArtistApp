@@ -7,6 +7,8 @@ import 'package:artist_icon/screens/feed/AllJobPostList.dart';
 import 'package:artist_icon/screens/feed/AppliedJobList.dart';
 import 'package:artist_icon/screens/feed/CreatePost.dart';
 import 'package:artist_icon/screens/feed/CreateJobPost.dart';
+import 'package:artist_icon/screens/feed/MyTutorialPurchase.dart';
+import 'package:artist_icon/screens/feed/UserTutorialLIst.dart';
 import 'package:artist_icon/screens/feed/YourJobPostList.dart';
 import 'package:artist_icon/screens/feed/SearchList.dart';
 import 'package:artist_icon/screens/feed/SharePost.dart';
@@ -139,6 +141,18 @@ class _HomeScreenState extends State<HomeScreen> {
                title: Text('My Feed',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>MyFeed()));
+               },
+             ),
+             ListTile(
+               title: Text('My Tutorial List',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
+               onTap: () {
+                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>MyTutorialPurchase()));
+               },
+             ),
+             ListTile(
+               title: Text('User Tutorial List',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
+               onTap: () {
+                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>UserTutorialList()));
                },
              ),
            ],

@@ -57,32 +57,6 @@ class _CreateJobPostState extends State<CreateJobPost> {
       .toList();
   final _multiSelectKey = GlobalKey<FormFieldState>();
 
-
-  /*Future<void> city_listApi() async {
-    print("jhsjhsjhdsjh==========");//jana screen me ab hit karna nahi ho raha hai call
-    final prefs = await SharedPreferences.getInstance();
-    var res = await _httpService.city_list(jwtToken:prefs.getString('userID'),limit:"");
-    if(res.status == true){
-      setState(() {
-        print(res.data.first);
-        citydata=  res.data;
-        var _itemsCity = citydata;
-        for(int i=0;i<_itemsCity.length;i++)
-          {
-            *//*listDrop.add(new DropdownMenuItem(
-              child: new Text(
-                _itemsCity[i]['city'],
-              ),
-              value: _itemsCity[i]['id'],
-            ));*//*
-          }
-
-      });
-    }else{
-      Fluttertoast.showToast(msg: "Something went wrong");
-
-    }
-  }*/
   Future<void> skills_listApi() async {
     final prefs = await SharedPreferences.getInstance();
     var res = await _httpService.skills_list(jwtToken:prefs.getString('userID'),limit:"");
@@ -155,7 +129,7 @@ class _CreateJobPostState extends State<CreateJobPost> {
   /*_addCreateJobPost() async
   {
     var res=await _httpService.create_job_post(
-        category_id: "1",
+        category_id: value1,
         location: location_controller.text,
         title:  title_controller.text,
         company_name:  company_name_controller.text,
@@ -163,17 +137,18 @@ class _CreateJobPostState extends State<CreateJobPost> {
         experience_to: exp_to_controller.text,
         salary_from: salary_form_controller.text,
         salary_to: salary_to_controller.text,
-        city_id: "1",
+        city_id: value2,
         other_skill: other_skill_controller.text,
         job_description: description_controller.text,
-        job_type: job_type_controller.text,
+        job_type: "full time",
         working_hours: working_hours_controller.text,
+        skills: "1,2"
     );
-    Fluttertoast.showToast(msg: "Create job Successfully.");
     _isLoading=false;
-    if(res.status==true)
+    if(res.message=="Create job  Successfully.")
     {
       _isLoading=false;
+      Fluttertoast.showToast(msg: res.message);
       print(res.message);
       //_showScaffold(res.message);
       //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditProfileScreen()));
@@ -183,23 +158,6 @@ class _CreateJobPostState extends State<CreateJobPost> {
   {
     final prefs = await SharedPreferences.getInstance();
     Map<String, String>headers = {'Content-Type': 'application/json'};
-    Map reqBody = {
-      "jwtToken":  prefs.getString('userID'),
-      "category_id": job_category_controller.text,
-      "location": location_controller.text,
-      "title": title_controller.text,
-      "job_description": description_controller.text,
-      "skills": "1,2",
-      "other_skills": other_skill_controller.text,
-      "salary_from": salary_form_controller.text,
-      "salary_to": salary_to_controller.text,
-      "experience_to": exp_to_controller.text,
-      "experience_form": exp_to_controller.text,
-      "job_type": job_type_controller.text,
-      "company_name": company_name_controller.text,
-      "working_hours": working_hours_controller.text,
-      "city_id": city_controller.text
-    };
     var response = await http.post(
         "https://artist.devclub.co.in/api/Artist_api/create_job_post",
         body: jsonEncode(

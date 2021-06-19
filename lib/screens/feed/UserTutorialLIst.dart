@@ -1,130 +1,60 @@
 import 'dart:convert';
 
-import 'package:artist_icon/screens/Color.dart';
-import 'package:artist_icon/screens/api_helper/http_service.dart';
-import 'package:artist_icon/screens/feed/model/getAllPost/feed/ProductData.dart';
-import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
-class TutorialPAge extends StatefulWidget {
-  final List<ProductData> data;
-  final String name;
-  final String img;
-  final String price;
-  final String id;
-  final isPlay;
-  const TutorialPAge({this.isPlay,this.id,this.price,this.img,this.name,this.data,Key key}) : super(key: key);
+class UserTutorialList extends StatefulWidget {
+  const UserTutorialList({Key key}) : super(key: key);
 
   @override
-  _TutorialPAgeState createState() => _TutorialPAgeState();
+  _UserTutorialListState createState() => _UserTutorialListState();
 }
 
-class _TutorialPAgeState extends State<TutorialPAge> {
-  bool _isLoading;
-  Razorpay razorpay;
-  TextEditingController amount_controller=TextEditingController();
+class _UserTutorialListState extends State<UserTutorialList> {
+  bool _isLoading=true;
+  List data1;
+  Future usergetMyTutorialList()async
+  {
+    final _prefs = await SharedPreferences.getInstance();
+    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"pages":"2"});
+    var response = await http.post(
+        "https://artist.devclub.co.in/api/Feed_api/get_my_tutorial_purchase_list",
+        body: res);
+    Map data = json.decode(response.body);
+    print("data is :${data}");
+    setState(() {
+      if(data['status']==true)
+      {
+        _isLoading=false;
+        Fluttertoast.showToast(msg: data['message']);
+        data1=data['data'];
 
+      }
+    });
+
+  }
   @override
   void initState() {
     // TODO: implement initState
+    usergetMyTutorialList();
     super.initState();
-    razorpay=new Razorpay();
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-    //amount_controller=widget.price as TextEditingController;
-  }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    razorpay.clear();
-  }
-  HttpService _httpService = HttpService();
-  Future<void> purchase() async {
-    var res = await _httpService.tutorial_purchase(postId: widget.id,price: widget.price);
-    if(res.status == true){
-      setState(() {
-        _isLoading=false;
-        Fluttertoast.showToast(msg: res.message);
-      });
-    }else{
-      Fluttertoast.showToast(msg: "Something went wrong");
-    }
-  }
-
-  void openCheckOut(){
-    var options={
-      "key":"rzp_live_RT4VvGiGJK6nMv",
-      "amount":"100",
-      "name":"ArtistIcon App",
-      "description":"Payment for the some random product",
-      "prefill":{
-        "contact":"",
-        "email":""
-      },
-      "external":{
-        "wallets":['payment']
-      }
-    };
-    try{
-      razorpay.open(options);
-
-    }catch(e){
-      print(e.toString());
-
-    }
-  }
-   _handlePaymentSuccess()
-  {
-    Fluttertoast.showToast(msg: "Payment Success");
-    //purchase();
-    purchase_tutorial();
-  }
-  void _handlePaymentError(PaymentFailureResponse response) 
-  {
-    Fluttertoast.showToast(msg: "Payment Failed..");
-    // Do something when payment fails
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    // Do something when an external wallet was selected
-    Fluttertoast.showToast(msg: "External Wallet");
-  }
-
-  Future purchase_tutorial()async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":"65","price":"1000"});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Artist_api/tutorial_purchase",
-        body: {"jwtToken": _prefs.getString('userID'),"post_id":"65","price":"1000"});
-    Map data = json.decode(response.body);
-    if(data['status']==true)
-    {
-      setState(() {
-        _isLoading=false;
-        Fluttertoast.showToast(msg: data['message']);
-        print("Purchase Successfull :${data['message']}");
-        // count=data['like_count'];
-      });
-    }
-
-
   }
   @override
   Widget build(BuildContext context) {
-    print('Is Play is :${widget.isPlay}');
     return Scaffold(
-      appBar: AppBar(title: Text("Tutorial Page"),),
-      body: _isLoading==true?Container(child: Center(child: CircularProgressIndicator(),),):ListView.builder(
-          itemCount: widget.data.length,
+      appBar: AppBar(title: Text(" User Tutorial List"),),
+      body: _isLoading==true?Container(child: Center(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(),
+
+        ],
+      ),),):ListView.builder(
+          itemCount: data1.length,
           itemBuilder: (context,index){
-            return Card(
+            return data1.length==null?Container(child: Center(child: Text("No Data Found.."),),):Card(
               elevation: 0,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -140,7 +70,7 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                           image: new DecorationImage(
                             fit: BoxFit.fill,
                             image: new NetworkImage(
-                                "${widget.img??''}"
+                                "${data1[index]['profile_img']??''}"
                             ),
 
                           ),
@@ -148,7 +78,7 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: Text(widget.name??'',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                        child: Text(data1[index]['user_name']??'',style: TextStyle(fontFamily: 'RobotoSlab'),),
                       ),
                       Spacer(),
                       Padding(
@@ -164,23 +94,20 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                       )
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5,top: 5),
-                    child: Text(widget.data[index].title??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
-                  ),
-                  SizedBox(height: 10,),
-                 widget.isPlay==0?Container(
-                   child: Center(
-                     child: Column(
-                       children: [
-                         Icon(Icons.lock,color: Color(fountColor),size: 40,),
-                         Text('Video locked purchase video'),
-                       ],
-                     ),
-                   ),): Container(
+
+                  /*SizedBox(height: 10,),
+                  data1[index]['is_play']==0?Container(
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Icon(Icons.lock,color: Color(fountColor),size: 40,),
+                          Text('Video locked purchase video'),
+                        ],
+                      ),
+                    ),): Container(
                     width: MediaQuery.of(context).size.width,
                     height: 200,
-                    child: BetterPlayer.network("${widget.data[index].product}",
+                    child: BetterPlayer.network("${data1[index]['product_data']['product']}",
                       betterPlayerConfiguration: BetterPlayerConfiguration(
                         aspectRatio: 1,
                         looping: true,
@@ -188,18 +115,9 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                         fit: BoxFit.cover,
 
                       ),),
+*/
 
-                    /*decoration: new BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: new DecorationImage(
-                        fit: BoxFit.cover,
-                        image: new NetworkImage(
-                            "${widget.data['product_data'][index]['product']??''}"
-                        ),
-
-                      ),
-                    ),*/
-                  ),
+                 // ),
                   SizedBox(height: 5,),
                   /*Row(
                     children: [
@@ -289,7 +207,7 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                           padding: const EdgeInsets.only(left: 10),
                           child: Text('taht neon life!',style: TextStyle(fontFamily: 'RobotoSlab'),),
                         ),
-                       /* Padding(
+                        /* Padding(
                           padding: const EdgeInsets.only(left: 10),
                           child: Text('View comments',style: TextStyle(fontWeight:FontWeight.bold,color: Color(fountColor)),),
                         ),*/
@@ -297,14 +215,14 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                     ),
                   ),
                   SizedBox(height: 50,),
-                  TextField(
+                  /*TextField(
                     enabled: false,
                     controller: amount_controller,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: "${widget.price}",
-                    hintStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab')
-                  ),
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        hintText: "${widget.price}",
+                        hintStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab')
+                    ),
                   ),
                   SizedBox(height: 20),
                   Container(
@@ -328,7 +246,7 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                       child: Text("Pay",
                           style: TextStyle(fontSize: 20,color: Colors.white,fontFamily: 'RobotoSlab')),
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             );

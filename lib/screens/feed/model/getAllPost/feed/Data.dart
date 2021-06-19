@@ -21,8 +21,9 @@ class Dataa {
     String user_id;
     String user_image;
     String user_name;
+    int is_play;
 
-    Dataa({this.comment_count, this.comment_data, this.created_at, this.file_url, this.id, this.is_bookmark, this.is_like, this.is_tutorial, this.like_count, this.media_type, this.price, this.product_data, this.status, this.text, this.user_id, this.user_image, this.user_name});
+    Dataa({this.is_play,this.comment_count, this.comment_data, this.created_at, this.file_url, this.id, this.is_bookmark, this.is_like, this.is_tutorial, this.like_count, this.media_type, this.price, this.product_data, this.status, this.text, this.user_id, this.user_image, this.user_name});
 
     factory Dataa.fromJson(Map<String, dynamic> json) {
         return Dataa(
@@ -30,7 +31,8 @@ class Dataa {
             comment_data: json['comment_data'] != null ? (json['comment_data'] as List).map((i) => CommentData.fromJson(i)).toList() : null, 
             created_at: json['created_at'], 
             file_url: json['file_url'], 
-            id: json['id'], 
+            id: json['id'],
+            is_play: json['is_play'],
             is_bookmark: json['is_bookmark'], 
             is_like: json['is_like'], 
             is_tutorial: json['is_tutorial'], 
@@ -52,6 +54,7 @@ class Dataa {
         data['created_at'] = this.created_at;
         data['file_url'] = this.file_url;
         data['id'] = this.id;
+        data['is_play']=this.is_play;
         data['is_bookmark'] = this.is_bookmark;
         data['is_like'] = this.is_like;
         data['is_tutorial'] = this.is_tutorial;
