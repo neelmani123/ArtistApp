@@ -126,7 +126,7 @@ class _CreateJobPostState extends State<CreateJobPost> {
     }
   }
 
-  /*_addCreateJobPost() async
+  _addCreateJobPost() async
   {
     var res=await _httpService.create_job_post(
         category_id: value1,
@@ -144,17 +144,18 @@ class _CreateJobPostState extends State<CreateJobPost> {
         working_hours: working_hours_controller.text,
         skills: "1,2"
     );
-    _isLoading=false;
-    if(res.message=="Create job  Successfully.")
+    if(res.status==true)
     {
-      _isLoading=false;
-      Fluttertoast.showToast(msg: res.message);
+     setState(() {
+       _isLoading=false;
+       Fluttertoast.showToast(msg: res.message);
+     });
       print(res.message);
       //_showScaffold(res.message);
       //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditProfileScreen()));
     }
-  }*/
-  Future _addCreateJobPost1() async
+  }
+  /*Future _addCreateJobPost1() async
   {
     final prefs = await SharedPreferences.getInstance();
     Map<String, String>headers = {'Content-Type': 'application/json'};
@@ -189,7 +190,7 @@ class _CreateJobPostState extends State<CreateJobPost> {
         });
 
       }
-  }
+  }*/
         @override
   void initState() {
     // TODO: implement initState
@@ -696,8 +697,8 @@ class _CreateJobPostState extends State<CreateJobPost> {
                 onPressed: () async{
                   setState(() {
                     _isLoading=true;
-                    //_addCreateJobPost();
-                    _addCreateJobPost1();
+                    _addCreateJobPost();
+                    //_addCreateJobPost1();
 
                   });
                 },

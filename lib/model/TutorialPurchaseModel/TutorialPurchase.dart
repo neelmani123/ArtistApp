@@ -1,5 +1,5 @@
 class TutorialPurchase{
-  String status;
+  bool status;
   String message;
   TutorialPurchase({this.status, this.message});
   factory TutorialPurchase.fromJson(Map<String, dynamic> json) {

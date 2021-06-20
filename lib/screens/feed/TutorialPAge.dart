@@ -317,10 +317,11 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                         borderRadius: BorderRadius.circular(10.10),),
                       // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
                       onPressed: () async{
-                        //openCheckOut();
+                        openCheckOut();
                         setState(() {
-                          _isLoading=true;
-                          purchase_tutorial();
+                          //_isLoading=true;
+                         // purchase_tutorial();
+                          openCheckOut();
                         });
                       },
                       color: Color(fountColor),

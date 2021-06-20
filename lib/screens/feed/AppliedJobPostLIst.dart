@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:artist_icon/model/YourJobPostApplied/YourJobPostAppliedData.dart';
 import 'package:artist_icon/screens/Color.dart';
+import 'package:artist_icon/screens/api_helper/http_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -16,9 +18,11 @@ class AppliedJobPostList extends StatefulWidget {
 
 class _AppliedJobPostListState extends State<AppliedJobPostList> {
   List data1;
+  List<Data> data2;
   bool _isLoading=true;
   String select_type;
   String choice;
+  HttpService _httpService = HttpService();
   Future select(){
     String no=select_type;
     switch(no)
@@ -66,10 +70,22 @@ class _AppliedJobPostListState extends State<AppliedJobPostList> {
       });
     }
   }
+  /*_appliedJob()async{
+    var res=await _httpService.jobPostApplied(id: widget.id);
+    if(res.status==true)
+      {
+        setState(() {
+          data2=res.data;
+          select_type=data2[0].selectType;
+          _isLoading=false;
+        });
+      }
+  }*/
   @override
   void initState() {
     // TODO: implement initState
     appliedDetails();
+    //_appliedJob();
     super.initState();
   }
   @override
@@ -105,7 +121,7 @@ class _AppliedJobPostListState extends State<AppliedJobPostList> {
                           image: new DecorationImage(
                               fit: BoxFit.fill,
                               image: new NetworkImage(
-                                  "https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
+                                  "${data1[index]['profile_img']??''}"
                               )
                           ),
                         ),

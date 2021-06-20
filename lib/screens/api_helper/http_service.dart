@@ -2,8 +2,13 @@ import 'dart:convert';
 import 'dart:io' show File, Platform;
 import 'package:artist_icon/helper/api_heper.dart';
 import 'package:artist_icon/helper/setup.dart';
+import 'package:artist_icon/model/ChangeStatus/ChangeStatusApplied.dart';
 import 'package:artist_icon/model/RequestUserLoginModel/RequestUserLoginModel.dart';
+import 'package:artist_icon/model/SearchJobModel1/SearchJobModel1.dart';
+import 'package:artist_icon/model/SearchJobModel1/UserSearchAppliedJob.dart';
 import 'package:artist_icon/model/TutorialPurchaseModel/TutorialPurchase.dart';
+import 'package:artist_icon/model/YourJobPostApplied/YourJobPostApplied.dart';
+import 'package:artist_icon/model/YourJobPostListModel/YourJobPostList.dart';
 import 'package:artist_icon/model/register/register_apiModel.dart';
 import 'package:artist_icon/screens/edit_profile/model/EditProfileBean.dart';
 import 'package:artist_icon/screens/feed/model/CreateJobPostModel.dart';
@@ -354,7 +359,90 @@ class HttpService {
     }
   }
 
+  Future<YourJobPostList>jobPostList()async
+  {
+    final prefs = await SharedPreferences.getInstance();
+    Map reqBody = {
+      "jwtToken": prefs.getString('userID')
+    };
+    final response = await _apiHelper.post('Artist_api/your_job_post_list', reqBody);
+    try{
+      return YourJobPostList.fromJson(response);
+    }
+    catch (e) {
+      showExceptionToast();
+      return null;
+    }
+  }
+  Future<SearchJobModel1>searchJob1({String skillId,String jobId,String cityId})async{
+    final prefs = await SharedPreferences.getInstance();
+    Map reqBody={
+      "jwtToken": prefs.getString('userID'),
+      "Skills_id":skillId,
+      "job_type":jobId,
+      "city_id":cityId
+    };
+    final response = await _apiHelper.post('Artist_api/search_job', reqBody);
+    try{
+      return SearchJobModel1.fromJson(response);
+    }
+    catch(e)
+    {
+      showExceptionToast();
+      return null;
+    }
+  }
+  Future<UserSearchAppliedJob>searchJobApplied({String jobPostId})async{
+    final prefs = await SharedPreferences.getInstance();
+    Map reqBody={
+      "jwtToken": prefs.getString('userID'),
+      "job_post_id":jobPostId,
+    };
+    final response= await _apiHelper.post('Artist_api/user_applied_job', reqBody);
+    try{
+      return UserSearchAppliedJob.fromJson(response);
+    }
+    catch(e)
+    {
+      showExceptionToast();
+      return null;
+    }
+  }
 
+Future<YourJobPostApplied>jobPostApplied({String id})async{
+  final prefs = await SharedPreferences.getInstance();
+  Map reqBody = {
+    "jwtToken": prefs.getString('userID'),
+    "job_id":id.toString(),
+  } ;
+  final response = await _apiHelper.post('Artist_api/applied_job_post_list', reqBody);
+  try{
+    return YourJobPostApplied.fromJson(response);
+  }
+  catch(e){
+    showExceptionToast();
+    return null;
+  }
+}
+Future<ChangeStatusApplied>changeStatus({String id,String type})async
+{
+  final prefs = await SharedPreferences.getInstance();
+  Map reqBody = {
+    "jwtToken": prefs.getString('userID'),
+    "applied_job_id":id.toString(),
+    "select_type":type
+  } ;
+  final response=await _apiHelper.post('Artist_api/change_status_applied_job_type', reqBody);
+  try{
+    return ChangeStatusApplied.fromJson(response);
+  }
+  catch(e)
+  {
+    showExceptionToast();
+    return null;
+  }
+
+}
   Future<CreateJobPostModel> create_job_post({
     String category_id, String location, String company_name, String title, String other_skill, String salary_from, String salary_to, String experience_from, String experience_to, String job_type, String working_hours, String city_id, String job_description ,String skills}) async {
     final prefs = await SharedPreferences.getInstance();

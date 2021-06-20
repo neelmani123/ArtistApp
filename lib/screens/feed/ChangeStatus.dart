@@ -1,4 +1,5 @@
 import 'package:artist_icon/screens/Color.dart';
+import 'package:artist_icon/screens/api_helper/http_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
@@ -16,6 +17,7 @@ class _ChangeStatusState extends State<ChangeStatus> {
   String _radioValue; //Initial definition of radio button value
   String choice;
   bool _isLoading;
+  HttpService _httpService = HttpService();
 
   void radioButtonChanges(String value) {
     setState(() {
@@ -39,25 +41,16 @@ class _ChangeStatusState extends State<ChangeStatus> {
       debugPrint(choice); //Debug the choice in console
     });
   }
-  Future changeStatus()async{
-    final _prefs = await SharedPreferences.getInstance();
-    print("Token is:${_prefs.getString('userID')}");
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),
-      "applied_job_id":widget.jobId,
-      "select_type":choice
-    });
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Artist_api/change_status_applied_job_type",
-        body: res);
-    Map data = json.decode(response.body);
-    print("Data is :${data}");
-    print("Message is:${data['message']}");
-    if(data['status']==true) {
-      setState(() {
-        Fluttertoast.showToast(msg: data['message']);
-        _isLoading = false;
-      });
-    }
+  _changeStatus()async
+  {
+    var res=await _httpService.changeStatus(id: widget.jobId,type: choice);
+    if(res.status==true)
+      {
+       setState(() {
+         Fluttertoast.showToast(msg: res.message);
+         _isLoading=false;
+       });
+      }
   }
   @override
   Widget build(BuildContext context) {
@@ -126,7 +119,7 @@ class _ChangeStatusState extends State<ChangeStatus> {
               onPressed: () async{
                 setState(() {
                   _isLoading=true;
-                  changeStatus();
+                  _changeStatus();
                 });
               },
               color: Color(fountColor),

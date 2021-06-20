@@ -1,11 +1,11 @@
 class CreateJobPostModel{
-  String status;
+  bool status;
   String message;
   CreateJobPostModel({this.status,this.message});
 
   factory CreateJobPostModel.fromJson(Map<String, dynamic> json) {
     return CreateJobPostModel(
-      status: json["status"],
+      status: json['status'],
       message: json['message'],
     );
   }

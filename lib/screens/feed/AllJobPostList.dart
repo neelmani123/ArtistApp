@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:artist_icon/model/SearchJobModel1/SearchJobData.dart';
+import 'package:artist_icon/screens/api_helper/http_service.dart';
 import 'package:artist_icon/screens/feed/AppliedJobList.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -16,8 +18,10 @@ class AllJobPostList extends StatefulWidget {
 class _AllJobPostListState extends State<AllJobPostList> {
   bool _isLoading=true;
   List data1;
-  var isApplied1;
+  List<Data> data2;
+  var isApplied1="Applied";
   String choice;
+  HttpService _httpService = HttpService();
   /*Future select(){
     switch(isApplied)
     {
@@ -32,78 +36,52 @@ class _AllJobPostListState extends State<AllJobPostList> {
 
     }
   }*/
-  Future _jobPostList()async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({
-      "jwtToken": _prefs.getString('userID'),
-      "Skills_id":"1",
-      "job_type":"1",
-      "city_id":""
-    });
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Artist_api/search_job",
-        body: res);
-    Map data = json.decode(response.body);
-    var status = data['status'];
-    print('Status is:${status}');
-    if(status==true)
-    {
-      setState(() {
-        data1=data['data'];
-        for(int i=0;i<data1.length;i++)
+  _jobPost()async{
+    var res= await _httpService.searchJob1(skillId: "1",jobId: "1",cityId: "");
+     if(res.status==true)
+       {
+         setState(() {
+        data2=res.data;
+       /* for(int i=0;i<data2.length;i++)
           {
-           setState(() {
-             isApplied1=data1[i]['is_applied'];
-             print("Is applied is:${data1[i]['is_applied']}");
-             if(data1[i]['is_applied']=="0")
-               {
-                 isApplied1="Apply Now";
-               }
-             else
-               {
-                 isApplied1="Applied";
+            setState(() {
+              isApplied1=data2[i].isApplied;
+              if(data1[i]['is_applied']=="0")
+              {
+                isApplied1="Apply Now";
+              }
+              else
+              {
+                isApplied1="Applied";
 
-             }
-
-           });
-          }
+              }
+            });
+          }*/
         _isLoading=false;
-      });
-    }
+         });
+       }
   }
-  Future appliedJobApi(String id)async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"job_post_id":id});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Artist_api/user_applied_job",
-        body: res);
-    Map data = json.decode(response.body);
-    var status = data['status'];
-    print('Status is:${status}');
-    if(status==true)
-    {
-      setState(() {
-        _isLoading=false;
-        Fluttertoast.showToast(msg: data['message']);
-        /*Navigator.push(context, MaterialPageRoute(builder: (context)=>AppliedJobList()));*/
-
-      });
-    }
-    else if(status==false)
+  _appliedJobApi(String id)async{
+    var res= await _httpService.searchJobApplied(jobPostId: id);
+    if(res.status==true)
       {
         setState(() {
           _isLoading=false;
-          Fluttertoast.showToast(msg: data['message']);
+          Fluttertoast.showToast(msg: res.message);
         });
       }
+    else if(res.status==false){
+      setState(() {
+        _isLoading=false;
+        Fluttertoast.showToast(msg: res.message);
+      });
+    }
   }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _jobPostList();
+    _jobPost();
   }
   var colors = [
     Color(0xFFACDEE5),
@@ -128,7 +106,7 @@ class _AllJobPostListState extends State<AllJobPostList> {
         backgroundColor: Colors.white,
          appBar: AppBar(title: Text("Search Job List"),),
         body: _isLoading==true?Container(child: Center(child: CircularProgressIndicator(),),):ListView.builder(
-            itemCount: data1.length,
+            itemCount: data2.length,
             itemBuilder: (context,index){
               return Padding(
                 padding: const EdgeInsets.all(5.0),
@@ -164,7 +142,7 @@ class _AllJobPostListState extends State<AllJobPostList> {
                                 padding: const EdgeInsets.only(left: 10,bottom: 10),
                                 child: Row(
                                   children: [
-                                    Text('${data1[index]['company_name']??''}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
+                                    Text('${data2[index].companyName??''}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
                                   ],
                                 ),
                               ),
@@ -184,7 +162,7 @@ class _AllJobPostListState extends State<AllJobPostList> {
                             Image.asset('images/description.png',width: 30,height: 30,color: Color(fountColor),),
                             Padding(
                               padding: const EdgeInsets.only(left: 20),
-                              child: Text('${data1[index]['job_description']??''}',style: TextStyle(fontSize: 15,fontFamily: 'RobotoSlab'),),
+                              child: Text('${data2[index].jobDescription??''}',style: TextStyle(fontSize: 15,fontFamily: 'RobotoSlab'),),
                             ),
                           ],
                         ),
@@ -208,7 +186,7 @@ class _AllJobPostListState extends State<AllJobPostList> {
                             Image.asset('images/location.png',width: 30,height: 30,color: Color(fountColor),),
                             Padding(
                               padding: const EdgeInsets.only(left: 20),
-                              child: Text('${data1[index]['location']??''}',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                              child: Text('${data2[index].location??''}',style: TextStyle(fontFamily: 'RobotoSlab'),),
                             ),
                           ],
                         ),
@@ -220,7 +198,7 @@ class _AllJobPostListState extends State<AllJobPostList> {
                             Image.asset('images/skills.png',width: 30,height: 30,color: Color(fountColor),),
                             Padding(
                               padding: const EdgeInsets.only(left: 20),
-                              child: Text('${data1[index]['other_skills']??''}',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                              child: Text('${data2[index].otherSkills??''}',style: TextStyle(fontFamily: 'RobotoSlab'),),
                             ),
                           ],
                         ),
@@ -241,7 +219,7 @@ class _AllJobPostListState extends State<AllJobPostList> {
                               onPressed: () async{
                                 setState(() {
                                   _isLoading=true;
-                                  appliedJobApi(data1[index]['id']);
+                                  _appliedJobApi(data2[index].id);
 
                                 });
                               },
