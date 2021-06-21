@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AddWorkExperienceModel
 {
-  String status;
+  bool status;
   String message;
 
   AddWorkExperienceModel({this.status,this.message});

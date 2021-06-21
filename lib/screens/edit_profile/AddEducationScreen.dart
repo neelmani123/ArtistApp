@@ -2,6 +2,7 @@ import 'package:artist_icon/screens/Color.dart';
 import 'package:artist_icon/screens/edit_profile/model/modeleducation/AddEducationModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http ;
 import 'package:artist_icon/screens/api_helper/http_service.dart';
 import 'package:artist_icon/screens/edit_profile/EditProfileScreen.dart';
@@ -53,7 +54,8 @@ class AddEducationScreenState extends State<AddEducationScreen>{
     if(res.status==true)
       {
         print(res.message);
-        _showScaffold(res.message);
+        //_showScaffold(res.message);
+        Fluttertoast.showToast(msg: res.message);
         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditProfileScreen()));
       }
   }

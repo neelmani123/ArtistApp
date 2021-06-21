@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:artist_icon/model/GetUserFeed/GetUserFeedData.dart';
 import 'package:artist_icon/screens/Color.dart';
+import 'package:artist_icon/screens/api_helper/http_service.dart';
 import 'package:artist_icon/screens/feed/CommentScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,272 +20,225 @@ class UserFeed extends StatefulWidget {
 
 class _UserFeedState extends State<UserFeed> {
   @override
-  bool _isLoading;
+  bool _isLoading=true;
   bool loading;
   List data1,data2;
+  List<Data> data3;
   Map data;
-  Future getuserFeed()async
-  {
-    loading=true;
-    final _prefs = await SharedPreferences.getInstance();
-    print("Token is:${_prefs.getString('userID')}");
-    print("Token is:${widget.id}");
-    print("Page Count is:${widget.page_count}");
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"pages":widget.page_count,"id_user":widget.id});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/user_feed",
-        body: res);
-     data = json.decode(response.body);
-    print(data);
-    var status = data['status'];
-    print('Status is:${status}');
-    if(status==true||status== false)
-    {
-      loading=false;
-      setState(() {
-        data1=data['data'];
-        // print("UserId Is:${data[0]['id']}");
-
-      });
-
-    }
+  HttpService _httpService = HttpService();
+  _getUserFeed()async{
+    var res=await _httpService.getUserFeedDetails(id: widget.id,pages: widget.page_count);
+    if(res.status==true)
+      {
+        setState(() {
+          data3=res.data;
+          _isLoading=false;
+        });
+      }
   }
-  Future doLike(String id)async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":id});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/do_like",
-        body: res);
-    Map data = json.decode(response.body);
-    var status = data['status'];
-    if(status==true)
+  _doLike(String id)async{
+    var res=await _httpService.doLike(id: id);
+    if(res.status==true)
     {
       setState(() {
-        Fluttertoast.showToast(msg: data['message']);
-        getAllPost();
-        // count=data['like_count'];
+        Fluttertoast.showToast(msg: res.message);
+        _getUserFeed();
       });
     }
-
   }
-  Future doBookmark(String id)async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":id});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/do_bookmark",
-        body: res);
-    Map data = json.decode(response.body);
-    var status = data['status'];
-    if(status==true)
+  _doBookmark(String id)async{
+    var res=await _httpService.doBookMark(id: id);
+    if(res.status==true)
     {
       setState(() {
-        Fluttertoast.showToast(msg: data['message']);
-        getAllPost();
-
+        Fluttertoast.showToast(msg: res.message);
+        _getUserFeed();
       });
     }
-
   }
-  Future getAllPost()async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"pages":"1"});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/get_all_post",
-        body: res);
-    Map data = json.decode(response.body);
-    print(data);
-    var status = data['status'];
-    print('Status is:${status}');
 
-    if(status==true)
-    {
-      setState(() {
-        data2=data['data'];
-        // print("UserId Is:${data[0]['id']}");
-        _isLoading=false;
-      });
-
-    }
-  }
   @override
   void initState() {
     // TODO: implement initState
-    getAllPost();
-    getuserFeed();
+    _getUserFeed();
     super.initState();
   }
 
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("User Feed",style: TextStyle(fontFamily: 'RobotoSlab'),),
-      ),
-      body: loading==true?Container(child: Center(child: CircularProgressIndicator(
-      ),),):
-      ListView.builder(
-        itemCount: 1,
+      appBar: AppBar(title: Text("User Feed",style: TextStyle(fontFamily: 'RobotoSlab'),),),
+      body: _isLoading==true?Container(child: Center(child: CircularProgressIndicator(),),):ListView.builder(
+          itemCount: 1,
           itemBuilder: (context,index){
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 300,
-                decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new NetworkImage(
-                        "${data['profile_image']??''}"
-                    ),
+            return Card(
+              elevation: 0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      new Container(
+                        height: 40.0,
+                        width: 40.0,
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: new DecorationImage(
+                            fit: BoxFit.fill,
+                            image: new NetworkImage(
+                                "${data3[index].userImage??''}"
+                            ),
 
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(data3[index].userName??'',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                      ),
+                      Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Text('09-11-2020',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: new IconButton(
+                          icon: Icon(Icons.more_horiz,color: Colors.black,),
+                          onPressed: null,
+                        ),
+                      )
+                    ],
                   ),
-                ),),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 250),
-                    child: Center(
-                      child: CircleAvatar(
-                        radius: 55,
-                        child: ClipOval(child: Image.network(data['profile_image']??'', height: 100, width: 100, fit: BoxFit.cover,),),
+                    padding: const EdgeInsets.only(left: 5,top: 5),
+                    child: Text(data3[index].text??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 200,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: new DecorationImage(
+                        fit: BoxFit.cover,
+                        image: new NetworkImage(
+                            "${data3[index].fileUrl??''}"
+                        ),
                       ),
                     ),
                   ),
-                ],
-              ),
-            ]),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(data['user_name']??'',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 20,fontFamily: "RobotoSlab"),),
-            ),
-            /*Padding(
-            padding: const EdgeInsets.only(left: 5,top: 5),
-            child: Text(data['text']??'',style: TextStyle(color: Colors.grey),),
-          ),*/
-            SizedBox(height: 10,),
-            /* Container(
-            width: MediaQuery.of(context).size.width,
-            height: 250,
-            decoration: new BoxDecoration(
-              shape: BoxShape.rectangle,
-              image: new DecorationImage(
-                fit: BoxFit.cover,
-                image: new NetworkImage(
-                    "${data['file_url']??''}"
-                ),
+                  SizedBox(height: 5,),
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: (){
+                          setState(() {
+                            _isLoading==true;
+                            _doLike(data3[index].id);
+                          });
+                          if (data3[index].isLike == 0) {
+                            setState(() {
+                              data3[index].isLike = 1;
+                            });
+                          } else if (data3[index].isLike == 1) {
+                            setState(() {
+                              data3[index].isLike = 0;
 
-              ),
-            ),
-          ),*/
-            SizedBox(height: 5,),
-            Row(
-              children: [
-                InkWell(
-                  onTap: (){
-                    setState(() {
-                      _isLoading==true;
-                      doLike(data2[index]['id']);
-                    });
-                    if (data2[index]['is_like'] == 0) {
-                      setState(() {
-                        data2[index]['is_like'] = 1;
-                      });
-                    } else if (data2[index]['is_like'] == 1) {
-                      setState(() {
-                        data2[index]['is_like'] = 0;
+                            });
+                          }
+                        },
+                        child:data3[index].isLike==1?Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Icon(Icons.favorite,size: 20,color: Colors.red,),
+                        ):Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Icon(Icons.favorite_border,size: 20,color: Colors.black,),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: (){
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(data: data1[index],)));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Icon(
+                            FontAwesomeIcons.comment,
+                            size: 18,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Icon(FontAwesomeIcons.shareAlt,size: 18,  color: Colors.black,),
+                      ),
+                      Spacer(),
+                      InkWell(
+                        onTap: (){
+                          setState(() {
+                            _isLoading==true;
+                            _doBookmark(data3[index].id);
+                          });
+                          if (data3[index].isBookmark == 0) {
+                            setState(() {
+                              data3[index].isBookmark = 1;
+                            });
+                          } else if (data3[index].isBookmark == 1) {
+                            setState(() {
+                              data3[index].isBookmark = 0;
 
-                      });
-                    }
-                  },
-                  child:data2[index]['is_like']==1?Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: Icon(Icons.favorite,size: 20,color: Colors.red,),
-                  ):Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: Icon(Icons.favorite_border,size: 20,color: Colors.black,),
+                            });
+                          }
+                        },
+                        child: data3[index].isBookmark==1?Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.red,),
+                        ):Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.grey,),
+                        ),
+                      )
+                    ],
                   ),
-                ),
-                InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(comment_data: data2[index],)));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Icon(
-                      FontAwesomeIcons.comment,
-                      size: 18,
-                      color: Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5,top: 10),
+                    child: Text('${data3[index].likeCount??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Text("Livin'",style: TextStyle(fontFamily: 'RobotoSlab'),),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text('taht neon life!',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                        ),
+                        /* Padding(
+                         padding: const EdgeInsets.only(left: 10),
+                         child: Text('View comments',style: TextStyle(fontWeight:FontWeight.bold,color: Color(fountColor)),),
+                       ),*/
+                      ],
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Icon(FontAwesomeIcons.shareAlt,size: 18,  color: Colors.black,),
-                ),
-                Spacer(),
-                InkWell(
-                  onTap: (){
-                    setState(() {
-                      _isLoading==true;
-                      doBookmark(data2[index]['id']);
-                    });
-                    if (data2[index]['is_bookmark'] == 0) {
-                      setState(() {
-                        data2[index]['is_bookmark'] = 1;
-                      });
-                    } else if (data2[index]['is_bookmark'] == 1) {
-                      setState(() {
-                        data2[index]['is_bookmark'] = 0;
-
-                      });
-                    }
-                  },
-                  child: data2[index]['is_bookmark']==1?Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.red,),
-                  ):Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.grey,),
+                  Container(
+                    child: RaisedButton(
+                        color: Color(fountColor),
+                        child: Text("${data3[index].isTutorial} Tutorial",style: TextStyle(color: Colors.white,fontFamily: 'RobotoSlab'),),
+                        onPressed: (){
+                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>BookMarkTutorial(isPlay:data2[index].isPlay,id:data2[index].id,data: data2[index].productData,name: data2[index].userName,img: data2[index].userImage,price: data2[index].price,)));
+                        }),
                   ),
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5,top: 10),
-              child: Text('${data2[index]['like_count']??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: Text("Livin'",style: TextStyle(fontFamily: "RobotoSlab"),),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text('taht neon life!',style: TextStyle(fontFamily: 'RobotoSlab'),),
-                  ),
-                  /*Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text('View comments',style: TextStyle(fontWeight:FontWeight.bold,color: Color(fountColor)),),
-                ),*/
+                  SizedBox(height: 10,)
                 ],
               ),
-            ),
-            SizedBox(height: 10,)
-          ],
-        );
-      })
-
+            );
+          }),
     );
   }
 

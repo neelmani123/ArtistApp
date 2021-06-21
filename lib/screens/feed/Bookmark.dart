@@ -1,6 +1,10 @@
 import 'dart:convert';
 
+import 'package:artist_icon/model/GetAllBookMark/GetBookMarkData.dart';
 import 'package:artist_icon/screens/Color.dart';
+import 'package:artist_icon/screens/api_helper/http_service.dart';
+import 'package:artist_icon/screens/feed/TutorialPAge.dart';
+import 'package:artist_icon/screens/feed/model/BookMarkTutorial.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,69 +19,43 @@ class Bookmark extends StatefulWidget {
 
 class _BookmarkState extends State<Bookmark> {
   bool _isLoading=true;
-  List data1;
-  Future getAllPost()async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"pages":"1"});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/get_all_bookmark_post",
-        body: res);
-    Map data = json.decode(response.body);
-    print(data);
-    var status = data['status'];
-    print('Status is:${status}');
-    if(status==true)
-    {
-      _isLoading=false;
-      setState(() {
-        data1=data['data'];
-        // print("UserId Is:${data[0]['id']}");
-        _isLoading=false;
-      });
-
-    }
+  HttpService _httpService = HttpService();
+  List<Data> data2;
+  _getAllBookMark()async{
+    var res=await _httpService.getBookMarkDetails();
+    if(res.status==true)
+      {
+        setState(() {
+          data2=res.data;
+          _isLoading=false;
+          print("MOdel Dara uhvshfuajvjvhjvhvhvhv:${data2}");
+        });
+      }
   }
-  Future doLike(String id)async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":id});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/do_like",
-        body: res);
-    Map data = json.decode(response.body);
-    var status = data['status'];
-    if(status==true)
-    {
-      setState(() {
-        Fluttertoast.showToast(msg: data['message']);
-        getAllPost();
-      });
-    }
-
+  _doLike(String id)async{
+    var res=await _httpService.doLike(id: id);
+    if(res.status==true)
+      {
+        setState(() {
+          Fluttertoast.showToast(msg: res.message);
+          _getAllBookMark();
+        });
+      }
   }
-  Future doBookmark(String id)async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":id});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/do_bookmark",
-        body: res);
-    Map data = json.decode(response.body);
-    var status = data['status'];
-    if(status==true)
-    {
-      setState(() {
-        Fluttertoast.showToast(msg: data['message']);
-        getAllPost();
-      });
-    }
-
+  _doBookmark(String id)async{
+    var res=await _httpService.doBookMark(id: id);
+    if(res.status==true)
+      {
+        setState(() {
+          Fluttertoast.showToast(msg: res.message);
+          _getAllBookMark();
+        });
+      }
   }
   @override
   void initState() {
     // TODO: implement initState
-    getAllPost();
+    _getAllBookMark();
     super.initState();
   }
   @override
@@ -85,7 +63,7 @@ class _BookmarkState extends State<Bookmark> {
     return Scaffold(
       appBar: AppBar(title: Text("Bookmark",style: TextStyle(fontFamily: 'RobotoSlab'),),),
      body: _isLoading==true?Container(child: Center(child: CircularProgressIndicator(),),):ListView.builder(
-         itemCount: data1.length,
+         itemCount: data2.length,
          itemBuilder: (context,index){
            return Card(
              elevation: 0,
@@ -103,7 +81,7 @@ class _BookmarkState extends State<Bookmark> {
                          image: new DecorationImage(
                            fit: BoxFit.fill,
                            image: new NetworkImage(
-                               "${data1[index]['user_image']??''}"
+                               "${data2[index].userImage??''}"
                            ),
 
                          ),
@@ -111,7 +89,7 @@ class _BookmarkState extends State<Bookmark> {
                      ),
                      Padding(
                        padding: const EdgeInsets.only(left: 10),
-                       child: Text(data1[index]['user_name']??'',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                       child: Text(data2[index].userName??'',style: TextStyle(fontFamily: 'RobotoSlab'),),
                      ),
                      Spacer(),
                      Padding(
@@ -129,14 +107,10 @@ class _BookmarkState extends State<Bookmark> {
                  ),
                  Padding(
                    padding: const EdgeInsets.only(left: 5,top: 5),
-                   child: Text(data1[index]['text']??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
+                   child: Text(data2[index].text??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
                  ),
                  SizedBox(height: 10,),
-                 data1[index]['is_play']==0?Container(child: Center(child: Column(
-                   children: [
-                     Icon(Icons.lock,color: Color(fountColor),size: 40,)
-                   ],
-                 ),),):Container(
+                 Container(
                    width: MediaQuery.of(context).size.width,
                    height: 200,
                    decoration: new BoxDecoration(
@@ -144,7 +118,7 @@ class _BookmarkState extends State<Bookmark> {
                      image: new DecorationImage(
                        fit: BoxFit.cover,
                        image: new NetworkImage(
-                           "${data1[index]['file_url']??''}"
+                           "${data2[index].fileUrl??''}"
                        ),
                      ),
                    ),
@@ -156,20 +130,20 @@ class _BookmarkState extends State<Bookmark> {
                        onTap: (){
                          setState(() {
                            _isLoading==true;
-                           doLike(data1[index]['id']);
+                           _doLike(data2[index].id);
                          });
-                         if (data1[index]['is_like'] == 0) {
+                         if (data2[index].isLike == 0) {
                            setState(() {
-                             data1[index]['is_like'] = 1;
+                             data2[index].isLike = 1;
                            });
-                         } else if (data1[index]['is_like'] == 1) {
+                         } else if (data2[index].isLike == 1) {
                            setState(() {
-                             data1[index]['is_like'] = 0;
+                             data2[index].isLike = 0;
 
                            });
                          }
                        },
-                       child:data1[index]['is_like']==1?Padding(
+                       child:data2[index].isLike==1?Padding(
                          padding: const EdgeInsets.only(left: 5),
                          child: Icon(Icons.favorite,size: 20,color: Colors.red,),
                        ):Padding(
@@ -199,20 +173,20 @@ class _BookmarkState extends State<Bookmark> {
                        onTap: (){
                          setState(() {
                            _isLoading==true;
-                           doBookmark(data1[index]['id']);
+                           _doBookmark(data2[index].id);
                          });
-                         if (data1[index]['is_bookmark'] == 0) {
+                         if (data2[index].isBookmark == 0) {
                            setState(() {
-                             data1[index]['is_bookmark'] = 1;
+                             data2[index].isBookmark = 1;
                            });
-                         } else if (data1[index]['is_bookmark'] == 1) {
+                         } else if (data2[index].isBookmark == 1) {
                            setState(() {
-                             data1[index]['is_bookmark'] = 0;
+                             data2[index].isBookmark = 0;
 
                            });
                          }
                        },
-                       child: data1[index]['is_bookmark']==1?Padding(
+                       child: data2[index].isBookmark==1?Padding(
                          padding: const EdgeInsets.only(right: 10),
                          child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.red,),
                        ):Padding(
@@ -224,7 +198,7 @@ class _BookmarkState extends State<Bookmark> {
                  ),
                  Padding(
                    padding: const EdgeInsets.only(left: 5,top: 10),
-                   child: Text('${data1[index]['like_count']??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
+                   child: Text('${data2[index].likeCount??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
                  ),
                  Padding(
                    padding: const EdgeInsets.only(top: 10),
@@ -244,6 +218,14 @@ class _BookmarkState extends State<Bookmark> {
                        ),*/
                      ],
                    ),
+                 ),
+                 Container(
+                   child: RaisedButton(
+                       color: Color(fountColor),
+                       child: Text("${data2[index].isTutorial} Tutorial",style: TextStyle(color: Colors.white,fontFamily: 'RobotoSlab'),),
+                       onPressed: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>BookMarkTutorial(isPlay:data2[index].isPlay,id:data2[index].id,data: data2[index].productData,name: data2[index].userName,img: data2[index].userImage,price: data2[index].price,)));
+                       }),
                  ),
                  SizedBox(height: 10,)
                ],

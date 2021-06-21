@@ -44,68 +44,25 @@ class _AddFeedState extends State<AddFeed> {
       Fluttertoast.showToast(msg: "Something went wrong");
     }
   }
-
-
-  /*Future getAllPost()async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"pages":"1"});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/get_all_post",
-        body: res);
-    Map data = json.decode(response.body);
-    print(data);
-    var status = data['status'];
-    print('Status is:${status}');
-
-    if(status==true)
+  _doLike(String id)async{
+    var res=await _httpService.doLike(id: id);
+    if(res.status==true)
     {
       setState(() {
-        data1=data['data'];
-        pageCount=data['page_count'];
-       // print("UserId Is:${data[0]['id']}");
-        _isLoading=false;
-      });
-
-    }
-  }*/
-  Future doLike(String id)async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":id});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/do_like",
-        body: res);
-    Map data = json.decode(response.body);
-    var status = data['status'];
-    if(status==true)
-    {
-      setState(() {
-        Fluttertoast.showToast(msg: data['message']);
-        allFeed_listApi();
-       // count=data['like_count'];
+        Fluttertoast.showToast(msg: res.message);
+       allFeed_listApi();
       });
     }
-
   }
-  Future doBookmark(String id)async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":id});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/do_bookmark",
-        body: res);
-    Map data = json.decode(response.body);
-    var status = data['status'];
-    if(status==true)
+  _doBookmark(String id)async{
+    var res=await _httpService.doBookMark(id: id);
+    if(res.status==true)
     {
       setState(() {
-        Fluttertoast.showToast(msg: data['message']);
+        Fluttertoast.showToast(msg: res.message);
         allFeed_listApi();
-
       });
     }
-
   }
   @override
   void initState() {
@@ -219,7 +176,7 @@ class _AddFeedState extends State<AddFeed> {
                    onTap: (){
                     setState(() {
                       _isLoading==true;
-                      doLike(data[index].id);
+                      _doLike(data[index].id);
                     });
                      if (data[index].is_like == 0) {
                        setState(() {
@@ -263,7 +220,7 @@ class _AddFeedState extends State<AddFeed> {
                    onTap: (){
                      setState(() {
                        _isLoading==true;
-                       doBookmark(data[index].id);
+                       _doBookmark(data[index].id);
                      });
                      if (data[index].is_bookmark == 0) {
                        setState(() {

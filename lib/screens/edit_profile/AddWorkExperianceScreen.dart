@@ -34,12 +34,14 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
   DateTime _date = DateTime.now();
   DateTime _date1 = DateTime.now();
   String _formatteddate="",_formatteddate1="";
+
+
   _addData() async {
     _isLoading=true;
     var res = await _httpService.add_Work_exp(
         position: position.text,
         comp_name: company_name.text,
-        current_work1: result1,
+        current_work1: result1.toString(),
         company_location: location.text,
       startDate: _formatteddate,
       endDate: _formatteddate1
@@ -113,31 +115,6 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
         break;
     }
     return result1;
-  }
-  Future _addWorkExperience() async
-  {
-    final prefs = await SharedPreferences.getInstance();
-    Map<String,String>headers={'Content-Type':'application/json'};
-    final res=jsonEncode({
-      "position":position.text,
-      "company_name":company_name.text,
-      "start_date":_formatteddate,
-      "end_date":_formatteddate1,
-      "currently_work_here":result1,
-      "company_location":location.text,
-      "jwtToken":prefs.getString('userID')
-    });
-    var response=await http.post("https://artist.devclub.co.in/api/Artist_api/add_work_experience",headers: headers,body: res);
-    Map data=json.decode(response.body);
-    print("response is:${data}");
-    if (data['status'] == true) {
-      setState(() {
-        _isLoading = false;
-        print(data['message']);
-        Fluttertoast.showToast(msg: data['message']);
-        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditProfileScreen()));
-      });
-    }
   }
 
   @override
@@ -402,8 +379,7 @@ class AddWorkExperianceScreenState extends State<AddWorkExperianceScreen> {
                       setState(() {
                         getTutorial(isSwitched);
                         _isLoading = true;
-                        //_addData();
-                        _addWorkExperience();
+                        _addData();
                       });
                     },
                     color: Color(fountColor),

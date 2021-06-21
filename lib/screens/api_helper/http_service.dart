@@ -3,6 +3,10 @@ import 'dart:io' show File, Platform;
 import 'package:artist_icon/helper/api_heper.dart';
 import 'package:artist_icon/helper/setup.dart';
 import 'package:artist_icon/model/ChangeStatus/ChangeStatusApplied.dart';
+import 'package:artist_icon/model/DoBookmark/DoBookmark.dart';
+import 'package:artist_icon/model/DoLike/DoLike.dart';
+import 'package:artist_icon/model/GetAllBookMark/getBookMark.dart';
+import 'package:artist_icon/model/GetUserFeed/GetUserFeed.dart';
 import 'package:artist_icon/model/RequestUserLoginModel/RequestUserLoginModel.dart';
 import 'package:artist_icon/model/SearchJobModel1/SearchJobModel1.dart';
 import 'package:artist_icon/model/SearchJobModel1/UserSearchAppliedJob.dart';
@@ -314,14 +318,14 @@ class HttpService {
 
   //Add Work Experience Api  Call
   Future<AddWorkExperienceModel> add_Work_exp(
-      {String position, String comp_name,String startDate,String endDate,int current_work1,String company_location }) async {
+      {String position, String comp_name,String startDate,String endDate,String current_work1,String company_location }) async {
     final prefs = await SharedPreferences.getInstance();
     Map reqBody = {
       'position': position,
       'company_name': comp_name,
       'start_date': startDate,
       'end_date': endDate,
-      'currently_work_here': current_work1,
+      'currently_work_here': current_work1.toString(),
       'company_location': company_location,
       'jwtToken': prefs.getString('userID')
     };
@@ -490,5 +494,69 @@ Future<ChangeStatusApplied>changeStatus({String id,String type})async
     }
   }
 
+  Future<GetAllBookMark>getBookMarkDetails()async{
+    final prefs = await SharedPreferences.getInstance();
+    Map reqBody = {
+      "jwtToken": prefs.getString('userID'),
+      "pages":"1",
+    };
+    final response=await _apiHelper.post('Feed_api/get_all_bookmark_post', reqBody);
+    try{
+      return GetAllBookMark.fromJson(response);
+    }
+    catch(e)
+    {
+      showExceptionToast();
+      return null;
+    }
+  }
+  Future<DoLike>doLike({String id})async{
+    final prefs = await SharedPreferences.getInstance();
+    Map reqBody={
+      "jwtToken": prefs.getString('userID'),
+      "post_id":id
+    };
+    final response=await _apiHelper.post('Feed_api/do_like', reqBody);
+    try{
+      return DoLike.fromJson(response);
+    }
+    catch(e)
+    {
+      showExceptionToast();
+      return null;
+    }
+  }
+  Future<DoBookMark>doBookMark({String id})async{
+    final prefs = await SharedPreferences.getInstance();
+    Map reqBody={
+      "jwtToken": prefs.getString('userID'),
+      "post_id":id
+    };
+    final response=await _apiHelper.post('Feed_api/do_bookmark', reqBody);
+    try{
+      return DoBookMark.fromJson(response);
+    }
+    catch(e){
+      showExceptionToast();
+      return null;
+    }
+  }
 
+  Future<GetUserFeed>getUserFeedDetails({String id,String pages})async{
+    final prefs = await SharedPreferences.getInstance();
+    Map reqBody={
+      "jwtToken": prefs.getString('userID'),
+      "pages":pages,
+      "id_user":id
+    };
+    final response=await _apiHelper.post('Feed_api/user_feed', reqBody);
+    try{
+      return GetUserFeed.fromJson(response);
+    }
+    catch(e)
+    {
+      showExceptionToast();
+      return null;
+    }
+  }
 }

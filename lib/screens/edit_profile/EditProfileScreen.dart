@@ -27,10 +27,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class EditProfileScreen extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-
     return EditProfileScreenState();
   }
-
 }
 class EditProfileScreenState extends State<EditProfileScreen>{
   HttpService _httpService = HttpService();
@@ -70,6 +68,7 @@ class EditProfileScreenState extends State<EditProfileScreen>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Edit Profile',style: TextStyle(fontFamily: 'RobotoSlab'),),
         elevation: 0,
         leading: InkWell(
           onTap: (){
