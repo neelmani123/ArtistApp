@@ -55,12 +55,10 @@ class EditProfileScreenState extends State<EditProfileScreen>{
     }
   }
 
-
   @override
   void initState() {
     super.initState();
     getDataApi();
-    //_addlanguage();
   }
 
 

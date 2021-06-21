@@ -7,9 +7,11 @@ import 'package:artist_icon/model/DoBookmark/DoBookmark.dart';
 import 'package:artist_icon/model/DoLike/DoLike.dart';
 import 'package:artist_icon/model/GetAllBookMark/getBookMark.dart';
 import 'package:artist_icon/model/GetUserFeed/GetUserFeed.dart';
+import 'package:artist_icon/model/MyFeedModel/MyFeedModel.dart';
 import 'package:artist_icon/model/RequestUserLoginModel/RequestUserLoginModel.dart';
 import 'package:artist_icon/model/SearchJobModel1/SearchJobModel1.dart';
 import 'package:artist_icon/model/SearchJobModel1/UserSearchAppliedJob.dart';
+import 'package:artist_icon/model/TutorialPurchaseList/TutorialPurchaseList.dart';
 import 'package:artist_icon/model/TutorialPurchaseModel/TutorialPurchase.dart';
 import 'package:artist_icon/model/YourJobPostApplied/YourJobPostApplied.dart';
 import 'package:artist_icon/model/YourJobPostListModel/YourJobPostList.dart';
@@ -552,6 +554,37 @@ Future<ChangeStatusApplied>changeStatus({String id,String type})async
     final response=await _apiHelper.post('Feed_api/user_feed', reqBody);
     try{
       return GetUserFeed.fromJson(response);
+    }
+    catch(e)
+    {
+      showExceptionToast();
+      return null;
+    }
+  }
+  Future<TutorialPurchaseList> getMyTutorialPurchaseList()async{
+    final prefs = await SharedPreferences.getInstance();
+    Map reqBody={
+      "jwtToken": prefs.getString('userID'),
+      "pages":"1",
+    };
+    final response=await _apiHelper.post('Feed_api/get_my_tutorial_purchase_list', reqBody);
+    try{
+      return TutorialPurchaseList.fromJson(response);
+    }
+    catch(e){
+      showExceptionToast();
+      return null;
+    }
+  }
+  Future<MyFeedModel>myFeed()async{
+    final prefs = await SharedPreferences.getInstance();
+    Map reqBody={
+      "jwtToken": prefs.getString('userID'),
+      "pages":"1",
+    };
+    final response=await _apiHelper.post('Feed_api/my_feed', reqBody);
+    try{
+      return MyFeedModel.fromJson(response);
     }
     catch(e)
     {

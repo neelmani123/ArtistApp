@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:artist_icon/model/MyFeedModel/MyFeedData.dart';
 import 'package:artist_icon/screens/Color.dart';
+import 'package:artist_icon/screens/api_helper/http_service.dart';
 import 'package:artist_icon/screens/feed/CommentScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,90 +18,47 @@ class MyFeed extends StatefulWidget {
 
 class _MyFeedState extends State<MyFeed> {
   bool _isLoading=true;
-  List data1;
-  Future getMyFeed()async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"pages":"1"});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/my_feed",
-        body: res);
-    Map data = json.decode(response.body);
-    print(data);
-    var status = data['status'];
-    print('Status is:${status}');
-    if(status==true)
+  List<Data> data1;
+  HttpService _httpService = HttpService();
+  _getMyFeed()async{
+    var res=await _httpService.myFeed();
+    if(res.status==true)
+      {
+        setState(() {
+          data1=res.data;
+          Fluttertoast.showToast(msg: res.message);
+          _isLoading=false;
+        });
+      }
+  }
+  _doLike(String id)async{
+    var res=await _httpService.doLike(id: id);
+    if(res.status==true)
     {
       setState(() {
-        data1=data['data'];
-        // print("UserId Is:${data[0]['id']}");
-        _isLoading=false;
+        Fluttertoast.showToast(msg: res.message);
+        //_getAllBookMark();
+        _getMyFeed();
       });
-
+    }
+  }
+  _doBookmark(String id)async{
+    var res=await _httpService.doBookMark(id: id);
+    if(res.status==true)
+    {
+      setState(() {
+        Fluttertoast.showToast(msg: res.message);
+        //_getAllBookMark();
+        _getMyFeed();
+      });
     }
   }
 
-  Future doLike(String id)async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":id});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/do_like",
-        body: res);
-    Map data = json.decode(response.body);
-    var status = data['status'];
-    if(status==true)
-    {
-      setState(() {
-        Fluttertoast.showToast(msg: data['message']);
-        getAllPost();
-      });
-    }
-
-  }
-  Future doBookmark(String id)async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"post_id":id});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/do_bookmark",
-        body: res);
-    Map data = json.decode(response.body);
-    var status = data['status'];
-    if(status==true)
-    {
-      setState(() {
-        Fluttertoast.showToast(msg: data['message']);
-
-      });
-    }
-
-  }
-  Future getAllPost()async
-  {
-    final _prefs = await SharedPreferences.getInstance();
-    final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"pages":"1"});
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Feed_api/get_all_post",
-        body: res);
-    Map data = json.decode(response.body);
-    print(data);
-    var status = data['status'];
-    print('Status is:${status}');
-    if(status==true)
-    {
-      setState(() {
-        data1=data['data'];
-        // print("UserId Is:${data[0]['id']}");
-        _isLoading=false;
-      });
-
-    }
-  }
   @override
   void initState() {
     // TODO: implement initState
-    getMyFeed();
+    //getMyFeed();
+    _getMyFeed();
     super.initState();
   }
   @override
@@ -125,7 +84,7 @@ class _MyFeedState extends State<MyFeed> {
                           image: new DecorationImage(
                             fit: BoxFit.fill,
                             image: new NetworkImage(
-                                "${data1[index]['user_image']??''}"
+                                "${data1[index].userImage??''}"
                             ),
 
                           ),
@@ -133,7 +92,7 @@ class _MyFeedState extends State<MyFeed> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: Text(data1[index]['user_name']??'',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                        child: Text(data1[index].userName??'',style: TextStyle(fontFamily: 'RobotoSlab'),),
                       ),
                       Spacer(),
                       Padding(
@@ -151,7 +110,7 @@ class _MyFeedState extends State<MyFeed> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5,top: 5),
-                    child: Text(data1[index]['text']??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
+                    child: Text(data1[index].text??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
                   ),
                   SizedBox(height: 10,),
                   Container(
@@ -162,7 +121,7 @@ class _MyFeedState extends State<MyFeed> {
                       image: new DecorationImage(
                         fit: BoxFit.cover,
                         image: new NetworkImage(
-                            "${data1[index]['file_url']??''}"
+                            "${data1[index].fileUrl??''}"
                         ),
 
                       ),
@@ -174,21 +133,21 @@ class _MyFeedState extends State<MyFeed> {
                       InkWell(
                         onTap: (){
                           setState(() {
-                            doLike(data1[index]['id']);
+                            _doLike(data1[index].id);
 
                           });
-                          if (data1[index]['is_like'] == 0) {
+                          if (data1[index].isLike == 0) {
                             setState(() {
-                              data1[index]['is_like'] = 1;
+                              data1[index].isLike = 1;
                             });
-                          } else if (data1[index]['is_like'] == 1) {
+                          } else if (data1[index].isLike == 1) {
                             setState(() {
-                              data1[index]['is_like'] = 0;
+                              data1[index].isLike = 0;
 
                             });
                           }
                         },
-                        child:data1[index]['is_like']==1?Padding(
+                        child:data1[index].isLike==1?Padding(
                           padding: const EdgeInsets.only(left: 5),
                           child: Icon(Icons.favorite,size: 20,color: Colors.red,),
                         ):Padding(
@@ -198,7 +157,7 @@ class _MyFeedState extends State<MyFeed> {
                       ),
                       InkWell(
                         onTap: (){
-                           Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(comment_data: data1[index],)));
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(comment_data: data1[index],)));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
@@ -217,21 +176,21 @@ class _MyFeedState extends State<MyFeed> {
                       InkWell(
                         onTap: (){
                           setState(() {
-                            doBookmark(data1[index]['id']);
+                            _doBookmark(data1[index].id);
 
                           });
-                          if (data1[index]['is_bookmark'] == 0) {
+                          if (data1[index].isBookmark == 0) {
                             setState(() {
-                              data1[index]['is_bookmark'] = 1;
+                              data1[index].isBookmark = 1;
                             });
-                          } else if (data1[index]['is_bookmark'] == 1) {
+                          } else if (data1[index].isBookmark == 1) {
                             setState(() {
-                              data1[index]['is_bookmark'] = 0;
+                              data1[index].isBookmark = 0;
 
                             });
                           }
                         },
-                        child: data1[index]['is_bookmark']==1?Padding(
+                        child: data1[index].isBookmark==1?Padding(
                           padding: const EdgeInsets.only(right: 10),
                           child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.red,),
                         ):Padding(
@@ -243,7 +202,7 @@ class _MyFeedState extends State<MyFeed> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5,top: 10),
-                    child: Text('${data1[index]['like_count']??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
+                    child: Text('${data1[index].likeCount??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),

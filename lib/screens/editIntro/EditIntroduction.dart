@@ -96,7 +96,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
         "name":name_controlle.text,
         "gender":_gender.text,
         "profile_summary":profile_controller.text,
-        "skill":"php",
+        "skill":"1,2",
         "home_town":home_controller.text,
         "perfect_work_location":work_location_controller.text,
         "your_interests":_prefs.getString('interest'),
@@ -104,7 +104,6 @@ class _EditIntroductionState extends State<EditIntroduction> {
         "experience_year":exp_year_controller.text,
         "experience_month":exp_month_controller.text,
         "resume":"",
-
       });
       Response response = await Dio().post(
           "https://artist.devclub.co.in/api/Artist_api/profile_update",
@@ -194,7 +193,7 @@ class _EditIntroductionState extends State<EditIntroduction> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 300,left: 20),
-                        child: Text('Profile photo',style: TextStyle(color: Colors.black,fontSize: 20),),
+                        child: Text('Profile photo',style: TextStyle(color: Colors.black,fontSize: 20,fontFamily: 'RobotoSlab'),),
                       ),
                     ],
                   ),
@@ -219,40 +218,10 @@ class _EditIntroductionState extends State<EditIntroduction> {
                             prefixIcon: Icon(Icons.person_outline,color: Colors.black,)
                           ),
                         )
-
                       ],
                     ),
                   ),
                 ),
-               /* Container(
-                  margin: EdgeInsets.only(top: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: TextFormField(
-                    controller: name_controlle,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab'),
-                      labelText: "Your Full Name",
-                      hintText: "Your Full Name",
-                      hintStyle: TextStyle(fontFamily: 'RobotoSlab'),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Color(fountColor),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),*/
                 InkWell(
                   onTap: () {
                     showDialog(
@@ -563,5 +532,4 @@ class _EditIntroductionState extends State<EditIntroduction> {
       )
     );
   }
-
 }

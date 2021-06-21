@@ -1,7 +1,12 @@
+import 'package:artist_icon/model/TutorialPurchaseList/TutorilaPurchaseListData.dart';
 import 'package:artist_icon/screens/Color.dart';
+import 'package:artist_icon/screens/api_helper/http_service.dart';
+import 'package:artist_icon/screens/feed/MyTutorialPurchasePage.dart';
+import 'package:artist_icon/screens/feed/model/BookMarkTutorial.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -16,8 +21,9 @@ class MyTutorialPurchase extends StatefulWidget {
 
 class _MyTutorialPurchaseState extends State<MyTutorialPurchase> {
   bool _isLoading=true;
-  List data1;
-  Future getMyTutorialList()async
+  List<Data> data1;
+  HttpService _httpService = HttpService();
+  /*Future getMyTutorialList()async
   {
     final _prefs = await SharedPreferences.getInstance();
     final res = jsonEncode({"jwtToken": _prefs.getString('userID'),"pages":"2"});
@@ -36,25 +42,30 @@ class _MyTutorialPurchaseState extends State<MyTutorialPurchase> {
         }
     });
 
+  }*/
+  _getTutorialPurchaseList()async{
+    var res=await _httpService.getMyTutorialPurchaseList();
+    if(res.status==true)
+      {
+        setState(() {
+          data1=res.data;
+          _isLoading=false;
+          Fluttertoast.showToast(msg: res.message);
+        });
+      }
   }
   @override
   void initState() {
     // TODO: implement initState
-    getMyTutorialList();
+    //getMyTutorialList();
+    _getTutorialPurchaseList();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(" My Tutorial List"),),
-      body: _isLoading==true?Container(child: Center(child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CircularProgressIndicator(),
-          Text('No Data Found..')
-        ],
-      ),),):ListView.builder(
+      appBar: AppBar(title: Text("My Tutorial List",style: TextStyle(fontFamily: 'RobotoSlab'),),),
+      body: _isLoading==true?Container(child: Center(child: CircularProgressIndicator(),),):ListView.builder(
           itemCount: data1.length,
           itemBuilder: (context,index){
             return Card(
@@ -73,7 +84,7 @@ class _MyTutorialPurchaseState extends State<MyTutorialPurchase> {
                           image: new DecorationImage(
                             fit: BoxFit.fill,
                             image: new NetworkImage(
-                                "${data1[index]['user_image']??''}"
+                                "${data1[index].userImage??''}"
                             ),
 
                           ),
@@ -81,7 +92,7 @@ class _MyTutorialPurchaseState extends State<MyTutorialPurchase> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: Text(data1[index]['user_name']??'',style: TextStyle(fontFamily: 'RobotoSlab'),),
+                        child: Text(data1[index].userName??'',style: TextStyle(fontFamily: 'RobotoSlab'),),
                       ),
                       Spacer(),
                       Padding(
@@ -97,63 +108,45 @@ class _MyTutorialPurchaseState extends State<MyTutorialPurchase> {
                       )
                     ],
                   ),
-                 /* Padding(
+                  Padding(
                     padding: const EdgeInsets.only(left: 5,top: 5),
-                    child: Text(widget.data[index].title??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
-                  ),*/
+                    child: Text(data1[index].text??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
+                  ),
                   SizedBox(height: 10,),
-                 data1[index]['is_play']==0?Container(
-                    child: Center(
-                      child: Column(
-                        children: [
-                          Icon(Icons.lock,color: Color(fountColor),size: 40,),
-                          Text('Video locked purchase video'),
-                        ],
-                      ),
-                    ),): Container(
+                  Container(
                     width: MediaQuery.of(context).size.width,
                     height: 200,
-                    child: BetterPlayer.network("${data1[index]['product_data']['product']}",
-                      betterPlayerConfiguration: BetterPlayerConfiguration(
-                        aspectRatio: 1,
-                        looping: true,
-                        autoPlay: false,
-                        fit: BoxFit.cover,
-
-                      ),),
-
-                    /*decoration: new BoxDecoration(
+                    decoration: new BoxDecoration(
                       shape: BoxShape.rectangle,
                       image: new DecorationImage(
                         fit: BoxFit.cover,
                         image: new NetworkImage(
-                            "${widget.data['product_data'][index]['product']??''}"
+                            "${data1[index].fileUrl??''}"
                         ),
-
                       ),
-                    ),*/
+                    ),
                   ),
                   SizedBox(height: 5,),
-                  /*Row(
+                  Row(
                     children: [
                       InkWell(
                         onTap: (){
                           setState(() {
                             _isLoading==true;
-                            doLike(data1[index]['id']);
+                           // _doLike(data1[index].id);
                           });
-                          if (data1[index]['is_like'] == 0) {
+                          if (data1[index].isLike == 0) {
                             setState(() {
-                              data1[index]['is_like'] = 1;
+                              data1[index].isLike = 1;
                             });
-                          } else if (data1[index]['is_like'] == 1) {
+                          } else if (data1[index].isLike == 1) {
                             setState(() {
-                              data1[index]['is_like'] = 0;
+                              data1[index].isLike = 0;
 
                             });
                           }
                         },
-                        child:data1[index]['is_like']==1?Padding(
+                        child:data1[index].isLike==1?Padding(
                           padding: const EdgeInsets.only(left: 5),
                           child: Icon(Icons.favorite,size: 20,color: Colors.red,),
                         ):Padding(
@@ -183,20 +176,20 @@ class _MyTutorialPurchaseState extends State<MyTutorialPurchase> {
                         onTap: (){
                           setState(() {
                             _isLoading==true;
-                            doBookmark(data1[index]['id']);
+                            //_doBookmark(data2[index].id);
                           });
-                          if (data1[index]['is_bookmark'] == 0) {
+                          if (data1[index].isBookmark == 0) {
                             setState(() {
-                              data1[index]['is_bookmark'] = 1;
+                              data1[index].isBookmark = 1;
                             });
-                          } else if (data1[index]['is_bookmark'] == 1) {
+                          } else if (data1[index].isBookmark == 1) {
                             setState(() {
-                              data1[index]['is_bookmark'] = 0;
+                              data1[index].isBookmark = 0;
 
                             });
                           }
                         },
-                        child: data1[index]['is_bookmark']==1?Padding(
+                        child: data1[index].isBookmark==1?Padding(
                           padding: const EdgeInsets.only(right: 10),
                           child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.red,),
                         ):Padding(
@@ -208,8 +201,8 @@ class _MyTutorialPurchaseState extends State<MyTutorialPurchase> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5,top: 10),
-                    child: Text('${data1[index]['like_count']??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-                  ),*/
+                    child: Text('${data1[index].likeCount??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'RobotoSlab'),),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Row(
@@ -223,50 +216,25 @@ class _MyTutorialPurchaseState extends State<MyTutorialPurchase> {
                           child: Text('taht neon life!',style: TextStyle(fontFamily: 'RobotoSlab'),),
                         ),
                         /* Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text('View comments',style: TextStyle(fontWeight:FontWeight.bold,color: Color(fountColor)),),
-                        ),*/
+                         padding: const EdgeInsets.only(left: 10),
+                         child: Text('View comments',style: TextStyle(fontWeight:FontWeight.bold,color: Color(fountColor)),),
+                       ),*/
                       ],
                     ),
                   ),
-                  SizedBox(height: 50,),
-                  /*TextField(
-                    enabled: false,
-                    controller: amount_controller,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        hintText: "${widget.price}",
-                        hintStyle: TextStyle(color: Colors.black,fontFamily: 'RobotoSlab')
-                    ),
-                  ),
-                  SizedBox(height: 20),
                   Container(
-                    height: 60,
-                    width: MediaQuery.of(context).size.width,
-                    margin: const EdgeInsets.only(top: 20,bottom: 20),
-                    padding: EdgeInsets.symmetric(horizontal: 30),
                     child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.10),),
-                      // side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
-                      onPressed: () async{
-                        //openCheckOut();
-                        setState(() {
-                          _isLoading=true;
-                          purchase_tutorial();
-                        });
-                      },
-                      color: Color(fountColor),
-                      // textColor: Colors.white,
-                      child: Text("Pay",
-                          style: TextStyle(fontSize: 20,color: Colors.white,fontFamily: 'RobotoSlab')),
-                    ),
-                  ),*/
+                        color: Color(fountColor),
+                        child: Text("${data1[index].isTutorial} Tutorial",style: TextStyle(color: Colors.white,fontFamily: 'RobotoSlab'),),
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>MyTutorialPurchasePage(isPlay:data1[index].isPlay,id:data1[index].id,data: data1[index].productData,name: data1[index].userName,img: data1[index].userImage,price: data1[index].price,)));
+                        }),
+                  ),
+                  SizedBox(height: 10,)
                 ],
               ),
             );
           }),
-
     );
   }
 }

@@ -172,114 +172,33 @@ class _TutorialPAgeState extends State<TutorialPAge> {
                     child: Text(widget.data[index].title??'',style: TextStyle(color: Colors.grey,fontFamily: 'RobotoSlab'),),
                   ),
                   SizedBox(height: 10,),
-                 widget.isPlay==0?Container(
-                   child: Center(
-                     child: Column(
-                       children: [
-                         Icon(Icons.lock,color: Color(fountColor),size: 40,),
-                         Text('Video locked purchase video'),
-                       ],
-                     ),
-                   ),): Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 200,
-                    child: BetterPlayer.network("${widget.data[index].product}",
-                      betterPlayerConfiguration: BetterPlayerConfiguration(
-                        aspectRatio: 1,
-                        looping: true,
-                        autoPlay: false,
-                        fit: BoxFit.cover,
+                 Stack(
+                   children: [
+                      Container(
+                       width: MediaQuery.of(context).size.width,
+                       height: 200,
+                       child: BetterPlayer.network("${widget.data[index].product}",
+                         betterPlayerConfiguration: BetterPlayerConfiguration(
+                           aspectRatio: 1,
+                           looping: false,
+                           autoPlay: false,
+                           fit: BoxFit.cover,
 
-                      ),),
-
-                    /*decoration: new BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: new DecorationImage(
-                        fit: BoxFit.cover,
-                        image: new NetworkImage(
-                            "${widget.data['product_data'][index]['product']??''}"
-                        ),
-
-                      ),
-                    ),*/
-                  ),
+                         ),),
+                     ),widget.isPlay==0?Container(
+                       child: Center(
+                         child: Column(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           crossAxisAlignment: CrossAxisAlignment.center,
+                           children: [
+                             Center(child: Icon(Icons.lock,color: Color(fountColor),size: 30,)),
+                           ],
+                         ),
+                       ),):Container()
+                   ],
+                 ),
                   SizedBox(height: 5,),
-                  /*Row(
-                    children: [
-                      InkWell(
-                        onTap: (){
-                          setState(() {
-                            _isLoading==true;
-                            doLike(data1[index]['id']);
-                          });
-                          if (data1[index]['is_like'] == 0) {
-                            setState(() {
-                              data1[index]['is_like'] = 1;
-                            });
-                          } else if (data1[index]['is_like'] == 1) {
-                            setState(() {
-                              data1[index]['is_like'] = 0;
 
-                            });
-                          }
-                        },
-                        child:data1[index]['is_like']==1?Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: Icon(Icons.favorite,size: 20,color: Colors.red,),
-                        ):Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: Icon(Icons.favorite_border,size: 20,color: Colors.black,),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: (){
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(data: data1[index],)));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Icon(
-                            FontAwesomeIcons.comment,
-                            size: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Icon(FontAwesomeIcons.shareAlt,size: 18,  color: Colors.black,),
-                      ),
-                      Spacer(),
-                      InkWell(
-                        onTap: (){
-                          setState(() {
-                            _isLoading==true;
-                            doBookmark(data1[index]['id']);
-                          });
-                          if (data1[index]['is_bookmark'] == 0) {
-                            setState(() {
-                              data1[index]['is_bookmark'] = 1;
-                            });
-                          } else if (data1[index]['is_bookmark'] == 1) {
-                            setState(() {
-                              data1[index]['is_bookmark'] = 0;
-
-                            });
-                          }
-                        },
-                        child: data1[index]['is_bookmark']==1?Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.red,),
-                        ):Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Icon(FontAwesomeIcons.bookmark,size: 20,  color: Colors.grey,),
-                        ),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5,top: 10),
-                    child: Text('${data1[index]['like_count']??''} likes',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-                  ),*/
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Row(
