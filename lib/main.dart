@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Artist Icon',
 
       home: Splash2(),
-      debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
     );
   }
 }

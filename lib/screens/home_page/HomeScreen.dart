@@ -30,6 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedPageIndex = 0;
   int _index = 0;
   String name=" ";
+  String imageUrl="";
+  String email='';
   void _selectTab(int index) {
     setState(() {
       _selectedPageIndex = index;
@@ -39,8 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       name=prefs.getString('name');
+      imageUrl=prefs.get('img');
+      email=prefs.get('email');
     });
     print("Name is${name}");
+    print("Image is:${imageUrl}");
   }
   @override
   void initState() {
@@ -83,11 +88,58 @@ class _HomeScreenState extends State<HomeScreen> {
        drawer: Drawer(
          child: ListView(
            children: [
-             DrawerHeader(
-               decoration: BoxDecoration(
-                 color: Colors.white,
+             Container(
+               height: 200,
+               child: DrawerHeader(
+                 decoration: BoxDecoration(
+                   color: Colors.white,
+                 ),
+                 child: Column(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     SizedBox(height: 10,),
+                     Container(
+                       height: 60.0,
+                       width: 60.0,
+                       decoration: new BoxDecoration(
+                         shape: BoxShape.circle,
+                         image: new DecorationImage(
+                           fit: BoxFit.fill,
+                           image: new NetworkImage(
+                               "${imageUrl??''}"
+                           ),
+                         ),
+                       ),
+                     ),
+                     SizedBox(height: 10,),
+                     Text("${name}"),
+                     SizedBox(height: 10,),
+                     Row(
+                       children: [
+                         Padding(
+                           padding: const EdgeInsets.only(right: 40),
+                           child: Text("${email}"),
+                         ),
+                         //Spacer(),
+                         /*Container(
+                           width: 86,
+                           height: 30,
+                          margin: EdgeInsets.only(bottom: 40),
+                           decoration: BoxDecoration(
+                               border: Border.all(color: Colors.black),
+                             borderRadius: BorderRadius.all(Radius.circular(5))
+                           ),
+                           child: Padding(
+                             padding: const EdgeInsets.all(5.0),
+                             child: Text('Edit Profile',style: TextStyle(color: Color(fountColor)),),
+                           ),
+                         )*/
+                       ],
+                     ),
+                   ],
+                 )
                ),
-               child: Text(''),
              ),
              /*ListTile(
                title: Text('Create Post',style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 18,fontWeight: FontWeight.bold),),
@@ -155,6 +207,26 @@ class _HomeScreenState extends State<HomeScreen> {
                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext)=>UserTutorialList()));
                },
              ),
+             ListTile(
+               title: Container(
+                 padding: EdgeInsets.only(right: 70),
+                 width: 50,
+                 height: 50,
+                 child: Card(
+                   shape:RoundedRectangleBorder(
+                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),topRight: Radius.circular(20)),),
+                   child: Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     crossAxisAlignment: CrossAxisAlignment.center,
+                     children: [
+                       Icon(Icons.logout,color: Color(fountColor),),
+                       Text('  Logout',style: TextStyle(color: Color(fountColor),fontWeight: FontWeight.bold),)
+                     ],
+                   ),
+                 ),
+               )
+             ),
+             SizedBox(height: 10,)
            ],
          ),
        ),

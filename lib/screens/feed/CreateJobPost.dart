@@ -23,7 +23,7 @@ class _CreateJobPostState extends State<CreateJobPost> {
   List<DropdownMenuItem<String>> listDrop = [];
   List<DropdownMenuItem<String>> listDrop1 = [];
   HttpService _httpService = HttpService();
-  List<DataCity> citydata=[];
+  //List<DataCity> citydata=[];
   String value1;
   String value2 ;
   List<DataSkills> _skills=[];
@@ -44,6 +44,8 @@ class _CreateJobPostState extends State<CreateJobPost> {
   TextEditingController job_category_controller=new TextEditingController();
   TextEditingController description_controller=new TextEditingController();
   bool _isLoading;
+  List<String> names;
+  var result;
   static List<JobType> _jobTypes = [
     JobType(id: 1, name: "Full Time"),
     JobType(id: 2, name: "Part Time"),
@@ -51,6 +53,8 @@ class _CreateJobPostState extends State<CreateJobPost> {
     JobType(id: 4, name: "Remote"),
     JobType(id: 5, name: "Freelance"),
   ];
+
+
   List<JobType> _selectedJobs = [];
   final _itemsJob = _jobTypes
       .map((jobs) => MultiSelectItem<JobType>(jobs, jobs.name))
@@ -125,9 +129,20 @@ class _CreateJobPostState extends State<CreateJobPost> {
       });
     }
   }
-
   _addCreateJobPost() async
   {
+    List<String> selectedskills=[];
+    List<String> jobTypes=[];
+    for(int i=0;i<_selectedskills3.length;i++){
+      selectedskills.add(_selectedskills3[i].id);
+    }
+    for(int i=0;i<_selectedJobs.length;i++){
+      jobTypes.add(_selectedJobs[i].id.toString());
+    }
+    String skills = selectedskills.join(',');
+    String jobs = jobTypes.join(',');
+    print("Skills is:${skills}");
+    print("Job Type is:${_jobTypes}");
     var res=await _httpService.create_job_post(
         category_id: value1,
         location: location_controller.text,
@@ -140,9 +155,9 @@ class _CreateJobPostState extends State<CreateJobPost> {
         city_id: value2,
         other_skill: other_skill_controller.text,
         job_description: description_controller.text,
-        job_type: "full time",
+        job_type: jobs,
         working_hours: working_hours_controller.text,
-        skills: "1,2"
+        skills: skills
     );
     if(res.status==true)
     {
@@ -155,42 +170,6 @@ class _CreateJobPostState extends State<CreateJobPost> {
       //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EditProfileScreen()));
     }
   }
-  /*Future _addCreateJobPost1() async
-  {
-    final prefs = await SharedPreferences.getInstance();
-    Map<String, String>headers = {'Content-Type': 'application/json'};
-    var response = await http.post(
-        "https://artist.devclub.co.in/api/Artist_api/create_job_post",
-        body: jsonEncode(
-            {
-              "jwtToken": prefs.getString('userID'),
-              "category_id": value1,
-              "location": location_controller.text,
-              "title": title_controller.text,
-              "job_description": description_controller.text,
-              "skills": "1,2",
-              "other_skills": other_skill_controller.text,
-              "salary_from": salary_form_controller.text,
-              "salary_to": salary_to_controller.text,
-              "experience_to": exp_to_controller.text,
-              "experience_form": exp_to_controller.text,
-              "job_type": "Full time",
-              "company_name": company_name_controller.text,
-              "working_hours": working_hours_controller.text,
-              "city_id": value2
-            }
-        ));
-    Map data = json.decode(response.body);
-    print("response is:${data}");
-    if(data['status']==true)
-      {
-        setState(() {
-          Fluttertoast.showToast(msg: data['message']);
-          _isLoading=false;
-        });
-
-      }
-  }*/
         @override
   void initState() {
     // TODO: implement initState
@@ -330,8 +309,9 @@ class _CreateJobPostState extends State<CreateJobPost> {
                        if (values == null || values.isEmpty) {
                          return "Required";
                        }
-                       List<String> names = values.map((e) => e.skills_name).toList();
+                      List<String> names = values.map((e) => e.skills_name).toList();
                        print("Selected Skill is:${names}");
+
                        if (false) {
                        }
                        return null;
@@ -409,7 +389,6 @@ class _CreateJobPostState extends State<CreateJobPost> {
                         ),
                       ),
                     )
-
                   ],
                 ),
               ),
@@ -436,7 +415,6 @@ class _CreateJobPostState extends State<CreateJobPost> {
                         ),
                       ),
                     )
-
                   ],
                 ),
               ),
@@ -463,7 +441,6 @@ class _CreateJobPostState extends State<CreateJobPost> {
                         ),
                       ),
                     )
-
                   ],
                 ),
               ),
@@ -490,7 +467,6 @@ class _CreateJobPostState extends State<CreateJobPost> {
                         ),
                       ),
                     )
-
                   ],
                 ),
               ),
@@ -554,7 +530,6 @@ class _CreateJobPostState extends State<CreateJobPost> {
                         },
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -713,5 +688,15 @@ class _CreateJobPostState extends State<CreateJobPost> {
       ),
     );
   }
+}
+
+class JobType {
+  final int id;
+  final String name;
+
+  JobType({
+    this.id,
+    this.name,
+  });
 }
 

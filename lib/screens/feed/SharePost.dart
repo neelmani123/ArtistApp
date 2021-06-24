@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:mime/mime.dart';
 
 class SharePost extends StatefulWidget {
   const SharePost({Key key}) : super(key: key);
@@ -29,6 +30,7 @@ class _SharePostState extends State<SharePost> {
   FileType fileType;
   String path;
   var result1=0;
+  var result2=1;
 
   TextEditingController mind_controller=new TextEditingController();
   TextEditingController price=new TextEditingController();
@@ -48,6 +50,11 @@ class _SharePostState extends State<SharePost> {
     _isLoading=true;
     final _prefs = await SharedPreferences.getInstance();
     String fileName1 = path.split('/').last;
+    var filePath=lookupMimeType(fileName1);
+    print("File Name :${filePath}");
+    /*setState(() {
+      getMediaType(filePath);
+    });*/
     String videoName1 = videoFile.path.split('/').last;
     try {
       FormData formData = new FormData.fromMap({
@@ -55,7 +62,7 @@ class _SharePostState extends State<SharePost> {
         "file_url":await  MultipartFile.fromFile(
             path,filename: fileName1),
         "text":mind_controller.text,
-        "media_type":"2",
+        "media_type":result2,
         "is_tutorial":result1,
         "price":price.text,
         "title":title.text,
@@ -98,7 +105,7 @@ class _SharePostState extends State<SharePost> {
   Future get_name() async{
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      name=prefs.get('name1');
+      name=prefs.get('name');
       imageUrl=prefs.get('img');
     });
     print("Name is${name}");
@@ -142,6 +149,16 @@ class _SharePostState extends State<SharePost> {
     }
     return result1;
  }
+  getMediaType(String type){
+    switch(type)
+    {
+      case "video/mp4" :
+        result2=2;
+        print("Result is :${result2}");
+        break;
+    }
+    return result2;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -242,14 +259,6 @@ class _SharePostState extends State<SharePost> {
                 ),
               ),
             ),
-            /*InkWell(
-              onTap: (){
-                showModalBottomSheet(
-                    context: context,
-                    builder: (builder) => bottomSheet());
-              },
-              child:
-            ),*/
             Container(
               margin: EdgeInsets.symmetric(horizontal: 5),
               width: MediaQuery.of(context).size.width,

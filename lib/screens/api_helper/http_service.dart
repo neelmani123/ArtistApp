@@ -458,7 +458,7 @@ Future<ChangeStatusApplied>changeStatus({String id,String type})async
       "location": location,
       "title": title,
       "job_description": job_description,
-      "skills": "1,2",
+      "skills": skills,
       "other_skills": other_skill,
       "salary_from": salary_from,
       "salary_to": salary_to,
